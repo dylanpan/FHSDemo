@@ -1,0 +1,26 @@
+require "Assets/Chess/Scripts/Lua/chessLogic/Core/middleclass"
+require "Assets/Chess/Scripts/Lua/chessLogic/Core/EventSystem"
+
+require "Assets/Chess/Scripts/Lua/chessLogic/ChessClassDef"
+
+require "Assets/Chess/Scripts/Lua/chessLogic/const/ChessConst"
+require "Assets/Chess/Scripts/Lua/chessLogic/util/ChessUtil"
+
+require "Assets/Chess/Scripts/Lua/chessLogic/controller/BartenderController"
+require "Assets/Chess/Scripts/Lua/chessLogic/controller/GameController"
+require "Assets/Chess/Scripts/Lua/chessLogic/controller/HeroController"
+require "Assets/Chess/Scripts/Lua/chessLogic/controller/PiecesController"
+require "Assets/Chess/Scripts/Lua/chessLogic/controller/PlayerController"
+require "Assets/Chess/Scripts/Lua/chessLogic/controller/BattleController"
+
+require "Assets/Chess/Scripts/Lua/chessLogic/model/Bartender"
+require "Assets/Chess/Scripts/Lua/chessLogic/model/Hero"
+require "Assets/Chess/Scripts/Lua/chessLogic/model/HeroSkill"
+require "Assets/Chess/Scripts/Lua/chessLogic/model/HeroPool"
+require "Assets/Chess/Scripts/Lua/chessLogic/model/Pieces"
+require "Assets/Chess/Scripts/Lua/chessLogic/model/PiecesSkill"
+require "Assets/Chess/Scripts/Lua/chessLogic/model/PiecesPool"
+require "Assets/Chess/Scripts/Lua/chessLogic/model/Player"
+require "Assets/Chess/Scripts/Lua/chessLogic/model/Buff"
+require "Assets/Chess/Scripts/Lua/chessLogic/model/AtkBuff"
+require "Assets/Chess/Scripts/Lua/chessLogic/model/HpBuff"
