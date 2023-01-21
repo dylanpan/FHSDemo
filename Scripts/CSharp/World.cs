@@ -61,7 +61,7 @@ public class World
             Console.WriteLine("------");
             foreach (IComponent component in entity.components)
             {
-                component.tostring();
+                component.LoggerString();
             }
         }
     }

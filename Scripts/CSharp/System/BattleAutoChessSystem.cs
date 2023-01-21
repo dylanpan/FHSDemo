@@ -16,7 +16,7 @@ public class BattleAutoChessSystem : ISystem
         resultPiecesDict.Add(0, aresultPiecesList);
         resultPiecesDict.Add(1, bresultPiecesList);
         // 字典 key 为轮次
-        resultComponent.resultDict.Add(0, resultPiecesDict);
+        resultComponent.result_dict.Add(0, resultPiecesDict);
         entity.AddComponent(resultComponent);
         return entity;
     }
@@ -35,8 +35,8 @@ public class BattleAutoChessSystem : ISystem
     public void GetBattleResult(int round, ref Entity entity)
     {
         ResultComponent resultComponent = (ResultComponent)entity.GetComponent<ResultComponent>();
-        List<Entity> aList = resultComponent.resultDict[round-1][0];
-        List<Entity> bList = resultComponent.resultDict[round-1][1];
+        List<Entity> aList = resultComponent.result_dict[round-1][0];
+        List<Entity> bList = resultComponent.result_dict[round-1][1];
         if (resultComponent != null)
         {
             if (Util.Battle_CheckListAllStatus(3, aList) && Util.Battle_CheckListAllStatus(3, bList))
@@ -60,25 +60,25 @@ public class BattleAutoChessSystem : ISystem
                 resultComponent.status = 0;
                 int b = round % 2;
                 int a = 1 - b;
-                List<Entity> _aList = Util.CopyList(resultComponent.resultDict[round-1][a]);
-                List<Entity> _bList = Util.CopyList(resultComponent.resultDict[round-1][b]);
+                List<Entity> _aList = Util.CopyList(resultComponent.result_dict[round-1][a]);
+                List<Entity> _bList = Util.CopyList(resultComponent.result_dict[round-1][b]);
                 Dictionary<int, List<Entity>> tmpDict = DoBattle(_aList, _bList);
-                if (!resultComponent.resultDict.ContainsKey(round))
+                if (!resultComponent.result_dict.ContainsKey(round))
                 {
-                    resultComponent.resultDict.Add(round, new Dictionary<int, List<Entity>>());
+                    resultComponent.result_dict.Add(round, new Dictionary<int, List<Entity>>());
                 }
                 // 当前轮次战斗结果
-                resultComponent.resultDict[round][a] = tmpDict[0];
-                resultComponent.resultDict[round][b] = tmpDict[1];
+                resultComponent.result_dict[round][a] = tmpDict[0];
+                resultComponent.result_dict[round][b] = tmpDict[1];
             }
 
             Console.WriteLine($"---> GetBattleResult {round}: {resultComponent.status}");
-            // todo tmpDict中的索引关系和_aList、_bList有关联
-            for (int i = 0; i < resultComponent.resultDict.Keys.Count; i++)
+            // todo tmpDict中的索引关系和_aList、_bList有关联,需要深拷贝到组件
+            for (int i = 0; i < resultComponent.result_dict.Keys.Count; i++)
             {
                 
-                Console.WriteLine($"BattleAutoChessSystem resultComponent list round: {i} {resultComponent.resultDict[i][0].GetHashCode()}");
-                Util.Battle_LoggerListPiecesEntity(resultComponent.resultDict[i][0]);
+                Console.WriteLine($"BattleAutoChessSystem resultComponent list round: {i} {resultComponent.result_dict[i][0].GetHashCode()}");
+                Util.Battle_LoggerListPiecesEntity(resultComponent.result_dict[i][0]);
             }
             if (resultComponent.status == 0)
             {

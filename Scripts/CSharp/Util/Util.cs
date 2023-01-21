@@ -1,5 +1,25 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+
 public class Util
 {
+    public static object Clone(object obj)
+    {
+        Type T = obj.GetType();
+        object O = Activator.CreateInstance(T);
+        PropertyInfo[] PI = T.GetProperties();
+        for (int i = 0; i < PI.Length; i++)
+        {
+            PropertyInfo P = PI[i];
+            P.SetValue(O, P.GetValue(obj));
+        }
+        return O;
+    }
+
     public static Entity CopyEntity(int id, bool isSetStatus = true)
     {
         Entity copyEntity = new Entity();
@@ -9,7 +29,7 @@ public class Util
             {
                 foreach (IComponent component in entity.components)
                 {
-                    copyEntity.AddComponent(component);
+                    copyEntity.AddComponent((IComponent)Util.Clone(component));
                 }
                 StatusComponent statusComponent = (StatusComponent)copyEntity.GetComponent<StatusComponent>();
                 if (statusComponent != null && isSetStatus)
@@ -26,7 +46,7 @@ public class Util
         Entity copyEntity = new Entity();
         foreach (IComponent component in originEntity.components)
         {
-            copyEntity.AddComponent(component);
+            copyEntity.AddComponent((IComponent)Util.Clone(component));
         }
         StatusComponent statusComponent = (StatusComponent)copyEntity.GetComponent<StatusComponent>();
         if (statusComponent != null && isSetStatus)
@@ -148,7 +168,7 @@ public class Util
             PorpertyComponent porpertyComponent = (PorpertyComponent)_entity.GetComponent<PorpertyComponent>();
             if (porpertyComponent != null)
             {
-                porpertyComponent.tostring();
+                porpertyComponent.LoggerString();
             }
         }
     }
