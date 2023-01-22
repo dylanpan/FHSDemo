@@ -39,17 +39,20 @@ public class BattleAutoChessSystem : ISystem
         List<Entity> bList = resultComponent.result_dict[round-1][1];
         if (resultComponent != null)
         {
-            if (Util.Battle_CheckListAllStatus(3, aList) && Util.Battle_CheckListAllStatus(3, bList))
+            if ((Util.Battle_CheckListAllSpecificStatus(new int[]{3,4}, aList) && !Util.Battle_CheckListHaveStatus(-1, aList) && !Util.Battle_CheckListHaveStatus(2, aList))
+                && (Util.Battle_CheckListAllSpecificStatus(new int[]{3,4}, bList) && !Util.Battle_CheckListHaveStatus(-1, bList) && !Util.Battle_CheckListHaveStatus(2, bList)))
             {
                 // 结束：同空，平局
                 resultComponent.status = 1;
             }
-            else if (!Util.Battle_CheckListAllStatus(3, aList) && Util.Battle_CheckListAllStatus(3, bList))
+            else if ((!Util.Battle_CheckListAllSpecificStatus(new int[]{3,4}, aList) && !Util.Battle_CheckListHaveStatus(-1, aList) && !Util.Battle_CheckListHaveStatus(2, aList))
+                    && (Util.Battle_CheckListAllSpecificStatus(new int[]{3,4}, bList) && !Util.Battle_CheckListHaveStatus(-1, bList) && !Util.Battle_CheckListHaveStatus(2, bList)))
             {
                 // 结束：b 空，a 赢
                 resultComponent.status = 2;
             }
-            else if (Util.Battle_CheckListAllStatus(3, aList) && !Util.Battle_CheckListAllStatus(3, bList))
+            else if ((Util.Battle_CheckListAllSpecificStatus(new int[]{3,4}, aList) && !Util.Battle_CheckListHaveStatus(-1, aList) && !Util.Battle_CheckListHaveStatus(2, aList))
+                    && (!Util.Battle_CheckListAllSpecificStatus(new int[]{3,4}, bList) && !Util.Battle_CheckListHaveStatus(-1, bList) && !Util.Battle_CheckListHaveStatus(2, bList)))
             {
                 // 结束：a 空， b 赢
                 resultComponent.status = 3;
@@ -61,6 +64,7 @@ public class BattleAutoChessSystem : ISystem
                 int b = round % 2;
                 int a = 1 - b;
                 // TODO: 目前为了查看日志方便进行了每一个轮次的复制,后续和展示层关联应该还是会使用同一个,需要考虑回放日志,制作战斗回放数据
+                // TODO: 战斗辅助工具:1.支持配置队伍信息;2.支持手动回合战斗;3.通过数据进行回放;
                 List<Entity> _aList = Util.CopyList(resultComponent.result_dict[round-1][a]);
                 List<Entity> _bList = Util.CopyList(resultComponent.result_dict[round-1][b]);
                 Dictionary<int, List<Entity>> tmpDict = DoBattle(_aList, _bList);
@@ -88,46 +92,37 @@ public class BattleAutoChessSystem : ISystem
         Entity defEntity = Util.Battle_FindDefEntity(bList);
 
         // 进行 a - b
-        if (atkEntity != null && defEntity != null)
+        if (atkEntity != null && defEntity == null)
+        {
+            Util.Battle_UpdateEntityStatus(atkEntity, true);
+        }
+        else if (atkEntity == null && defEntity != null)
+        {
+            Util.Battle_UpdateEntityStatus(defEntity, true);
+        }
+        else if (atkEntity != null && defEntity != null)
         {
             PorpertyComponent atkPorpertyComponent = (PorpertyComponent)atkEntity.GetComponent<PorpertyComponent>();
             PorpertyComponent defPorpertyComponent = (PorpertyComponent)defEntity.GetComponent<PorpertyComponent>();
-            if (atkPorpertyComponent.hp > 0 && defPorpertyComponent.hp > 0)
+            if (atkPorpertyComponent.hp > 0 && defPorpertyComponent.hp > 0 && atkPorpertyComponent.atk > 0)
             {
                 defPorpertyComponent.hp -= atkPorpertyComponent.atk;
                 atkPorpertyComponent.hp -= defPorpertyComponent.atk;
             }
 
-            // 将 hp = 0 的更新状态
-            if (atkPorpertyComponent.hp <= 0)
-            {
-                Util.Battle_SetEntityStatus(atkEntity, 3);
-            }
-            if (defPorpertyComponent.hp <= 0)
-            {
-                Util.Battle_SetEntityStatus(defEntity, 3);
-            }
+            Util.Battle_UpdateEntityStatus(atkEntity);
+            Util.Battle_UpdateEntityStatus(defEntity);
 
             // 转换攻击 Index
             if (aList.Count > 0)
             {
-                Util.Battle_SetEntityStatus(atkEntity, -1);
                 int findNextAtkIndex = -1;
                 Entity nextAtkEntity = Util.Battle_FindAtkEntity(aList, out findNextAtkIndex);
-                if (nextAtkEntity != null)
-                {
-                    Util.Battle_SetEntityStatus(nextAtkEntity, 2);
-                }
-                
-                if (bList.Count > 0)
-                {
-                    int findOtherAtkIndex = -1;
-                    Entity otherAtkEntity = Util.Battle_FindAtkEntity(bList, out findOtherAtkIndex);
-                    if (otherAtkEntity != null)
-                    {
-                        Util.Battle_SetEntityStatus(otherAtkEntity, 2);
-                    }
-                }
+            }
+            if (bList.Count > 0)
+            {
+                int findOtherAtkIndex = -1;
+                Entity otherAtkEntity = Util.Battle_FindAtkEntity(bList, out findOtherAtkIndex);
             }
         }
         tmpDict.Add(0, aList);

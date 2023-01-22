@@ -91,16 +91,12 @@ public class Util
                 StatusComponent statusComponent = (StatusComponent)entity.GetComponent<StatusComponent>();
                 if (porpertyComponent != null && statusComponent != null)
                 {
-                    if (porpertyComponent.hp > 0)
+                    if (porpertyComponent.hp > 0 && statusComponent.status != 4)
                     {
                         atkEntity = entity;
                         statusComponent.status = 2;
                         findAtkIndex = i;
                         break;
-                    }
-                    else
-                    {
-                        statusComponent.status = 3;
                     }
                 }
             }
@@ -137,20 +133,66 @@ public class Util
         entity.AddComponent(new PiecesListComponent());
         return entity;
     }
-    public static bool Battle_CheckListAllStatus(int checkStatus, List<Entity> checkList)
+    public static bool Battle_CheckListHaveStatus(int checkStatus, List<Entity> checkList)
     {
-        bool isAll = true;
+        bool isHave = false;
         for (int i = 0; i < checkList.Count; i++)
         {
             Entity entity = checkList[i];
             StatusComponent statusComponent = (StatusComponent)entity.GetComponent<StatusComponent>();
-            if (statusComponent != null && statusComponent.status != checkStatus)
+            if (statusComponent != null && statusComponent.status == checkStatus)
             {
-                isAll = false;
+                isHave = true;
                 break;
             }
         }
+        return isHave;
+    }
+    public static bool Battle_CheckListAllSpecificStatus(int[] checkStatusList, List<Entity> checkList)
+    {
+        bool isAll = true;
+        int count = 0;
+        for (int i = 0; i < checkList.Count; i++)
+        {
+            Entity entity = checkList[i];
+            StatusComponent statusComponent = (StatusComponent)entity.GetComponent<StatusComponent>();
+            if (statusComponent != null)
+            {
+                for (int j = 0; j < checkStatusList.Length; j++)
+                {
+                    if (statusComponent.status == checkStatusList[j])
+                    {
+                        count = count + 1;
+                        break;
+                    }
+                }
+            }
+        }
+        if (count != checkList.Count)
+        {
+            isAll = false;
+        }
         return isAll;
+    }
+
+    public static void Battle_UpdateEntityStatus(Entity entity, bool isFinish = false)
+    {
+        PorpertyComponent porpertyComponent = (PorpertyComponent)entity.GetComponent<PorpertyComponent>();
+        if (porpertyComponent != null)
+        {
+            if (porpertyComponent.hp <= 0)
+            {
+                Util.Battle_SetEntityStatus(entity, 3);
+            }
+            else if (porpertyComponent.atk > 0 && porpertyComponent.hp > 0)
+            {
+                Util.Battle_SetEntityStatus(entity, isFinish ? 1 : -1);
+            }
+            else if (porpertyComponent.atk <= 0)
+            {
+                Util.Battle_SetEntityStatus(entity, 4);
+            }
+        }
     }
 
     public static void Battle_SetEntityStatus(Entity entity, int status)
