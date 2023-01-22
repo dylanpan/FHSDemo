@@ -60,6 +60,7 @@ public class BattleAutoChessSystem : ISystem
                 resultComponent.status = 0;
                 int b = round % 2;
                 int a = 1 - b;
+                // TODO: 目前为了查看日志方便进行了每一个轮次的复制,后续和展示层关联应该还是会使用同一个,需要考虑回放日志,制作战斗回放数据
                 List<Entity> _aList = Util.CopyList(resultComponent.result_dict[round-1][a]);
                 List<Entity> _bList = Util.CopyList(resultComponent.result_dict[round-1][b]);
                 Dictionary<int, List<Entity>> tmpDict = DoBattle(_aList, _bList);
@@ -70,15 +71,6 @@ public class BattleAutoChessSystem : ISystem
                 // 当前轮次战斗结果
                 resultComponent.result_dict[round][a] = tmpDict[0];
                 resultComponent.result_dict[round][b] = tmpDict[1];
-            }
-
-            Console.WriteLine($"---> GetBattleResult {round}: {resultComponent.status}");
-            // todo tmpDict中的索引关系和_aList、_bList有关联,需要深拷贝到组件
-            for (int i = 0; i < resultComponent.result_dict.Keys.Count; i++)
-            {
-                
-                Console.WriteLine($"BattleAutoChessSystem resultComponent list round: {i} {resultComponent.result_dict[i][0].GetHashCode()}");
-                Util.Battle_LoggerListPiecesEntity(resultComponent.result_dict[i][0]);
             }
             if (resultComponent.status == 0)
             {
@@ -158,6 +150,7 @@ public class BattleAutoChessSystem : ISystem
         }
         Entity battleAEntity = battleEntitys.Count > 0 ? battleEntitys[0] : Util.Battle_GetEmptyEntity();
         Entity battleBEntity = battleEntitys.Count > 1 ? battleEntitys[1] : Util.Battle_GetEmptyEntity();
+        TestUtil.SetTestPiecesIds(ref battleAEntity, ref battleBEntity);
         Entity resultEntity = CreateBattleResultEntity(battleAEntity, battleBEntity);
         GetBattleResult(1, ref resultEntity);
         World.Instance.AddEntity(resultEntity);

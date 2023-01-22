@@ -165,10 +165,14 @@ public class Util
     {
         foreach (Entity _entity in list)
         {
+            NameComponent nameComponent = (NameComponent)_entity.GetComponent<NameComponent>();
             PorpertyComponent porpertyComponent = (PorpertyComponent)_entity.GetComponent<PorpertyComponent>();
-            if (porpertyComponent != null)
+            StatusComponent statusComponent = (StatusComponent)_entity.GetComponent<StatusComponent>();
+            if (porpertyComponent != null && nameComponent != null && statusComponent != null)
             {
+                nameComponent.LoggerString();
                 porpertyComponent.LoggerString();
+                statusComponent.LoggerString();
             }
         }
     }
