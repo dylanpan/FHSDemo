@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 public class Util
 {
+    #region Common
     public static object Clone(object obj)
     {
         Type T = obj.GetType();
@@ -31,10 +32,13 @@ public class Util
                 {
                     copyEntity.AddComponent((IComponent)Util.Clone(component));
                 }
-                StatusComponent statusComponent = (StatusComponent)copyEntity.GetComponent<StatusComponent>();
-                if (statusComponent != null && isSetStatus)
+                if (isSetStatus)
                 {
-                    statusComponent.status = ConstUtil.None;
+                    StatusComponent statusComponent = (StatusComponent)copyEntity.GetComponent<StatusComponent>();
+                    if (statusComponent != null)
+                    {
+                        statusComponent.status = ConstUtil.None;
+                    }
                 }
                 break;
             }
@@ -48,10 +52,13 @@ public class Util
         {
             copyEntity.AddComponent((IComponent)Util.Clone(component));
         }
-        StatusComponent statusComponent = (StatusComponent)copyEntity.GetComponent<StatusComponent>();
-        if (statusComponent != null && isSetStatus)
+        if (isSetStatus)
         {
-            statusComponent.status = ConstUtil.None;
+            StatusComponent statusComponent = (StatusComponent)copyEntity.GetComponent<StatusComponent>();
+            if (statusComponent != null)
+            {
+                statusComponent.status = ConstUtil.None;
+            }
         }
         return copyEntity;
     }
@@ -61,6 +68,49 @@ public class Util
         originList.ForEach(i => copyList.Add(Util.CopyEntity(i, false)));
         return copyList;
     }
+
+    public static Dictionary<string, string> GetCommonParamDict()
+    {
+        Dictionary<string, string> paramDict = new Dictionary<string, string>();
+        paramDict["name"] = "";
+        paramDict["id"] = "0";
+        paramDict["skin_name"] = "";
+        paramDict["current_level"] = "0";
+        paramDict["pieces_cost"] = "0";
+        paramDict["pieces_recycle"] = "0";
+        paramDict["race"] = "0";
+        paramDict["atk"] = "0";
+        paramDict["hp"] = "0";
+        return paramDict;
+    }
+    #endregion
+
+    #region Check
+    public static bool CheckIsPiece(Entity entity)
+    {
+        NameComponent nameComponent = (NameComponent)entity.GetComponent<NameComponent>();
+        SkinComponent skinComponent = (SkinComponent)entity.GetComponent<SkinComponent>();
+        LevelComponent levelComponent = (LevelComponent)entity.GetComponent<LevelComponent>();
+        CurrencyComponent currencyComponent = (CurrencyComponent)entity.GetComponent<CurrencyComponent>();
+        PorpertyComponent porpertyComponent = (PorpertyComponent)entity.GetComponent<PorpertyComponent>();
+        BuffComponent buffComponent = (BuffComponent)entity.GetComponent<BuffComponent>();
+        StatusComponent statusComponent = (StatusComponent)entity.GetComponent<StatusComponent>();
+        bool isPiece = false;
+        if (nameComponent != null 
+            && skinComponent != null 
+            && levelComponent != null 
+            && currencyComponent != null 
+            && porpertyComponent != null 
+            && buffComponent != null 
+            && statusComponent != null)
+        {
+            isPiece = true;
+        }
+        return isPiece;
+    }
+    #endregion
+
+    #region Battle
     public static int Battle_RandomPiecesIndex(int total)
     {
         return new Random().Next(total);
@@ -217,17 +267,25 @@ public class Util
 
     public static void Battle_LoggerListPiecesEntity(List<Entity> list)
     {
-        foreach (Entity _entity in list)
+        if (list.Count > 0)
         {
-            NameComponent nameComponent = (NameComponent)_entity.GetComponent<NameComponent>();
-            PorpertyComponent porpertyComponent = (PorpertyComponent)_entity.GetComponent<PorpertyComponent>();
-            StatusComponent statusComponent = (StatusComponent)_entity.GetComponent<StatusComponent>();
-            if (porpertyComponent != null && nameComponent != null && statusComponent != null)
+            foreach (Entity _entity in list)
             {
-                nameComponent.LoggerString();
-                porpertyComponent.LoggerString();
-                statusComponent.LoggerString();
+                NameComponent nameComponent = (NameComponent)_entity.GetComponent<NameComponent>();
+                PorpertyComponent porpertyComponent = (PorpertyComponent)_entity.GetComponent<PorpertyComponent>();
+                StatusComponent statusComponent = (StatusComponent)_entity.GetComponent<StatusComponent>();
+                if (porpertyComponent != null && nameComponent != null && statusComponent != null)
+                {
+                    nameComponent.LoggerString();
+                    porpertyComponent.LoggerString();
+                    statusComponent.LoggerString();
+                }
             }
         }
+        else
+        {
+            Console.WriteLine("Empty list");
+        }
     }
+    #endregion
 }

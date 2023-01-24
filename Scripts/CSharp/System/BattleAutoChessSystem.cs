@@ -39,7 +39,22 @@ public class BattleAutoChessSystem : ISystem
         List<Entity> bList = resultComponent.result_dict[round-1][ConstUtil.Team_B];
         if (resultComponent != null)
         {
-            if ((Util.Battle_CheckListAllSpecificStatus(new int[]{ConstUtil.Status_PieceDead,ConstUtil.Status_PieceNoAtk}, aList) && !Util.Battle_CheckListHaveStatus(ConstUtil.None, aList) && !Util.Battle_CheckListHaveStatus(ConstUtil.Status_PieceAtk, aList))
+            if (aList.Count <= 0 && bList.Count <= 0)
+            {
+        Console.WriteLine("BattleAutoChessSystem DoBattle-----------------01");
+
+            }
+            else if (aList.Count > 0 && bList.Count <= 0)
+            {
+        Console.WriteLine("BattleAutoChessSystem DoBattle-----------------02");
+
+            }
+            else if (aList.Count <= 0 && bList.Count > 0)
+            {
+        Console.WriteLine("BattleAutoChessSystem DoBattle-----------------03");
+
+            }
+            else if ((Util.Battle_CheckListAllSpecificStatus(new int[]{ConstUtil.Status_PieceDead,ConstUtil.Status_PieceNoAtk}, aList) && !Util.Battle_CheckListHaveStatus(ConstUtil.None, aList) && !Util.Battle_CheckListHaveStatus(ConstUtil.Status_PieceAtk, aList))
                 && (Util.Battle_CheckListAllSpecificStatus(new int[]{ConstUtil.Status_PieceDead,ConstUtil.Status_PieceNoAtk}, bList) && !Util.Battle_CheckListHaveStatus(ConstUtil.None, bList) && !Util.Battle_CheckListHaveStatus(ConstUtil.Status_PieceAtk, bList)))
             {
                 // 结束：同空，平局

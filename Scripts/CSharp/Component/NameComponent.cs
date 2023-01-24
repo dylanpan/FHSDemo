@@ -12,8 +12,20 @@ public class NameComponent: IComponent
             _name = value;
         }
     }
+    private int _id = ConstUtil.Zero;
+    public int id
+    {
+        get
+        {
+            return _id;
+        }
+        set
+        {
+            _id = value;
+        }
+    }
     public override void LoggerString()
     {
-        Console.WriteLine("---> NameComponent:{name:" + name + "}");
+        Console.WriteLine("---> NameComponent:{name:" + name + ", id:" + id + "}");
     }
 }

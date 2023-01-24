@@ -11,6 +11,7 @@ public class Program
         world.AddSystem(new PlayerSystem());
         world.AddSystem(new BartenderSystem());
         world.AddSystem(new HeroPoolSystem());
+        world.AddSystem(new PiecesPoolSystem());
         world.AddSystem(new HandCardSystem());
         world.AddSystem(new BattleCardSystem());
         world.AddSystem(new BattleAutoChessSystem());

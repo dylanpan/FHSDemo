@@ -1,0 +1,68 @@
+[
+    {
+        "name": "慵懒的野猪人",
+        "id": 4001,
+        "skin_name": "pig_001",
+        "current_level": 1,
+        "pieces_cost": 3,
+        "pieces_recycle": 1,
+        "race": 4,
+        "atk": 0,
+        "hp": 2
+    },
+    {
+        "name": "昏睡的野猪人",
+        "id": 4002,
+        "skin_name": "pig_001",
+        "current_level": 1,
+        "pieces_cost": 3,
+        "pieces_recycle": 1,
+        "race": 4,
+        "atk": 1,
+        "hp": 2
+    },
+    {
+        "name": "奔跑的野猪人",
+        "id": 4003,
+        "skin_name": "pig_001",
+        "current_level": 1,
+        "pieces_cost": 3,
+        "pieces_recycle": 1,
+        "race": 4,
+        "atk": 4,
+        "hp": 1
+    },
+    {
+        "name": "凶残的野猪人",
+        "id": 4004,
+        "skin_name": "pig_001",
+        "current_level": 1,
+        "pieces_cost": 3,
+        "pieces_recycle": 1,
+        "race": 4,
+        "atk": 2,
+        "hp": 2
+    },
+    {
+        "name": "柔弱的野猪人",
+        "id": 4005,
+        "skin_name": "pig_001",
+        "current_level": 1,
+        "pieces_cost": 3,
+        "pieces_recycle": 1,
+        "race": 4,
+        "atk": 1,
+        "hp": 5
+    },
+    {
+        "name": "木乃伊",
+        "id": 3001,
+        "skin_name": "machinery_001",
+        "current_level": 1,
+        "pieces_cost": 3,
+        "pieces_recycle": 1,
+        "race": 3,
+        "atk": 1,
+        "hp": 2
+    }
+]
