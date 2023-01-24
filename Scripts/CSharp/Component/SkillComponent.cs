@@ -1,6 +1,6 @@
 public class SkillComponent: IComponent
 {
-    private int _skill_id = -1;
+    private int _skill_id = ConstUtil.None;
     public int skill_id
     {
         get

@@ -1,6 +1,6 @@
 public class SkinComponent: IComponent
 {
-    private string _skin_name = "";
+    private string _skin_name = ConstUtil.Empty;
     public string skin_name
     {
         get

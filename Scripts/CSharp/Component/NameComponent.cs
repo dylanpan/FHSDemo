@@ -1,6 +1,6 @@
 public class NameComponent: IComponent
 {
-    private string _name = "";
+    private string _name = ConstUtil.Empty;
     public string name
     {
         get

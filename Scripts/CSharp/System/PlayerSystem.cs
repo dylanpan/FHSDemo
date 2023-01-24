@@ -11,7 +11,8 @@ public class PlayerSystem : ISystem
     }
     public void InitWorldPlayerEntity()
     {
-        for (int i = 0; i < 2; i++)
+        // TODO: 新增扩展到 8 个
+        for (int i = 0; i < ConstUtil.Max_PlayerNum; i++)
         {
             World.Instance.AddEntity(CreatePlayerEntity());
         }

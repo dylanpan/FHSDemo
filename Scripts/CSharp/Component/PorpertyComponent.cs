@@ -1,6 +1,6 @@
 public class PorpertyComponent: IComponent
 {
-    private int _atk = 0;
+    private int _atk = ConstUtil.Zero;
     public int atk
     {
         get
@@ -12,7 +12,7 @@ public class PorpertyComponent: IComponent
             _atk = value;
         }
     }
-    private int _hp = 0;
+    private int _hp = ConstUtil.Zero;
     public int hp
     {
         get
@@ -24,7 +24,7 @@ public class PorpertyComponent: IComponent
             _hp = value;
         }
     }
-    private int _race = 0;
+    private int _race = ConstUtil.Zero;
     public int race
     {
         get

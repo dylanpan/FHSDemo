@@ -11,7 +11,7 @@ public class BattleCardSystem : ISystem
         }
         if (entity.GetComponent<PiecesListComponent>() == null)
         {
-            entity.AddComponent(new PiecesListComponent(){max_num = 7, battle_card_id = entity.ID});
+            entity.AddComponent(new PiecesListComponent(){max_num = ConstUtil.Max_BattleCardNum, battle_card_id = entity.ID});
         }
         return entity;
     }
@@ -20,7 +20,7 @@ public class BattleCardSystem : ISystem
         PlayerComponent playerComponent = (PlayerComponent)entity.GetComponent<PlayerComponent>();
         if (playerComponent != null)
         {
-            if (playerComponent.battle_card_id == -1)
+            if (playerComponent.battle_card_id == ConstUtil.None)
             {
                 Entity battleCard = CreateBattleCardEntity();
                 playerComponent.battle_card_id = battleCard.ID;

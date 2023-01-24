@@ -1,6 +1,6 @@
 public class CurrencyComponent: IComponent
 {
-    private int _currency = 0;
+    private int _currency = ConstUtil.Zero;
     public int currency
     {
         get
@@ -12,7 +12,7 @@ public class CurrencyComponent: IComponent
             _currency = value;
         }
     }
-    private int _up_level_cost = 0;
+    private int _up_level_cost = ConstUtil.Zero;
     public int up_level_cost
     {
         get
@@ -24,7 +24,7 @@ public class CurrencyComponent: IComponent
             _up_level_cost = value;
         }
     }
-    private int _refresh_cost = 0;
+    private int _refresh_cost = ConstUtil.Zero;
     public int refresh_cost
     {
         get
@@ -36,7 +36,7 @@ public class CurrencyComponent: IComponent
             _refresh_cost = value;
         }
     }
-    private int _pieces_cost = 0;
+    private int _pieces_cost = ConstUtil.Zero;
     public int pieces_cost
     {
         get
@@ -48,7 +48,7 @@ public class CurrencyComponent: IComponent
             _pieces_cost = value;
         }
     }
-    private int _pieces_recycle = 0;
+    private int _pieces_recycle = ConstUtil.Zero;
     public int pieces_recycle
     {
         get

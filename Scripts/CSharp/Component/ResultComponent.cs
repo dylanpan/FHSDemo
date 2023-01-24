@@ -12,8 +12,8 @@ public class ResultComponent: IComponent
             _result_dict = value;
         }
     }
-    // 0 - 未结束，1 - 平，2 - 赢，3 - 输
-    private int _status = -1;
+    // 0 - 未结束，1 - 平，2 - A赢，3 - B赢
+    private int _status = ConstUtil.None;
     public int status
     {
         get

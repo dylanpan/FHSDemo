@@ -1,6 +1,6 @@
 public class BuffComponent: IComponent
 {
-    private int _buff_id = -1;
+    private int _buff_id = ConstUtil.None;
     public int buff_id
     {
         get

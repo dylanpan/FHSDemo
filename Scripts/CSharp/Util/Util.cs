@@ -34,7 +34,7 @@ public class Util
                 StatusComponent statusComponent = (StatusComponent)copyEntity.GetComponent<StatusComponent>();
                 if (statusComponent != null && isSetStatus)
                 {
-                    statusComponent.status = -1;
+                    statusComponent.status = ConstUtil.None;
                 }
                 break;
             }
@@ -51,7 +51,7 @@ public class Util
         StatusComponent statusComponent = (StatusComponent)copyEntity.GetComponent<StatusComponent>();
         if (statusComponent != null && isSetStatus)
         {
-            statusComponent.status = -1;
+            statusComponent.status = ConstUtil.None;
         }
         return copyEntity;
     }
@@ -74,7 +74,7 @@ public class Util
         {
             Entity entity = list[i];
             StatusComponent statusComponent = (StatusComponent)entity.GetComponent<StatusComponent>();
-            if (statusComponent != null && statusComponent.status == 2)
+            if (statusComponent != null && statusComponent.status == ConstUtil.Status_PieceAtk)
             {
                 atkEntity = entity;
                 findAtkIndex = i;
@@ -91,10 +91,10 @@ public class Util
                 StatusComponent statusComponent = (StatusComponent)entity.GetComponent<StatusComponent>();
                 if (porpertyComponent != null && statusComponent != null)
                 {
-                    if (porpertyComponent.hp > 0 && statusComponent.status != 4)
+                    if (porpertyComponent.hp > 0 && statusComponent.status != ConstUtil.Status_PieceNoAtk)
                     {
                         atkEntity = entity;
-                        statusComponent.status = 2;
+                        statusComponent.status = ConstUtil.Status_PieceAtk;
                         findAtkIndex = i;
                         break;
                     }
@@ -114,7 +114,7 @@ public class Util
             StatusComponent statusComponent = (StatusComponent)entity.GetComponent<StatusComponent>();
             if (porpertyComponent != null && statusComponent != null)
             {
-                if (porpertyComponent.hp > 0 && statusComponent.status != 3)
+                if (porpertyComponent.hp > 0 && statusComponent.status != ConstUtil.Status_PieceDead)
                 {
                     tmpList.Add(entity);
                 }
@@ -182,15 +182,15 @@ public class Util
         {
             if (porpertyComponent.hp <= 0)
             {
-                Util.Battle_SetEntityStatus(entity, 3);
+                Util.Battle_SetEntityStatus(entity, ConstUtil.Status_PieceDead);
             }
             else if (porpertyComponent.atk > 0 && porpertyComponent.hp > 0)
             {
-                Util.Battle_SetEntityStatus(entity, isFinish ? 1 : -1);
+                Util.Battle_SetEntityStatus(entity, isFinish ? ConstUtil.Status_PieceIdle : ConstUtil.None);
             }
             else if (porpertyComponent.atk <= 0)
             {
-                Util.Battle_SetEntityStatus(entity, 4);
+                Util.Battle_SetEntityStatus(entity, ConstUtil.Status_PieceNoAtk);
             }
         }
     }
@@ -203,6 +203,18 @@ public class Util
             statusComponent.status = status;
         }
     }
+
+    public static int Battle_GetEntityStatus(Entity entity)
+    {
+        int status = -1;
+        StatusComponent statusComponent = (StatusComponent)entity.GetComponent<StatusComponent>();
+        if (statusComponent != null)
+        {
+            status = statusComponent.status;
+        }
+        return status;
+    }
+
     public static void Battle_LoggerListPiecesEntity(List<Entity> list)
     {
         foreach (Entity _entity in list)

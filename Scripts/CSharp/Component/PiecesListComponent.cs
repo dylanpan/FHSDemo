@@ -1,6 +1,6 @@
 public class PiecesListComponent: IComponent
 {
-    private int _max_num = -1;
+    private int _max_num = ConstUtil.None;
     public int max_num
     {
         get
@@ -12,7 +12,7 @@ public class PiecesListComponent: IComponent
             _max_num = value;
         }
     }
-    private int _bartender_id = -1;
+    private int _bartender_id = ConstUtil.None;
     public int bartender_id
     {
         get
@@ -24,7 +24,7 @@ public class PiecesListComponent: IComponent
             _bartender_id = value;
         }
     }
-    private int _hand_card_id = -1;
+    private int _hand_card_id = ConstUtil.None;
     public int hand_card_id
     {
         get
@@ -36,7 +36,7 @@ public class PiecesListComponent: IComponent
             _hand_card_id = value;
         }
     }
-    private int _battle_card_id = -1;
+    private int _battle_card_id = ConstUtil.None;
     public int battle_card_id
     {
         get

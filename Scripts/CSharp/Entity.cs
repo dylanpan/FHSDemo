@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public class Entity
 {
-    public int ID = 0;
+    public int ID = ConstUtil.Zero;
     public List<IComponent> components = new List<IComponent>();
 
     public Entity()

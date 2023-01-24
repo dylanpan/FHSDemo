@@ -11,7 +11,7 @@ public class HandCardSystem : ISystem
         }
         if (entity.GetComponent<PiecesListComponent>() == null)
         {
-            entity.AddComponent(new PiecesListComponent(){max_num = 10, hand_card_id = entity.ID});
+            entity.AddComponent(new PiecesListComponent(){max_num = ConstUtil.Max_HandCardNum, hand_card_id = entity.ID});
         }
         return entity;
     }
@@ -20,7 +20,7 @@ public class HandCardSystem : ISystem
         PlayerComponent playerComponent = (PlayerComponent)entity.GetComponent<PlayerComponent>();
         if (playerComponent != null)
         {
-            if (playerComponent.hand_card_id == -1)
+            if (playerComponent.hand_card_id == ConstUtil.None)
             {
                 Entity handCard = CreateHandCardEntity();
                 playerComponent.hand_card_id = handCard.ID;

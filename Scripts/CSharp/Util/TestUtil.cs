@@ -10,6 +10,7 @@ public class TestUtil
         return paramDict;
     }
     // TODO: PiecesPool 中生成棋子,然后从其中进行复制
+    // TODO: HeroPool 中生成英雄,然后从其中进行复制
     public static Entity GetTestPieces(Dictionary<string, string> paramDict)
     {
         Entity pieces = new Entity();
@@ -76,6 +77,52 @@ public class TestUtil
                 int[] piecesIds = {pieces_0.ID,pieces_1.ID,pieces_2.ID};
                 bPiecesListComponent.piecesIds = new List<int>(piecesIds);
             }
+        }
+    }
+
+    public static void AddBartenderComponents(Entity entity)
+    {
+        if (entity.GetComponent<NameComponent>() == null)
+        {
+            entity.AddComponent(new NameComponent(){name = "调酒机器人"});
+        }
+        if (entity.GetComponent<CurrencyComponent>() == null)
+        {
+            entity.AddComponent(new CurrencyComponent(){currency = 3, up_level_cost = 4, refresh_cost = 1});
+        }
+        if (entity.GetComponent<LevelComponent>() == null)
+        {
+            entity.AddComponent(new LevelComponent(){current_level = 1});
+        }
+        if (entity.GetComponent<SkinComponent>() == null)
+        {
+            entity.AddComponent(new SkinComponent(){skin_name = "wine_001"});
+        }
+        if (entity.GetComponent<PiecesListComponent>() == null)
+        {
+            // int[] bartender_piecesIds = {10, 11, 12};
+            // piecesIds = new List<int>(bartender_piecesIds)
+            entity.AddComponent(new PiecesListComponent(){max_num = 3, bartender_id = entity.ID});
+        }
+    }
+
+    public static void AddHeroComponents(Entity entity)
+    {
+        if (entity.GetComponent<NameComponent>() == null)
+        {
+            entity.AddComponent(new NameComponent(){name = "迦拉克隆"});
+        }
+        if (entity.GetComponent<SkinComponent>() == null)
+        {
+            entity.AddComponent(new SkinComponent(){skin_name = "jk_001"});
+        }
+        if (entity.GetComponent<SkillComponent>() == null)
+        {
+            entity.AddComponent(new SkillComponent(){skill_id = 1001});
+        }
+        if (entity.GetComponent<PorpertyComponent>() == null)
+        {
+            entity.AddComponent(new PorpertyComponent(){atk = 0, hp = 40});
         }
     }
 }

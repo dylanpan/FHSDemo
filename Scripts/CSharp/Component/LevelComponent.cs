@@ -1,6 +1,6 @@
 public class LevelComponent: IComponent
 {
-    private int _current_level = 0;
+    private int _current_level = ConstUtil.Zero;
     public int current_level
     {
         get
