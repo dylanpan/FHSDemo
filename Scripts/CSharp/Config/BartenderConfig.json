@@ -1,0 +1,44 @@
+[
+    {
+        "name": "调酒机器人",
+        "id": 1000,
+        "skin_name": "wine_001",
+        "refresh_cost": 1,
+        "up_level_cost": [
+            4,
+            7,
+            8,
+            9,
+            10
+        ],
+        "level_list_num": [
+            3,
+            4,
+            4,
+            4,
+            5,
+            6
+        ]
+    },
+    {
+        "name": "地精",
+        "id": 2000,
+        "skin_name": "goblin_001",
+        "refresh_cost": 1,
+        "up_level_cost": [
+            4,
+            7,
+            8,
+            9,
+            10
+        ],
+        "level_list_num": [
+            3,
+            4,
+            4,
+            4,
+            5,
+            6
+        ]
+    }
+]

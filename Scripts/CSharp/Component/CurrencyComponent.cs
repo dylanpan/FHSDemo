@@ -36,32 +36,32 @@ public class CurrencyComponent: IComponent
             _refresh_cost = value;
         }
     }
-    private int _pieces_cost = ConstUtil.Zero;
-    public int pieces_cost
+    private int _piece_cost = ConstUtil.Zero;
+    public int piece_cost
     {
         get
         {
-            return _pieces_cost;
+            return _piece_cost;
         }
         set
         {
-            _pieces_cost = value;
+            _piece_cost = value;
         }
     }
-    private int _pieces_recycle = ConstUtil.Zero;
-    public int pieces_recycle
+    private int _piece_recycle = ConstUtil.Zero;
+    public int piece_recycle
     {
         get
         {
-            return _pieces_recycle;
+            return _piece_recycle;
         }
         set
         {
-            _pieces_recycle = value;
+            _piece_recycle = value;
         }
     }
     public override void LoggerString()
     {
-        Console.WriteLine("---> CurrencyComponent:{currency:" + currency + ", up_level_cost:" + up_level_cost + ", refresh_cost:" + refresh_cost + ", pieces_cost:" + pieces_cost + ", pieces_recycle:" + pieces_recycle + "}");
+        Console.WriteLine("---> CurrencyComponent:{currency:" + currency + ", up_level_cost:" + up_level_cost + ", refresh_cost:" + refresh_cost + ", piece_cost:" + piece_cost + ", piece_recycle:" + piece_recycle + "}");
     }
 }

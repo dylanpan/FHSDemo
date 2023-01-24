@@ -58,7 +58,7 @@ public class World
         }
         foreach (Entity entity in entityDic.Values)
         {
-            Console.WriteLine("------");
+            Console.WriteLine("\n------>>>Entity ID: " + entity.ID);
             foreach (IComponent component in entity.components)
             {
                 component.LoggerString();

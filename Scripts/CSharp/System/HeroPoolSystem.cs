@@ -4,21 +4,21 @@ public class HeroPoolSystem : ISystem
 {
     public void GenerateHeroEntity(Dictionary<string, string> paramDict)
     {
-        Entity hero = new Entity();
+        Entity entity = new Entity();
         int _id = ConstUtil.Zero;
         int.TryParse(paramDict["id"], out _id);
-        hero.AddComponent(new NameComponent(){name = paramDict["name"], id = _id});
-        hero.AddComponent(new SkinComponent(){skin_name = paramDict["skin_name"]});
+        entity.AddComponent(new NameComponent(){name = paramDict["name"], id = _id});
+        entity.AddComponent(new SkinComponent(){skin_name = paramDict["skin_name"]});
         int _skill_id = ConstUtil.Zero;
         int.TryParse(paramDict["skill_id"], out _skill_id);
-        hero.AddComponent(new SkillComponent(){skill_id = _skill_id});
+        entity.AddComponent(new SkillComponent(){skill_id = _skill_id});
         int _atk = ConstUtil.Zero;
         int.TryParse(paramDict["atk"], out _atk);
         int _hp = ConstUtil.Zero;
         int.TryParse(paramDict["hp"], out _hp);
-        hero.AddComponent(new PorpertyComponent(){atk = _atk, hp = _hp});
-        hero.AddComponent(new StatusComponent());
-        World.Instance.AddEntity(hero);
+        entity.AddComponent(new PorpertyComponent(){atk = _atk, hp = _hp});
+        entity.AddComponent(new StatusComponent());
+        World.Instance.AddEntity(entity);
     }
     public void GeneratePoolFormConfig()
     {
@@ -38,6 +38,6 @@ public class HeroPoolSystem : ISystem
     {
         Console.WriteLine("HeroPoolSystem Update");
         GeneratePoolFormConfig();
-        TestUtil.CheckAddHeroEntity();
+        TestUtil.SetHero();
     }
 }

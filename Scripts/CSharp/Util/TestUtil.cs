@@ -1,7 +1,6 @@
 
 public class TestUtil
 {
-    // TODO: HeroPool 中生成英雄,然后从其中进行复制
     public static int GetTestPieces(int piece_id)
     {
         int find_id = 0;
@@ -66,7 +65,7 @@ public class TestUtil
         return heroEntity;
     }
 
-    public static void CheckAddHeroEntity()
+    public static void SetHero()
     {
         foreach (Entity entity in World.Instance.entityDic.Values)
         {
@@ -82,27 +81,41 @@ public class TestUtil
         }
     }
 
-    public static void AddBartenderComponents(Entity entity)
+    public static Entity GetTestBartender()
     {
-        if (entity.GetComponent<NameComponent>() == null)
+        Entity? bartenderEntity = null;
+        foreach (Entity entity in World.Instance.entityDic.Values)
         {
-            entity.AddComponent(new NameComponent(){name = "调酒机器人"});
+                NameComponent nameComponent1 = (NameComponent)entity.GetComponent<NameComponent>();
+                nameComponent1.LoggerString();
+            if (Util.CheckIsBartender(entity))
+            {
+                NameComponent nameComponent = (NameComponent)entity.GetComponent<NameComponent>();
+                StatusComponent statusComponent = (StatusComponent)entity.GetComponent<StatusComponent>();
+                if (nameComponent != null && statusComponent != null && statusComponent.status != ConstUtil.Status_BartenderPick)
+                {
+                    statusComponent.status = ConstUtil.Status_BartenderPick;
+                    bartenderEntity = entity;
+                    break;
+                }
+            }
         }
-        if (entity.GetComponent<CurrencyComponent>() == null)
+        return bartenderEntity;
+    }
+    public static void SetBartender()
+    {
+        for (int i = 0; i < World.Instance.entityDic.Values.Count; i++)
         {
-            entity.AddComponent(new CurrencyComponent(){currency = 3, up_level_cost = 4, refresh_cost = 1});
-        }
-        if (entity.GetComponent<LevelComponent>() == null)
-        {
-            entity.AddComponent(new LevelComponent(){current_level = 1});
-        }
-        if (entity.GetComponent<SkinComponent>() == null)
-        {
-            entity.AddComponent(new SkinComponent(){skin_name = "wine_001"});
-        }
-        if (entity.GetComponent<PiecesListComponent>() == null)
-        {
-            entity.AddComponent(new PiecesListComponent(){max_num = 3, bartender_id = entity.ID});
+            Entity entity = World.Instance.entityDic.Values.ElementAt(i);
+            PlayerComponent playerComponent = (PlayerComponent)entity.GetComponent<PlayerComponent>();
+            if (playerComponent != null)
+            {
+                if (playerComponent.bartender_id == ConstUtil.None)
+                {
+                    Entity bartender = TestUtil.GetTestBartender();
+                    playerComponent.bartender_id = bartender.ID;
+                }
+            }
         }
     }
 }

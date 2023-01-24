@@ -5,14 +5,8 @@ public class HandCardSystem : ISystem
     public Entity CreateHandCardEntity()
     {
         Entity entity = new Entity();
-        if (entity.GetComponent<NameComponent>() == null)
-        {
-            entity.AddComponent(new NameComponent(){name = "HandCard"});
-        }
-        if (entity.GetComponent<PiecesListComponent>() == null)
-        {
-            entity.AddComponent(new PiecesListComponent(){max_num = ConstUtil.Max_HandCardNum, hand_card_id = entity.ID});
-        }
+        entity.AddComponent(new NameComponent(){name = "HandCard"});
+        entity.AddComponent(new PiecesListComponent(){max_num = ConstUtil.Max_HandCardNum, hand_card_id = entity.ID});
         return entity;
     }
     public void CheckAddHandCardEntity(ref Entity entity)

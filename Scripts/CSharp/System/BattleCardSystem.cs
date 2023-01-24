@@ -5,14 +5,8 @@ public class BattleCardSystem : ISystem
     public Entity CreateBattleCardEntity()
     {
         Entity entity = new Entity();
-        if (entity.GetComponent<NameComponent>() == null)
-        {
-            entity.AddComponent(new NameComponent(){name = "BattleCard"});
-        }
-        if (entity.GetComponent<PiecesListComponent>() == null)
-        {
-            entity.AddComponent(new PiecesListComponent(){max_num = ConstUtil.Max_BattleCardNum, battle_card_id = entity.ID});
-        }
+        entity.AddComponent(new NameComponent(){name = "BattleCard"});
+        entity.AddComponent(new PiecesListComponent(){max_num = ConstUtil.Max_BattleCardNum, battle_card_id = entity.ID});
         return entity;
     }
     public void CheckAddBattleCardEntity(ref Entity entity)

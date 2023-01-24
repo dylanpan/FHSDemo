@@ -77,6 +77,9 @@ public class Util
         paramDict["skill_id"] = "0";
         paramDict["skin_name"] = "";
         paramDict["current_level"] = "0";
+        paramDict["refresh_cost"] = "0";
+        paramDict["up_level_cost"] = "0";
+        paramDict["level_list_num"] = "0";
         paramDict["piece_cost"] = "0";
         paramDict["piece_recycle"] = "0";
         paramDict["race"] = "0";
@@ -126,6 +129,26 @@ public class Util
             isHero = true;
         }
         return isHero;
+    }
+    public static bool CheckIsBartender(Entity entity)
+    {
+        NameComponent nameComponent = (NameComponent)entity.GetComponent<NameComponent>();
+        SkinComponent skinComponent = (SkinComponent)entity.GetComponent<SkinComponent>();
+        LevelComponent levelComponent = (LevelComponent)entity.GetComponent<LevelComponent>();
+        CurrencyComponent currencyComponent = (CurrencyComponent)entity.GetComponent<CurrencyComponent>();
+        PiecesListComponent piecesListComponent = (PiecesListComponent)entity.GetComponent<PiecesListComponent>();
+        StatusComponent statusComponent = (StatusComponent)entity.GetComponent<StatusComponent>();
+        bool isBartender = false;
+        if (nameComponent != null 
+            && skinComponent != null 
+            && levelComponent != null 
+            && currencyComponent != null 
+            && piecesListComponent != null
+            && statusComponent != null)
+        {
+            isBartender = true;
+        }
+        return isBartender;
     }
     #endregion
 

@@ -14,6 +14,8 @@ public class ConstUtil
     public const int Status_HeroDead = 6;
     public const int Status_HeroPick = 7;
 
+    public const int Status_BartenderPick = 8;
+
     public const int Team_A = 0;
     public const int Team_B = 1;
 
