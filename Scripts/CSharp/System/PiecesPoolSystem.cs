@@ -2,33 +2,33 @@ using System;
 
 public class PiecesPoolSystem : ISystem
 {
-    public void GeneriatePieces(Dictionary<string, string> paramDict)
+    public void GeneratePieceEntity(Dictionary<string, string> paramDict)
     {
-        Entity pieces = new Entity();
+        Entity piece = new Entity();
         int _id = ConstUtil.Zero;
         int.TryParse(paramDict["id"], out _id);
-        pieces.AddComponent(new NameComponent(){name = paramDict["name"], id = _id});
-        pieces.AddComponent(new SkinComponent(){skin_name = paramDict["skin_name"]});
+        piece.AddComponent(new NameComponent(){name = paramDict["name"], id = _id});
+        piece.AddComponent(new SkinComponent(){skin_name = paramDict["skin_name"]});
         int _current_level = ConstUtil.Zero;
         int.TryParse(paramDict["current_level"], out _current_level);
-        pieces.AddComponent(new LevelComponent(){current_level = _current_level});
-        int _pieces_cost = ConstUtil.Zero;
-        int.TryParse(paramDict["pieces_cost"], out _pieces_cost);
-        int _pieces_recycle = ConstUtil.Zero;
-        int.TryParse(paramDict["pieces_recycle"], out _pieces_recycle);
-        pieces.AddComponent(new CurrencyComponent(){pieces_cost = _pieces_cost, pieces_recycle = _pieces_recycle});
+        piece.AddComponent(new LevelComponent(){current_level = _current_level});
+        int _piece_cost = ConstUtil.Zero;
+        int.TryParse(paramDict["piece_cost"], out _piece_cost);
+        int _piece_recycle = ConstUtil.Zero;
+        int.TryParse(paramDict["piece_recycle"], out _piece_recycle);
+        piece.AddComponent(new CurrencyComponent(){piece_cost = _piece_cost, piece_recycle = _piece_recycle});
         int _atk = ConstUtil.Zero;
         int.TryParse(paramDict["atk"], out _atk);
         int _hp = ConstUtil.Zero;
         int.TryParse(paramDict["hp"], out _hp);
         int _race = ConstUtil.Zero;
         int.TryParse(paramDict["race"], out _race);
-        pieces.AddComponent(new PorpertyComponent(){atk = _atk, hp = _hp, race = _race});
-        pieces.AddComponent(new BuffComponent());
-        pieces.AddComponent(new StatusComponent());
-        World.Instance.AddEntity(pieces);
+        piece.AddComponent(new PorpertyComponent(){atk = _atk, hp = _hp, race = _race});
+        piece.AddComponent(new BuffComponent());
+        piece.AddComponent(new StatusComponent());
+        World.Instance.AddEntity(piece);
     }
-    public void GeneriatePoolFormConfig()
+    public void GeneratePoolFormConfig()
     {
         List<Dictionary<string, string>> piecesConfigList = ConfigUtil.GetPiecesConfig();
         for (int i = 0; i < piecesConfigList.Count; i++)
@@ -39,13 +39,13 @@ public class PiecesPoolSystem : ISystem
             {
                 paramDict[config.Key] = config.Value;
             }
-            GeneriatePieces(paramDict);
+            GeneratePieceEntity(paramDict);
         }
     }
 
     public override void Update()
     {
         Console.WriteLine("PiecesPoolSystem Update");
-        GeneriatePoolFormConfig();
+        GeneratePoolFormConfig();
     }
 }

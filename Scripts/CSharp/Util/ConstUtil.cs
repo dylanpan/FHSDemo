@@ -9,6 +9,10 @@ public class ConstUtil
     public const int Status_PieceAtk = 2;
     public const int Status_PieceDead = 3;
     public const int Status_PieceNoAtk = 4;
+    public const int Status_PiecePick = 5;
+
+    public const int Status_HeroDead = 6;
+    public const int Status_HeroPick = 7;
 
     public const int Team_A = 0;
     public const int Team_B = 1;

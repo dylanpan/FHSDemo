@@ -46,6 +46,42 @@ public class TestUtil
         }
     }
 
+    public static Entity GetTestHero()
+    {
+        Entity? heroEntity = null;
+        foreach (Entity entity in World.Instance.entityDic.Values)
+        {
+            if (Util.CheckIsHero(entity))
+            {
+                NameComponent nameComponent = (NameComponent)entity.GetComponent<NameComponent>();
+                StatusComponent statusComponent = (StatusComponent)entity.GetComponent<StatusComponent>();
+                if (nameComponent != null && statusComponent != null && statusComponent.status != ConstUtil.Status_HeroPick)
+                {
+                    statusComponent.status = ConstUtil.Status_HeroPick;
+                    heroEntity = entity;
+                    break;
+                }
+            }
+        }
+        return heroEntity;
+    }
+
+    public static void CheckAddHeroEntity()
+    {
+        foreach (Entity entity in World.Instance.entityDic.Values)
+        {
+            PlayerComponent playerComponent = (PlayerComponent)entity.GetComponent<PlayerComponent>();
+            if (playerComponent != null)
+            {
+                if (playerComponent.hero_id == ConstUtil.None)
+                {
+                    Entity hero = TestUtil.GetTestHero();
+                    playerComponent.hero_id = hero.ID;
+                }
+            }
+        }
+    }
+
     public static void AddBartenderComponents(Entity entity)
     {
         if (entity.GetComponent<NameComponent>() == null)
@@ -67,26 +103,6 @@ public class TestUtil
         if (entity.GetComponent<PiecesListComponent>() == null)
         {
             entity.AddComponent(new PiecesListComponent(){max_num = 3, bartender_id = entity.ID});
-        }
-    }
-
-    public static void AddHeroComponents(Entity entity)
-    {
-        if (entity.GetComponent<NameComponent>() == null)
-        {
-            entity.AddComponent(new NameComponent(){name = "迦拉克隆"});
-        }
-        if (entity.GetComponent<SkinComponent>() == null)
-        {
-            entity.AddComponent(new SkinComponent(){skin_name = "jk_001"});
-        }
-        if (entity.GetComponent<SkillComponent>() == null)
-        {
-            entity.AddComponent(new SkillComponent(){skill_id = 1001});
-        }
-        if (entity.GetComponent<PorpertyComponent>() == null)
-        {
-            entity.AddComponent(new PorpertyComponent(){atk = 0, hp = 40});
         }
     }
 }

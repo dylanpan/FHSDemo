@@ -74,10 +74,11 @@ public class Util
         Dictionary<string, string> paramDict = new Dictionary<string, string>();
         paramDict["name"] = "";
         paramDict["id"] = "0";
+        paramDict["skill_id"] = "0";
         paramDict["skin_name"] = "";
         paramDict["current_level"] = "0";
-        paramDict["pieces_cost"] = "0";
-        paramDict["pieces_recycle"] = "0";
+        paramDict["piece_cost"] = "0";
+        paramDict["piece_recycle"] = "0";
         paramDict["race"] = "0";
         paramDict["atk"] = "0";
         paramDict["hp"] = "0";
@@ -107,6 +108,24 @@ public class Util
             isPiece = true;
         }
         return isPiece;
+    }
+    public static bool CheckIsHero(Entity entity)
+    {
+        NameComponent nameComponent = (NameComponent)entity.GetComponent<NameComponent>();
+        SkinComponent skinComponent = (SkinComponent)entity.GetComponent<SkinComponent>();
+        SkillComponent skillComponent = (SkillComponent)entity.GetComponent<SkillComponent>();
+        PorpertyComponent porpertyComponent = (PorpertyComponent)entity.GetComponent<PorpertyComponent>();
+        StatusComponent statusComponent = (StatusComponent)entity.GetComponent<StatusComponent>();
+        bool isHero = false;
+        if (nameComponent != null 
+            && skinComponent != null 
+            && skillComponent != null 
+            && porpertyComponent != null
+            && statusComponent != null)
+        {
+            isHero = true;
+        }
+        return isHero;
     }
     #endregion
 
