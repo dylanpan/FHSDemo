@@ -1,5 +1,6 @@
 using System;
-
+using System.Collections.Generic;
+using System.Linq;
 using Chess.Base;
 using Chess.Config;
 using Chess.Component;
@@ -25,10 +26,17 @@ namespace Chess.System
         public void GeneratePoolFormConfig()
         {
             List<HeroesConfig> configDataList = ConfigUtil.GetConfigData<HeroesConfig>(ConstUtil.JsonFile_HeroesConfig);
-            for (int i = 0; i < configDataList.Count; i++)
+            if (configDataList.Count > 0)
             {
-                HeroesConfig heroesConfig = configDataList[i];
-                GenerateHeroEntity(heroesConfig);
+                for (int i = 0; i < configDataList.Count; i++)
+                {
+                    HeroesConfig heroesConfig = configDataList[i];
+                    GenerateHeroEntity(heroesConfig);
+                }
+            }
+            else
+            {
+                Console.WriteLine("HeroPoolSystem get empty config");
             }
         }
         public override void Update()

@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Chess.Base;
 using Chess.Component;
 
@@ -71,8 +74,10 @@ namespace Chess.Util
 
         public static void SetHero()
         {
-            foreach (Entity entity in World.Instance.entityDic.Values)
+            int[] keyList = World.Instance.entityDic.Keys.ToArray();
+            for (int i = 0; i < keyList.Length; i++)
             {
+                Entity entity = World.Instance.entityDic[keyList[i]];
                 PlayerComponent playerComponent = (PlayerComponent)entity.GetComponent<PlayerComponent>();
                 if (playerComponent != null)
                 {
@@ -90,7 +95,6 @@ namespace Chess.Util
             Entity? bartenderEntity = null;
             foreach (Entity entity in World.Instance.entityDic.Values)
             {
-                    NameComponent nameComponent1 = (NameComponent)entity.GetComponent<NameComponent>();
                 if (CommonUtil.CheckIsBartender(entity))
                 {
                     NameComponent nameComponent = (NameComponent)entity.GetComponent<NameComponent>();
@@ -107,9 +111,10 @@ namespace Chess.Util
         }
         public static void SetBartender()
         {
-            for (int i = 0; i < World.Instance.entityDic.Values.Count; i++)
+            int[] keyList = World.Instance.entityDic.Keys.ToArray();
+            for (int i = 0; i < keyList.Length; i++)
             {
-                Entity entity = World.Instance.entityDic.Values.ElementAt(i);
+                Entity entity = World.Instance.entityDic[keyList[i]];
                 PlayerComponent playerComponent = (PlayerComponent)entity.GetComponent<PlayerComponent>();
                 if (playerComponent != null)
                 {

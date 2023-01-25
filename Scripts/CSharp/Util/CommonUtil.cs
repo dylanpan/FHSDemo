@@ -28,23 +28,20 @@ namespace Chess.Util
         public static Entity CopyEntity(int id, bool isSetStatus = true)
         {
             Entity copyEntity = new Entity();
-            foreach (Entity entity in World.Instance.entityDic.Values)
+            if (World.Instance.entityDic.ContainsKey(id))
             {
-                if (id == entity.ID)
+                Entity entity = World.Instance.entityDic[id];
+                foreach (IComponent component in entity.components)
                 {
-                    foreach (IComponent component in entity.components)
+                    copyEntity.AddComponent((IComponent)CommonUtil.Clone(component));
+                }
+                if (isSetStatus)
+                {
+                    StatusComponent statusComponent = (StatusComponent)copyEntity.GetComponent<StatusComponent>();
+                    if (statusComponent != null)
                     {
-                        copyEntity.AddComponent((IComponent)CommonUtil.Clone(component));
+                        statusComponent.status = ConstUtil.None;
                     }
-                    if (isSetStatus)
-                    {
-                        StatusComponent statusComponent = (StatusComponent)copyEntity.GetComponent<StatusComponent>();
-                        if (statusComponent != null)
-                        {
-                            statusComponent.status = ConstUtil.None;
-                        }
-                    }
-                    break;
                 }
             }
             return copyEntity;

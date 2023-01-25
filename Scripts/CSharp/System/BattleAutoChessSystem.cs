@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Chess.Base;
 using Chess.Config;
 using Chess.Component;
@@ -173,9 +175,8 @@ namespace Chess.System
             Console.WriteLine("BattleAutoChessSystem Update");
             
             List<Entity> battleEntitys = new List<Entity>();
-            for (int i = 0; i < World.Instance.entityDic.Values.Count; i++)
+            foreach (Entity entity in World.Instance.entityDic.Values)
             {
-                Entity entity = World.Instance.entityDic.Values.ElementAt(i);
                 PiecesListComponent piecesListComponent = (PiecesListComponent)entity.GetComponent<PiecesListComponent>();
                 if (piecesListComponent != null && piecesListComponent.battle_card_id != ConstUtil.None)
                 {

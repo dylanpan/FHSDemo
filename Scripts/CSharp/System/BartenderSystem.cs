@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Chess.Base;
 using Chess.Config;
 using Chess.Component;
@@ -28,10 +30,17 @@ namespace Chess.System
         public void GeneratePoolFormConfig()
         {
             List<BartenderConfig> configDataList = ConfigUtil.GetConfigData<BartenderConfig>(ConstUtil.JsonFile_BartenderConfig);
-            for (int i = 0; i < configDataList.Count; i++)
+            if (configDataList.Count > 0)
             {
-                BartenderConfig bartenderConfig = configDataList[i];
-                GrenerateBartenderEntity(bartenderConfig);
+                for (int i = 0; i < configDataList.Count; i++)
+                {
+                    BartenderConfig bartenderConfig = configDataList[i];
+                    GrenerateBartenderEntity(bartenderConfig);
+                }
+            }
+            else
+            {
+                Console.WriteLine("BartenderSystem get empty config");
             }
         }
         public override void Update()
