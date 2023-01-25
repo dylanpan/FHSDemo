@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -25,7 +23,7 @@ namespace Chess.Util
                     for (int i = 0; i < configArray.Count; i++)
                     {
                         string config = configArray[i].ToString();
-                        T? configData = JsonConvert.DeserializeObject<T>(config);
+                        T configData = JsonConvert.DeserializeObject<T>(config);
                         if (configData != null)
                         {
                             configList.Add(configData);
