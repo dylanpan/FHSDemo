@@ -6,7 +6,6 @@ using Newtonsoft.Json.Linq;
 
 public class ConfigUtil
 {
-    // TODO: 反序列化对应的类
     // dotnet add package Newtonsoft.Json --version 13.0.2
     public static List<T> GetConfigData<T>(string fileName)
     {

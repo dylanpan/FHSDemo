@@ -87,7 +87,6 @@ public class TestUtil
         foreach (Entity entity in World.Instance.entityDic.Values)
         {
                 NameComponent nameComponent1 = (NameComponent)entity.GetComponent<NameComponent>();
-                nameComponent1.LoggerString();
             if (Util.CheckIsBartender(entity))
             {
                 NameComponent nameComponent = (NameComponent)entity.GetComponent<NameComponent>();

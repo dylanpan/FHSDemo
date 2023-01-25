@@ -48,7 +48,7 @@ public class Entity
         }
         return isHave;
     }
-    public IComponent? GetComponent<T>()
+    public IComponent GetComponent<T>()
     {
         int index = HaveComponent<T>();
         if (index >= 0)

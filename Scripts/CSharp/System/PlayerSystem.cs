@@ -5,7 +5,7 @@ public class PlayerSystem : ISystem
     public Entity CreatePlayerEntity()
     {
         Entity player = new Entity();
-        player.AddComponent(new NameComponent(){name = "Player" + player.ID});
+        player.AddComponent(new NameComponent(){name = "Player_" + player.ID});
         player.AddComponent(new PlayerComponent());
         return player;
     }
