@@ -28,4 +28,7 @@ public class ConstUtil
     public const int Max_HandCardNum = 10;
     public const int Max_PlayerNum = 2;
 
+    public const string JsonFile_PiecesConfig = "Config/PiecesConfig.json";
+    public const string JsonFile_HeroesConfig = "Config/HeroesConfig.json";
+    public const string JsonFile_BartenderConfig = "Config/BartenderConfig.json";
 }
