@@ -1,4 +1,6 @@
 ﻿using System;
+using Chess.Base;
+using Chess.System;
 
 public class Program
 {

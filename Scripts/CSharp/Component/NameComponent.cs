@@ -1,31 +1,37 @@
-public class NameComponent: IComponent
+using Chess.Base;
+using Chess.Util;
+
+namespace Chess.Component
 {
-    private string _name = ConstUtil.Empty;
-    public string name
+    public class NameComponent: IComponent
     {
-        get
+        private string _name = ConstUtil.Empty;
+        public string name
         {
-            return _name;
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+            }
         }
-        set
+        private int _id = ConstUtil.Zero;
+        public int id
         {
-            _name = value;
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                _id = value;
+            }
         }
-    }
-    private int _id = ConstUtil.Zero;
-    public int id
-    {
-        get
+        public override void LoggerString()
         {
-            return _id;
+            Console.WriteLine("---> NameComponent:{name:" + name + ", id:" + id + "}");
         }
-        set
-        {
-            _id = value;
-        }
-    }
-    public override void LoggerString()
-    {
-        Console.WriteLine("---> NameComponent:{name:" + name + ", id:" + id + "}");
     }
 }

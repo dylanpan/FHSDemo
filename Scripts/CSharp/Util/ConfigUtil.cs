@@ -4,30 +4,33 @@ using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-public class ConfigUtil
+namespace Chess.Util
 {
-    // dotnet add package Newtonsoft.Json --version 13.0.2
-    public static List<T> GetConfigData<T>(string fileName)
+    public class ConfigUtil
     {
-        List<T> configList = new List<T>();
-        using FileStream openStream = File.OpenRead(fileName);
-
-        using (StreamReader file = File.OpenText(fileName))
+        // dotnet add package Newtonsoft.Json --version 13.0.2
+        public static List<T> GetConfigData<T>(string fileName)
         {
-            using (JsonTextReader reader = new JsonTextReader(file))
+            List<T> configList = new List<T>();
+            using FileStream openStream = File.OpenRead(fileName);
+
+            using (StreamReader file = File.OpenText(fileName))
             {
-                JArray configArray = (JArray)JToken.ReadFrom(reader);
-                for (int i = 0; i < configArray.Count; i++)
+                using (JsonTextReader reader = new JsonTextReader(file))
                 {
-                    string config = configArray[i].ToString();
-                    T? configData = JsonConvert.DeserializeObject<T>(config);
-                    if (configData != null)
+                    JArray configArray = (JArray)JToken.ReadFrom(reader);
+                    for (int i = 0; i < configArray.Count; i++)
                     {
-                        configList.Add(configData);
+                        string config = configArray[i].ToString();
+                        T? configData = JsonConvert.DeserializeObject<T>(config);
+                        if (configData != null)
+                        {
+                            configList.Add(configData);
+                        }
                     }
                 }
             }
+            return configList;
         }
-        return configList;
     }
 }

@@ -1,24 +1,30 @@
-public class StatusComponent: IComponent
+using Chess.Base;
+using Chess.Util;
+
+namespace Chess.Component
 {
-    // 通常: -1 - 无状态；
-    // 棋子酒馆: 0 - 冻结；5 - 被选择中
-    // 棋子战斗: 1 - 待机；2 - 攻击；3 - 死亡；4 - 无法攻击
-    // 英雄: 6 - 被选择中；7 - 死亡
-    private int _status = ConstUtil.None;
-    public int status
+    public class StatusComponent: IComponent
     {
-        get
+        // 通常: -1 - 无状态；
+        // 棋子酒馆: 0 - 冻结；5 - 被选择中
+        // 棋子战斗: 1 - 待机；2 - 攻击；3 - 死亡；4 - 无法攻击
+        // 英雄: 6 - 被选择中；7 - 死亡
+        private int _status = ConstUtil.None;
+        public int status
         {
-            return _status;
+            get
+            {
+                return _status;
+            }
+            set
+            {
+                _status = value;
+            }
         }
-        set
+        
+        public override void LoggerString()
         {
-            _status = value;
+            Console.WriteLine("---> StatusComponent:{status:" + status + "}");
         }
-    }
-    
-    public override void LoggerString()
-    {
-        Console.WriteLine("---> StatusComponent:{status:" + status + "}");
     }
 }

@@ -1,55 +1,61 @@
-public class PlayerComponent: IComponent
+using Chess.Base;
+using Chess.Util;
+
+namespace Chess.Component
 {
-    private int _hero_id = ConstUtil.None;
-    public int hero_id
+    public class PlayerComponent: IComponent
     {
-        get
+        private int _hero_id = ConstUtil.None;
+        public int hero_id
         {
-            return _hero_id;
+            get
+            {
+                return _hero_id;
+            }
+            set
+            {
+                _hero_id = value;
+            }
         }
-        set
+        private int _bartender_id = ConstUtil.None;
+        public int bartender_id
         {
-            _hero_id = value;
+            get
+            {
+                return _bartender_id;
+            }
+            set
+            {
+                _bartender_id = value;
+            }
         }
-    }
-    private int _bartender_id = ConstUtil.None;
-    public int bartender_id
-    {
-        get
+        private int _hand_card_id = ConstUtil.None;
+        public int hand_card_id
         {
-            return _bartender_id;
+            get
+            {
+                return _hand_card_id;
+            }
+            set
+            {
+                _hand_card_id = value;
+            }
         }
-        set
+        private int _battle_card_id = ConstUtil.None;
+        public int battle_card_id
         {
-            _bartender_id = value;
+            get
+            {
+                return _battle_card_id;
+            }
+            set
+            {
+                _battle_card_id = value;
+            }
         }
-    }
-    private int _hand_card_id = ConstUtil.None;
-    public int hand_card_id
-    {
-        get
+        public override void LoggerString()
         {
-            return _hand_card_id;
+            Console.WriteLine("---> PlayerComponent:{hero_id:" + hero_id + ", bartender_id: " + bartender_id + ", hand_card_id: " + hand_card_id + ", battle_card_id: " + battle_card_id + "}");
         }
-        set
-        {
-            _hand_card_id = value;
-        }
-    }
-    private int _battle_card_id = ConstUtil.None;
-    public int battle_card_id
-    {
-        get
-        {
-            return _battle_card_id;
-        }
-        set
-        {
-            _battle_card_id = value;
-        }
-    }
-    public override void LoggerString()
-    {
-        Console.WriteLine("---> PlayerComponent:{hero_id:" + hero_id + ", bartender_id: " + bartender_id + ", hand_card_id: " + hand_card_id + ", battle_card_id: " + battle_card_id + "}");
     }
 }

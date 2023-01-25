@@ -1,43 +1,49 @@
-public class PorpertyComponent: IComponent
+using Chess.Base;
+using Chess.Util;
+
+namespace Chess.Component
 {
-    private int _atk = ConstUtil.Zero;
-    public int atk
+    public class PorpertyComponent: IComponent
     {
-        get
+        private int _atk = ConstUtil.Zero;
+        public int atk
         {
-            return _atk;
+            get
+            {
+                return _atk;
+            }
+            set
+            {
+                _atk = value;
+            }
         }
-        set
+        private int _hp = ConstUtil.Zero;
+        public int hp
         {
-            _atk = value;
+            get
+            {
+                return _hp;
+            }
+            set
+            {
+                _hp = value;
+            }
         }
-    }
-    private int _hp = ConstUtil.Zero;
-    public int hp
-    {
-        get
+        private int _race = ConstUtil.Zero;
+        public int race
         {
-            return _hp;
+            get
+            {
+                return _race;
+            }
+            set
+            {
+                _race = value;
+            }
         }
-        set
+        public override void LoggerString()
         {
-            _hp = value;
+            Console.WriteLine("---> PorpertyComponent[" + this.GetHashCode() + "]:{atk:" + atk + ", hp: " + hp + ", race: " + race + "}");
         }
-    }
-    private int _race = ConstUtil.Zero;
-    public int race
-    {
-        get
-        {
-            return _race;
-        }
-        set
-        {
-            _race = value;
-        }
-    }
-    public override void LoggerString()
-    {
-        Console.WriteLine("---> PorpertyComponent[" + this.GetHashCode() + "]:{atk:" + atk + ", hp: " + hp + ", race: " + race + "}");
     }
 }

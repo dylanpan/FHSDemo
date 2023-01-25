@@ -1,15 +1,21 @@
 using System;
+using Chess.Base;
+using Chess.Config;
+using Chess.Component;
 
-public class BattleReplaySystem : ISystem
+namespace Chess.System
 {
-    public override void Update()
+    public class BattleReplaySystem : ISystem
     {
-        Console.WriteLine("BattleReplaySystem Update");
-        
-        List<Entity> battleEntitys = new List<Entity>();
-        for (int i = 0; i < World.Instance.entityDic.Values.Count; i++)
+        public override void Update()
         {
-            Entity entity = World.Instance.entityDic.Values.ElementAt(i);
+            Console.WriteLine("BattleReplaySystem Update");
+            
+            List<Entity> battleEntitys = new List<Entity>();
+            for (int i = 0; i < World.Instance.entityDic.Values.Count; i++)
+            {
+                Entity entity = World.Instance.entityDic.Values.ElementAt(i);
+            }
         }
     }
 }

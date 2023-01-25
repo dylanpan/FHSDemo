@@ -1,19 +1,25 @@
-public class BuffComponent: IComponent
+using Chess.Base;
+using Chess.Util;
+
+namespace Chess.Component
 {
-    private int _buff_id = ConstUtil.None;
-    public int buff_id
+    public class BuffComponent: IComponent
     {
-        get
+        private int _buff_id = ConstUtil.None;
+        public int buff_id
         {
-            return _buff_id;
+            get
+            {
+                return _buff_id;
+            }
+            set
+            {
+                _buff_id = value;
+            }
         }
-        set
+        public override void LoggerString()
         {
-            _buff_id = value;
+            Console.WriteLine("---> BuffComponent:{buff_id:" + buff_id + "}");
         }
-    }
-    public override void LoggerString()
-    {
-        Console.WriteLine("---> BuffComponent:{buff_id:" + buff_id + "}");
     }
 }

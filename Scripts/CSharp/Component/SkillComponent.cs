@@ -1,19 +1,25 @@
-public class SkillComponent: IComponent
+using Chess.Base;
+using Chess.Util;
+
+namespace Chess.Component
 {
-    private int _skill_id = ConstUtil.None;
-    public int skill_id
+    public class SkillComponent: IComponent
     {
-        get
+        private int _skill_id = ConstUtil.None;
+        public int skill_id
         {
-            return _skill_id;
+            get
+            {
+                return _skill_id;
+            }
+            set
+            {
+                _skill_id = value;
+            }
         }
-        set
+        public override void LoggerString()
         {
-            _skill_id = value;
+            Console.WriteLine("---> SkillComponent:{skill_id:" + skill_id + "}");
         }
-    }
-    public override void LoggerString()
-    {
-        Console.WriteLine("---> SkillComponent:{skill_id:" + skill_id + "}");
     }
 }
