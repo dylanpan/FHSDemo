@@ -4,13 +4,16 @@ public class HeroPoolSystem : ISystem
 {
     public void GenerateHeroEntity(HeroesConfig heroesConfig)
     {
-        Entity entity = new Entity();
-        entity.AddComponent(new NameComponent(){name = heroesConfig.name, id = heroesConfig.id});
-        entity.AddComponent(new SkinComponent(){skin_name = heroesConfig.skin_name});
-        entity.AddComponent(new SkillComponent(){skill_id = heroesConfig.skill_id});
-        entity.AddComponent(new PorpertyComponent(){atk = heroesConfig.atk, hp = heroesConfig.hp});
-        entity.AddComponent(new StatusComponent());
-        World.Instance.AddEntity(entity);
+        if (heroesConfig != null)
+        {
+            Entity entity = new Entity();
+            entity.AddComponent(new NameComponent(){name = heroesConfig.name, id = heroesConfig.id});
+            entity.AddComponent(new SkinComponent(){skin_name = heroesConfig.skin_name});
+            entity.AddComponent(new SkillComponent(){skill_id = heroesConfig.skill_id});
+            entity.AddComponent(new PorpertyComponent(){atk = heroesConfig.atk, hp = heroesConfig.hp});
+            entity.AddComponent(new StatusComponent());
+            World.Instance.AddEntity(entity);
+        }
     }
     public void GeneratePoolFormConfig()
     {

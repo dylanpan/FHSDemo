@@ -68,25 +68,6 @@ public class Util
         originList.ForEach(i => copyList.Add(Util.CopyEntity(i, false)));
         return copyList;
     }
-
-    public static Dictionary<string, string> GetCommonParamDict()
-    {
-        Dictionary<string, string> paramDict = new Dictionary<string, string>();
-        paramDict["name"] = "";
-        paramDict["id"] = "0";
-        paramDict["skill_id"] = "0";
-        paramDict["skin_name"] = "";
-        paramDict["current_level"] = "0";
-        paramDict["refresh_cost"] = "0";
-        paramDict["up_level_cost"] = "0";
-        paramDict["level_list_num"] = "0";
-        paramDict["piece_cost"] = "0";
-        paramDict["piece_recycle"] = "0";
-        paramDict["race"] = "0";
-        paramDict["atk"] = "0";
-        paramDict["hp"] = "0";
-        return paramDict;
-    }
     #endregion
 
     #region Check

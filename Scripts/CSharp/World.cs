@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public class World
 {
-    private static World instance = null;
+    private static World? instance = null;
     
     public static World Instance
     {

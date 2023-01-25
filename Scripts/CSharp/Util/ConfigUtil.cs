@@ -22,7 +22,10 @@ public class ConfigUtil
                 {
                     string config = configArray[i].ToString();
                     T? configData = JsonConvert.DeserializeObject<T>(config);
-                    configList.Add(configData);
+                    if (configData != null)
+                    {
+                        configList.Add(configData);
+                    }
                 }
             }
         }
