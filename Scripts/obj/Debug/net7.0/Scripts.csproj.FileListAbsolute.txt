@@ -1,5 +1,0 @@
-D:\newTrunk2019\Chess\Scripts\obj\Debug\net7.0\Scripts.csproj.AssemblyReference.cache
-D:\newTrunk2019\Chess\Scripts\obj\Debug\net7.0\Scripts.GeneratedMSBuildEditorConfig.editorconfig
-D:\newTrunk2019\Chess\Scripts\obj\Debug\net7.0\Scripts.AssemblyInfoInputs.cache
-D:\newTrunk2019\Chess\Scripts\obj\Debug\net7.0\Scripts.AssemblyInfo.cs
-D:\newTrunk2019\Chess\Scripts\obj\Debug\net7.0\Scripts.csproj.CoreCompileInputs.cache
