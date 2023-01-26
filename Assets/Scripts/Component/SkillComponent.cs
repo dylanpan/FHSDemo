@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Chess.Base;
 using Chess.Util;
+using UnityEngine;
 
 namespace Chess.Component
 {
@@ -22,7 +23,7 @@ namespace Chess.Component
         }
         public override void LoggerString()
         {
-            Console.WriteLine("---> SkillComponent:{skill_id:" + skill_id + "}");
+            Debug.Log("---> SkillComponent:{skill_id:" + skill_id + "}");
         }
     }
 }

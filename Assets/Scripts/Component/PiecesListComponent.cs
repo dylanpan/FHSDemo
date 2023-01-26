@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Chess.Base;
 using Chess.Util;
+using UnityEngine;
 
 namespace Chess.Component
 {
@@ -59,7 +60,7 @@ namespace Chess.Component
         public List<int> piecesIds = new List<int>();
         public override void LoggerString()
         {
-            Console.WriteLine("---> PiecesListComponent:{piecesIds:[" + string.Join(",", piecesIds.ToArray()) + "], max_num: " + max_num + ", bartender_id: " + bartender_id + ", hand_card_id: " + hand_card_id + ", battle_card_id: " + battle_card_id + "}");
+            Debug.Log("---> PiecesListComponent:{piecesIds:[" + string.Join(",", piecesIds.ToArray()) + "], max_num: " + max_num + ", bartender_id: " + bartender_id + ", hand_card_id: " + hand_card_id + ", battle_card_id: " + battle_card_id + "}");
         }
     }
 }

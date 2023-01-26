@@ -15,10 +15,20 @@ namespace Chess.Base
         {
             get { return instance != null ? instance : (instance = new Process()); }
         }
-        public int current_process = ConstUtil.None;
+        private int _current_process = ConstUtil.None;
 
         public int current_level = ConstUtil.Init_Level;
         public int current_currency = ConstUtil.Init_Currency;
+
+        public void SetProcess(int process)
+        {
+            _current_process = process;
+        }
+
+        public int GetProcess()
+        {
+            return _current_process;
+        }
         // TODO: 在各个系统中进行判断相关进度,执行对应结果
     }
 }

@@ -5,8 +5,9 @@ using Chess.Base;
 using Chess.Config;
 using Chess.Component;
 using Chess.Util;
+using UnityEngine;
 
-namespace Chess.System
+namespace Chess.Systems
 {
     public class PlayerSystem : ISystem
     {
@@ -28,8 +29,12 @@ namespace Chess.System
 
         public override void Update()
         {
-            Console.WriteLine("PlayerSystem Update");
-            InitWorldPlayerEntity();
+            if (Process.Instance.GetProcess() == ConstUtil.Process_Game_Start)
+            {
+                Debug.Log("PlayerSystem Update - init");
+                InitWorldPlayerEntity();
+                Process.Instance.SetProcess(ConstUtil.Process_Game_Start_Player);
+            }
         }
     }
 }

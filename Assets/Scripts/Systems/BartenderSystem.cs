@@ -5,8 +5,9 @@ using Chess.Base;
 using Chess.Config;
 using Chess.Component;
 using Chess.Util;
+using UnityEngine;
 
-namespace Chess.System
+namespace Chess.Systems
 {
     public class BartenderSystem : ISystem
     {
@@ -37,14 +38,22 @@ namespace Chess.System
             }
             else
             {
-                Console.WriteLine("BartenderSystem get empty config");
+                Debug.Log("BartenderSystem get empty config");
             }
         }
         public override void Update()
         {
-            Console.WriteLine("BartenderSystem Update");
-            GeneratePoolFormConfig();
-            TestUtil.SetBartender();
+            if (Process.Instance.GetProcess() == ConstUtil.Process_Game_Start_Player)
+            {
+                Debug.Log("BartenderSystem Update - init");
+                GeneratePoolFormConfig();
+                TestUtil.SetBartender();
+                Process.Instance.SetProcess(ConstUtil.Process_Game_Start_Bartender);
+            }
+            else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Start)
+            {
+                Debug.Log("BartenderSystem Update - battle prepare");
+            }
         }
     }
 }

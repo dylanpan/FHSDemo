@@ -5,8 +5,9 @@ using Chess.Base;
 using Chess.Config;
 using Chess.Component;
 using Chess.Util;
+using UnityEngine;
 
-namespace Chess.System
+namespace Chess.Systems
 {
     public class PiecesPoolSystem : ISystem
     {
@@ -39,14 +40,22 @@ namespace Chess.System
             }
             else
             {
-                Console.WriteLine("PiecesPoolSystem get empty config");
+                Debug.Log("PiecesPoolSystem get empty config");
             }
         }
 
         public override void Update()
         {
-            Console.WriteLine("PiecesPoolSystem Update");
-            GeneratePoolFormConfig();
+            if (Process.Instance.GetProcess() == ConstUtil.Process_Game_Start_Heroes_Pool)
+            {
+                Debug.Log("PiecesPoolSystem Update - init");
+                GeneratePoolFormConfig();
+                Process.Instance.SetProcess(ConstUtil.Process_Game_Start_Pieces_Pool);
+            }
+            else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Start)
+            {
+                Debug.Log("PiecesPoolSystem Update - battle prepare");
+            }
         }
     }
 }

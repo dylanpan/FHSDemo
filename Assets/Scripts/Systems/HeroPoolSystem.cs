@@ -5,8 +5,9 @@ using Chess.Base;
 using Chess.Config;
 using Chess.Component;
 using Chess.Util;
+using UnityEngine;
 
-namespace Chess.System
+namespace Chess.Systems
 {
     public class HeroPoolSystem : ISystem
     {
@@ -36,14 +37,24 @@ namespace Chess.System
             }
             else
             {
-                Console.WriteLine("HeroPoolSystem get empty config");
+                Debug.Log("HeroPoolSystem get empty config");
             }
         }
         public override void Update()
         {
-            Console.WriteLine("HeroPoolSystem Update");
-            GeneratePoolFormConfig();
-            TestUtil.SetHero();
+            if (Process.Instance.GetProcess() == ConstUtil.Process_Game_Start_Bartender)
+            {
+                Debug.Log("HeroPoolSystem Update - init");
+                GeneratePoolFormConfig();
+                TestUtil.SetHero();
+                Process.Instance.SetProcess(ConstUtil.Process_Game_Start_Heroes_Pool);
+            }
+            else if(Process.Instance.GetProcess() == ConstUtil.Process_Game_Start_Battle_Card)
+            {
+                Debug.Log("HeroPoolSystem Update - pick Hero");
+                Process.Instance.SetProcess(ConstUtil.Process_Pick_Hero);
+                // TODO: 弹出[选择英雄]界面,选择后设置新的状态 - Process_Prepare_Start
+            }
         }
     }
 }

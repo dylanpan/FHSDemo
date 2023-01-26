@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Chess.Base;
 using Chess.Util;
+using UnityEngine;
 
 namespace Chess.Component
 {
@@ -46,7 +47,7 @@ namespace Chess.Component
         }
         public override void LoggerString()
         {
-            Console.WriteLine("---> PorpertyComponent[" + this.GetHashCode() + "]:{atk:" + atk + ", hp: " + hp + ", race: " + race + "}");
+            Debug.Log("---> PorpertyComponent[" + this.GetHashCode() + "]:{atk:" + atk + ", hp: " + hp + ", race: " + race + "}");
         }
     }
 }

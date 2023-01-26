@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Chess.Systems;
+using Chess.Util;
 
 namespace Chess.Base
 {
@@ -53,20 +55,28 @@ namespace Chess.Base
         {
             return entityDic.ContainsKey(entity.ID);
         }
+        public void AddSystem()
+        {
+            World.Instance.AddSystem(new ViewSystem());
+            World.Instance.AddSystem(new PlayerSystem());
+            World.Instance.AddSystem(new BartenderSystem());
+            World.Instance.AddSystem(new HeroPoolSystem());
+            World.Instance.AddSystem(new PiecesPoolSystem());
+            World.Instance.AddSystem(new HandCardSystem());
+            World.Instance.AddSystem(new BattleCardSystem());
+            World.Instance.AddSystem(new BattleAutoChessSystem());
+            World.Instance.AddSystem(new BattleReplaySystem());
+        }
         // 由引擎驱动
         public void Update()
         {
+            if (Process.Instance.GetProcess() == ConstUtil.None)
+            {
+                AddSystem();
+            }
             foreach (ISystem system in systems)
             {
                 system.Update();
-            }
-            foreach (Entity entity in entityDic.Values)
-            {
-                Console.WriteLine("\n------>>>Entity ID: " + entity.ID);
-                foreach (IComponent component in entity.components)
-                {
-                    component.LoggerString();
-                }
             }
         }
     }

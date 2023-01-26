@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 #endif
 
 using UnityEngine;
+using Chess.Base;
+using Chess.Util;
 
 // TODO: 镜头设置:1.蓝色我方,白色敌方;2.横屏修改Z轴(-90),同时同步变化场景的布局;3.镜头位移切换(a.开始界面到游戏操作界面、b.游戏准备阶段到游戏战斗阶段)
 
@@ -226,6 +228,15 @@ namespace UnityTemplateProjects
             m_InterpolatingCameraState.LerpTowards(m_TargetCameraState, positionLerpPct, rotationLerpPct);
 
             m_InterpolatingCameraState.UpdateTransform(transform);
+
+            World.Instance.Update();
+            if(Process.Instance.GetProcess() == ConstUtil.Process_Pick_Hero)
+            {
+                if (m_TargetCameraState.pitch > 0.0f)
+                {
+                    m_TargetCameraState.pitch -= (Time.deltaTime + 1.5f);
+                }
+            }
         }
 
         float GetBoostFactor()

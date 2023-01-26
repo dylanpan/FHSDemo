@@ -5,8 +5,9 @@ using Chess.Base;
 using Chess.Config;
 using Chess.Component;
 using Chess.Util;
+using UnityEngine;
 
-namespace Chess.System
+namespace Chess.Systems
 {
     public class BattleCardSystem : ISystem
     {
@@ -37,8 +38,12 @@ namespace Chess.System
         }
         public override void Update()
         {
-            Console.WriteLine("BattleCardSystem Update");
-            CheckAddBattleCardEntity();
+            if (Process.Instance.GetProcess() == ConstUtil.Process_Game_Start_Hand_Card)
+            {
+                Debug.Log("BattleCardSystem Update - init");
+                CheckAddBattleCardEntity();
+                Process.Instance.SetProcess(ConstUtil.Process_Game_Start_Battle_Card);
+            }
         }
     }
 }

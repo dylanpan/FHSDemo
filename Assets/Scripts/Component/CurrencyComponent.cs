@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Chess.Base;
 using Chess.Util;
+using UnityEngine;
 
 namespace Chess.Component
 {
@@ -70,7 +71,7 @@ namespace Chess.Component
         }
         public override void LoggerString()
         {
-            Console.WriteLine("---> CurrencyComponent:{currency:" + currency + ", up_level_cost:" + up_level_cost + ", refresh_cost:" + refresh_cost + ", piece_cost:" + piece_cost + ", piece_recycle:" + piece_recycle + "}");
+            Debug.Log("---> CurrencyComponent:{currency:" + currency + ", up_level_cost:" + up_level_cost + ", refresh_cost:" + refresh_cost + ", piece_cost:" + piece_cost + ", piece_recycle:" + piece_recycle + "}");
         }
     }
 }

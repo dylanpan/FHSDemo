@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Chess.Base;
 using Chess.Util;
+using UnityEngine;
 
 namespace Chess.Component
 {
@@ -35,13 +36,13 @@ namespace Chess.Component
         }
         public override void LoggerString()
         {
-            Console.WriteLine("---> ResultComponent:{" + status + "}");
+            Debug.Log("---> ResultComponent:{" + status + "}");
             foreach (KeyValuePair<int, Dictionary<int, List<Entity>>> kvp in result_dict)
             {
-                Console.WriteLine("------round = {0}", kvp.Key);
+                Debug.Log("------round = " + kvp.Key);
                 foreach (KeyValuePair<int, List<Entity>> item in kvp.Value)
                 {
-                    Console.WriteLine("team = {0}", item.Key);
+                    Debug.Log("team = " + item.Key);
                     CommonUtil.Battle_LoggerListPiecesEntity(item.Value);
                 }
             }

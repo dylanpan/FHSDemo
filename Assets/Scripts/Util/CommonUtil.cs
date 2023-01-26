@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Chess.Base;
 using Chess.Component;
+using UnityEngine;
 
 namespace Chess.Util
 {
@@ -137,7 +138,7 @@ namespace Chess.Util
         #region Battle
         public static int Battle_RandomPiecesIndex(int total)
         {
-            return new Random().Next(total);
+            return new System.Random().Next(total);
         }
 
         public static Entity Battle_FindAtkEntity(List<Entity> list, out int findAtkIndex)
@@ -308,7 +309,7 @@ namespace Chess.Util
             }
             else
             {
-                Console.WriteLine("Empty list");
+                Debug.Log("Empty list");
             }
         }
         #endregion

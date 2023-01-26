@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Chess.Base;
 using Chess.Util;
+using UnityEngine;
 
 namespace Chess.Component
 {
@@ -23,7 +24,7 @@ namespace Chess.Component
         
         public override void LoggerString()
         {
-            Console.WriteLine("---> SkinComponent:{skin_name:" + skin_name + "}");
+            Debug.Log("---> SkinComponent:{skin_name:" + skin_name + "}");
         }
     }
 }

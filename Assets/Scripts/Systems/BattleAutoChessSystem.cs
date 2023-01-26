@@ -5,8 +5,9 @@ using Chess.Base;
 using Chess.Config;
 using Chess.Component;
 using Chess.Util;
+using UnityEngine;
 
-namespace Chess.System
+namespace Chess.Systems
 {
     public class BattleAutoChessSystem : ISystem
     {
@@ -49,17 +50,17 @@ namespace Chess.System
             {
                 if (aList.Count <= 0 && bList.Count <= 0)
                 {
-            Console.WriteLine("BattleAutoChessSystem DoBattle-----------------01");
+            Debug.Log("BattleAutoChessSystem DoBattle-----------------01");
 
                 }
                 else if (aList.Count > 0 && bList.Count <= 0)
                 {
-            Console.WriteLine("BattleAutoChessSystem DoBattle-----------------02");
+            Debug.Log("BattleAutoChessSystem DoBattle-----------------02");
 
                 }
                 else if (aList.Count <= 0 && bList.Count > 0)
                 {
-            Console.WriteLine("BattleAutoChessSystem DoBattle-----------------03");
+            Debug.Log("BattleAutoChessSystem DoBattle-----------------03");
 
                 }
                 else if ((CommonUtil.Battle_CheckListAllSpecificStatus(new int[]{ConstUtil.Status_Piece_Dead,ConstUtil.Status_Piece_No_Atk}, aList) && !CommonUtil.Battle_CheckListHaveStatus(ConstUtil.None, aList) && !CommonUtil.Battle_CheckListHaveStatus(ConstUtil.Status_Piece_Atk, aList))
@@ -172,24 +173,27 @@ namespace Chess.System
         }
         public override void Update()
         {
-            Console.WriteLine("BattleAutoChessSystem Update");
-            
-            List<Entity> battleEntitys = new List<Entity>();
-            foreach (Entity entity in World.Instance.entityDic.Values)
+            if (Process.Instance.GetProcess() == ConstUtil.Process_Battle_Start)
             {
-                PiecesListComponent piecesListComponent = (PiecesListComponent)entity.GetComponent<PiecesListComponent>();
-                if (piecesListComponent != null && piecesListComponent.battle_card_id != ConstUtil.None)
+                Debug.Log("BattleAutoChessSystem Update - init");
+                List<Entity> battleEntitys = new List<Entity>();
+                foreach (Entity entity in World.Instance.entityDic.Values)
                 {
-                    battleEntitys.Add(entity);
+                    PiecesListComponent piecesListComponent = (PiecesListComponent)entity.GetComponent<PiecesListComponent>();
+                    if (piecesListComponent != null && piecesListComponent.battle_card_id != ConstUtil.None)
+                    {
+                        battleEntitys.Add(entity);
+                    }
                 }
+                Entity battleAEntity = battleEntitys.Count > 0 ? battleEntitys[ConstUtil.Team_A] : CommonUtil.Battle_GetEmptyEntity();
+                Entity battleBEntity = battleEntitys.Count > 1 ? battleEntitys[ConstUtil.Team_B] : CommonUtil.Battle_GetEmptyEntity();
+                TestUtil.SetTestPiecesIds(ref battleAEntity, ref battleBEntity);
+                // TODO: 需要补充随机先手 A 还是 B
+                Entity resultEntity = CreateBattleResultEntity(battleAEntity, battleBEntity);
+                GetBattleResult(1, ref resultEntity);
+                World.Instance.AddEntity(resultEntity);
+                Process.Instance.SetProcess(ConstUtil.Process_Battle_End);
             }
-            Entity battleAEntity = battleEntitys.Count > 0 ? battleEntitys[ConstUtil.Team_A] : CommonUtil.Battle_GetEmptyEntity();
-            Entity battleBEntity = battleEntitys.Count > 1 ? battleEntitys[ConstUtil.Team_B] : CommonUtil.Battle_GetEmptyEntity();
-            TestUtil.SetTestPiecesIds(ref battleAEntity, ref battleBEntity);
-            // TODO: 需要补充随机先手 A 还是 B
-            Entity resultEntity = CreateBattleResultEntity(battleAEntity, battleBEntity);
-            GetBattleResult(1, ref resultEntity);
-            World.Instance.AddEntity(resultEntity);
         }
     }
 }

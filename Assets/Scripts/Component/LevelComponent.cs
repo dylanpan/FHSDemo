@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Chess.Base;
 using Chess.Util;
+using UnityEngine;
 
 namespace Chess.Component
 {
@@ -23,7 +24,7 @@ namespace Chess.Component
 
         public override void LoggerString()
         {
-            Console.WriteLine("---> LevelComponent:{current_level:" + current_level + "}");
+            Debug.Log("---> LevelComponent:{current_level:" + current_level + "}");
         }
     }
 }
