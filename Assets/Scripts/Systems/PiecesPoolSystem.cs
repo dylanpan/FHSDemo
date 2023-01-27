@@ -18,7 +18,7 @@ namespace Chess.Systems
                 Entity entity = new Entity();
                 entity.AddComponent(new NameComponent(){name = piecesConfig.name, id = piecesConfig.id});
                 entity.AddComponent(new SkinComponent(){skin_name = piecesConfig.skin_name});
-                entity.AddComponent(new LevelComponent(){current_level = piecesConfig.current_level});
+                entity.AddComponent(new LevelComponent(){level = piecesConfig.level});
                 entity.AddComponent(new CurrencyComponent(){piece_cost = piecesConfig.piece_cost, piece_recycle = piecesConfig.piece_recycle});
                 entity.AddComponent(new PorpertyComponent(){atk = piecesConfig.atk, hp = piecesConfig.hp, race = piecesConfig.race});
                 entity.AddComponent(new BuffComponent());
@@ -55,6 +55,8 @@ namespace Chess.Systems
             else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Start)
             {
                 Debug.Log("PiecesPoolSystem Update - battle prepare");
+                // TODO: 设置当前回合Buff信息(考虑防止在BuffSys中): 对应玩家手牌和场上的棋子信息和各个酒馆的棋子信息
+                // TODO: 从池子中抽取各个玩家酒馆的棋子信息
             }
         }
     }

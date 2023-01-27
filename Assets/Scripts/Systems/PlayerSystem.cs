@@ -13,10 +13,16 @@ namespace Chess.Systems
     {
         public Entity CreatePlayerEntity()
         {
-            Entity player = new Entity();
-            player.AddComponent(new NameComponent(){name = "Player_" + player.ID});
-            player.AddComponent(new PlayerComponent());
-            return player;
+            Entity entity = new Entity();
+            entity.AddComponent(new NameComponent(){name = "Player_" + entity.ID});
+            entity.AddComponent(new PlayerComponent());
+            StatusComponent statusComponent = new StatusComponent();
+            if (Process.Instance.GetSelfPlayerId() == ConstUtil.None)
+            {
+                Process.Instance.SetSelfPlayerId(entity.ID);
+            }
+            entity.AddComponent(statusComponent);
+            return entity;
         }
         public void InitWorldPlayerEntity()
         {
@@ -32,8 +38,8 @@ namespace Chess.Systems
             if (Process.Instance.GetProcess() == ConstUtil.Process_Game_Start)
             {
                 Debug.Log("PlayerSystem Update - init");
-                InitWorldPlayerEntity();
                 Process.Instance.SetProcess(ConstUtil.Process_Game_Start_Player);
+                InitWorldPlayerEntity();
             }
         }
     }

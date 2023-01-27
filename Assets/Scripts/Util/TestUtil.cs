@@ -8,6 +8,45 @@ namespace Chess.Util
 {
     public class TestUtil
     {
+        public static void SetHero(int id)
+        {
+            Entity entity = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            PlayerComponent playerComponent = (PlayerComponent)entity.GetComponent<PlayerComponent>();
+            if (playerComponent != null)
+            {
+                if (playerComponent.hero_id == ConstUtil.None)
+                {
+                    playerComponent.hero_id = id;
+                }
+            }
+        }
+
+        public static void SetBartender(int config_id)
+        {
+            Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
+            if (playerComponent != null)
+            {
+                if (playerComponent.bartender_id == ConstUtil.None)
+                {
+                    Entity? bartenderEntity = null;
+                    List<int> bartender_pool = Process.Instance.GetBartenderPool();
+                    for (int i = 0; i < bartender_pool.Count; i++)
+                    {
+                        Entity entity = World.Instance.entityDic[bartender_pool[i]];
+                        NameComponent nameComponent = (NameComponent)entity.GetComponent<NameComponent>();
+                        StatusComponent statusComponent = (StatusComponent)entity.GetComponent<StatusComponent>();
+                        if (nameComponent != null && nameComponent.id == config_id)
+                        {
+                            bartenderEntity = entity;
+                            break;
+                        }
+                    }
+                    playerComponent.bartender_id = bartenderEntity.ID;
+                }
+            }
+        }
+        
         public static int GetTestPieces(int piece_id)
         {
             int find_id = 0;
@@ -48,81 +87,6 @@ namespace Chess.Util
                     int pieces_2_ID = TestUtil.GetTestPieces(4005);
                     int[] piecesIds = {pieces_0_ID, pieces_1_ID, pieces_2_ID};
                     bPiecesListComponent.piecesIds = new List<int>(piecesIds);
-                }
-            }
-        }
-
-        public static Entity GetTestHero()
-        {
-            Entity? heroEntity = null;
-            foreach (Entity entity in World.Instance.entityDic.Values)
-            {
-                if (CommonUtil.CheckIsHero(entity))
-                {
-                    NameComponent nameComponent = (NameComponent)entity.GetComponent<NameComponent>();
-                    StatusComponent statusComponent = (StatusComponent)entity.GetComponent<StatusComponent>();
-                    if (nameComponent != null && statusComponent != null && statusComponent.status != ConstUtil.Status_Hero_Pick)
-                    {
-                        statusComponent.status = ConstUtil.Status_Hero_Pick;
-                        heroEntity = entity;
-                        break;
-                    }
-                }
-            }
-            return heroEntity;
-        }
-
-        public static void SetHero()
-        {
-            int[] keyList = World.Instance.entityDic.Keys.ToArray();
-            for (int i = 0; i < keyList.Length; i++)
-            {
-                Entity entity = World.Instance.entityDic[keyList[i]];
-                PlayerComponent playerComponent = (PlayerComponent)entity.GetComponent<PlayerComponent>();
-                if (playerComponent != null)
-                {
-                    if (playerComponent.hero_id == ConstUtil.None)
-                    {
-                        Entity hero = TestUtil.GetTestHero();
-                        playerComponent.hero_id = hero.ID;
-                    }
-                }
-            }
-        }
-
-        public static Entity GetTestBartender()
-        {
-            Entity? bartenderEntity = null;
-            foreach (Entity entity in World.Instance.entityDic.Values)
-            {
-                if (CommonUtil.CheckIsBartender(entity))
-                {
-                    NameComponent nameComponent = (NameComponent)entity.GetComponent<NameComponent>();
-                    StatusComponent statusComponent = (StatusComponent)entity.GetComponent<StatusComponent>();
-                    if (nameComponent != null && statusComponent != null && statusComponent.status != ConstUtil.Status_Bartender_Pick)
-                    {
-                        statusComponent.status = ConstUtil.Status_Bartender_Pick;
-                        bartenderEntity = entity;
-                        break;
-                    }
-                }
-            }
-            return bartenderEntity;
-        }
-        public static void SetBartender()
-        {
-            int[] keyList = World.Instance.entityDic.Keys.ToArray();
-            for (int i = 0; i < keyList.Length; i++)
-            {
-                Entity entity = World.Instance.entityDic[keyList[i]];
-                PlayerComponent playerComponent = (PlayerComponent)entity.GetComponent<PlayerComponent>();
-                if (playerComponent != null)
-                {
-                    if (playerComponent.bartender_id == ConstUtil.None)
-                    {
-                        Entity bartender = TestUtil.GetTestBartender();
-                        playerComponent.bartender_id = bartender.ID;
-                    }
                 }
             }
         }

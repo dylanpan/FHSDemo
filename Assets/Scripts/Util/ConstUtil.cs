@@ -48,6 +48,7 @@ namespace Chess.Util
         public const int Process_Game_Start_Battle_Card = 107;
         // 选择英雄
         public const int Process_Pick_Hero = 200;
+        public const int Process_Pick_Hero_Ing = 201;
         // 战斗准备开始
         public const int Process_Prepare_Start = 300;
         // 战斗准备中: 刷新酒馆

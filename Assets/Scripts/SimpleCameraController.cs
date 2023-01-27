@@ -230,7 +230,7 @@ namespace UnityTemplateProjects
             m_InterpolatingCameraState.UpdateTransform(transform);
 
             World.Instance.Update();
-            if(Process.Instance.GetProcess() == ConstUtil.Process_Pick_Hero)
+            if(Process.Instance.GetProcess() == ConstUtil.Process_Pick_Hero_Ing)
             {
                 if (m_TargetCameraState.pitch > 0.0f)
                 {

@@ -193,6 +193,9 @@ namespace Chess.Systems
                 GetBattleResult(1, ref resultEntity);
                 World.Instance.AddEntity(resultEntity);
                 Process.Instance.SetProcess(ConstUtil.Process_Battle_End);
+
+                // ResultComponent resultComponent = (ResultComponent)resultEntity.GetComponent<ResultComponent>();
+                // resultComponent.LoggerString();
             }
         }
     }

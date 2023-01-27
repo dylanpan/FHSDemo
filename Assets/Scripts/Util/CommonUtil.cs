@@ -113,6 +113,20 @@ namespace Chess.Util
             }
             return isHero;
         }
+        public static bool CheckIsPlayer(Entity entity)
+        {
+            NameComponent nameComponent = (NameComponent)entity.GetComponent<NameComponent>();
+            PlayerComponent playerComponent = (PlayerComponent)entity.GetComponent<PlayerComponent>();
+            StatusComponent statusComponent = (StatusComponent)entity.GetComponent<StatusComponent>();
+            bool isPlayer = false;
+            if (nameComponent != null 
+                && statusComponent != null
+                && playerComponent != null)
+            {
+                isPlayer = true;
+            }
+            return isPlayer;
+        }
         public static bool CheckIsBartender(Entity entity)
         {
             NameComponent nameComponent = (NameComponent)entity.GetComponent<NameComponent>();
@@ -132,6 +146,13 @@ namespace Chess.Util
                 isBartender = true;
             }
             return isBartender;
+        }
+        #endregion
+
+        #region Prepare
+        public static int RandomHeroesIndex(int total)
+        {
+            return new System.Random().Next(total);
         }
         #endregion
 

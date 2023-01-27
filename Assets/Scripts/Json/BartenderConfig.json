@@ -1,6 +1,6 @@
 [
     {
-        "name": "调酒机器人",
+        "name": "WineMachine",
         "id": 1000,
         "skin_name": "wine_001",
         "refresh_cost": 1,
@@ -22,7 +22,7 @@
         ]
     },
     {
-        "name": "地精",
+        "name": "Goblin",
         "id": 2000,
         "skin_name": "goblin_001",
         "refresh_cost": 1,

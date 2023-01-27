@@ -1,6 +1,6 @@
 [
     {
-        "name": "迦拉克隆",
+        "name": "JK",
         "id": 1000,
         "skin_name": "jk_001",
         "skill_id": 1001,
@@ -8,10 +8,26 @@
         "hp": 40
     },
     {
-        "name": "导演",
+        "name": "Derector",
         "id": 2000,
         "skin_name": "dy_001",
         "skill_id": 2001,
+        "atk": 0,
+        "hp": 40
+    },
+    {
+        "name": "House",
+        "id": 3000,
+        "skin_name": "house_001",
+        "skill_id": 3001,
+        "atk": 0,
+        "hp": 40
+    },
+    {
+        "name": "Tree",
+        "id": 4000,
+        "skin_name": "tree_001",
+        "skill_id": 4001,
         "atk": 0,
         "hp": 40
     }

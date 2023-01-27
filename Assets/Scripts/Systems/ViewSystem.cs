@@ -13,9 +13,29 @@ namespace Chess.Systems
     {
         public void AddGameMainView()
         {
-            GameObject mainView = (GameObject)GameObject.Instantiate(Resources.Load("Prefabs/MainView"));
-            GameObject mUICanvas = GameObject.Find("Canvas");
-            mainView.transform.parent = mUICanvas.transform;
+            GameObject view = (GameObject)GameObject.Instantiate(Resources.Load("Prefabs/MainView"));
+            GameObject mUICanvas = GameObject.Find("UIRoot");
+            view.transform.parent = mUICanvas.transform;
+        }
+        public void AddHeroPickView()
+        {
+            GameObject view = (GameObject)GameObject.Instantiate(Resources.Load("Prefabs/HeroPickView"));
+            GameObject mUICanvas = GameObject.Find("UIRoot");
+            view.transform.parent = mUICanvas.transform;
+        }
+        public void AddBartenderView()
+        {
+            GameObject bartenderView = GameObject.Find("UIRoot/BartenderView");
+            if (bartenderView == null)
+            {
+                Debug.Log("ViewSystem Update - add bartender");
+                GameObject view = (GameObject)GameObject.Instantiate(Resources.Load("Prefabs/BartenderView"));
+                GameObject mUICanvas = GameObject.Find("UIRoot");
+                view.name = "BartenderView";
+                view.transform.parent = mUICanvas.transform;
+                BartenderView script = view.transform.GetComponent<BartenderView>();
+                script.UpdateViewByData();
+            }
         }
         public override void Update()
         {
@@ -24,6 +44,16 @@ namespace Chess.Systems
                 Debug.Log("ViewSystem Update - init");
                 AddGameMainView();
                 Process.Instance.SetProcess(ConstUtil.Process_Game_Start_Main_View);
+            }
+            else if (Process.Instance.GetProcess() == ConstUtil.Process_Pick_Hero)
+            {
+                Debug.Log("ViewSystem Update - pick hero");
+                AddHeroPickView();
+                Process.Instance.SetProcess(ConstUtil.Process_Pick_Hero_Ing);
+            }
+            else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Start)
+            {
+                AddBartenderView();
             }
         }
     }
