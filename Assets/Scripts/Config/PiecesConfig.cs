@@ -8,6 +8,7 @@ namespace Chess.Config
         public int level { get; set; }
         public int piece_cost { get; set; }
         public int piece_recycle { get; set; }
+        public int piece_num { get; set; }
         public int race { get; set; }
         public int atk { get; set; }
         public int hp { get; set; }

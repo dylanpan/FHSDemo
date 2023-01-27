@@ -41,6 +41,19 @@ namespace Chess.Systems
                 Debug.Log("HeroPoolSystem get empty config");
             }
         }
+        public void GenerateHeroListFormPool()
+        {
+            foreach (Entity entity in World.Instance.entityDic.Values)
+            {
+                if (CommonUtil.CheckIsPlayer(entity))
+                {
+                    // TODO: VIP 扩展 4 个
+                    // TODO: 切换不同 player 视角(编写 AI 执行脚本可观测操作流程)
+                    List<int> hero_pool = GetRamdomHeroFormPool(2);
+                    Process.Instance.AddHeroPoolToDict(entity.ID, hero_pool);
+                }
+            }
+        }
         public List<int> GetRamdomHeroFormPool(int max)
         {
             List<int> hero_pool = new List<int>();
@@ -60,19 +73,6 @@ namespace Chess.Systems
                 Process.Instance.RemoveHeroFormPool(id);
             }
             return id;
-        }
-        public void GenerateHeroListFormPool()
-        {
-            foreach (Entity entity in World.Instance.entityDic.Values)
-            {
-                if (CommonUtil.CheckIsPlayer(entity))
-                {
-                    // TODO: VIP 扩展 4 个
-                    // TODO: 切换不同 player 视角(编写 AI 执行脚本可观测操作流程)
-                    List<int> hero_pool = GetRamdomHeroFormPool(2);
-                    Process.Instance.AddHeroPoolToDict(entity.ID, hero_pool);
-                }
-            }
         }
         public override void Update()
         {

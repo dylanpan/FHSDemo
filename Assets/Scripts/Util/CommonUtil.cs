@@ -154,6 +154,10 @@ namespace Chess.Util
         {
             return new System.Random().Next(total);
         }
+        public static int RandomPiecesIndex(int total)
+        {
+            return new System.Random().Next(total);
+        }
         #endregion
 
         #region Battle
@@ -302,7 +306,7 @@ namespace Chess.Util
 
         public static int Battle_GetEntityStatus(Entity entity)
         {
-            int status = -1;
+            int status = ConstUtil.None;
             StatusComponent statusComponent = (StatusComponent)entity.GetComponent<StatusComponent>();
             if (statusComponent != null)
             {

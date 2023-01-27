@@ -20,6 +20,7 @@ public class BartenderView : MonoBehaviour
     public TextMeshProUGUI RefreshBtnLabel;
     public Button FreezeBtn;
     public TextMeshProUGUI FreezeBtnLabel;
+    public Transform PiecesLayout;
     // Start is called before the first frame update
     void Start()
     {
@@ -73,6 +74,33 @@ public class BartenderView : MonoBehaviour
             RefreshBtnLabel.text = currencyComponent.refresh_cost.ToString();
             CurrencyBtnLabel.text = currencyComponent.currency.ToString();
         }
+        if (piecesListComponent != null)
+        {
+            if (piecesListComponent.piecesIds.Count > 0)
+            {
+                for (int i = 0; i < piecesListComponent.piecesIds.Count; i++)
+                {
+                    Entity piece = World.Instance.entityDic[piecesListComponent.piecesIds[i]];
+                    AddPieceView(PiecesLayout, new Vector3(){x=0,y=0,z=0}, piecesListComponent.piecesIds[i]);
+                }
+                for (int i = 0; i < piecesListComponent.piecesIds.Count; i++)
+                {
+                    Debug.Log("BartenderView Update - prepare: " + piecesListComponent.piecesIds[i].ToString());
+                }
+            }
+            else
+            {
+                    Debug.Log("BartenderView Update - prepare no");
+            }
+        }
+    }
+    public void AddPieceView(Transform parent, Vector3 pos, int id)
+    {
+        GameObject view = (GameObject)GameObject.Instantiate(Resources.Load("Prefabs/PieceView"));
+        view.transform.parent = parent;
+        view.transform.position += pos;
+        PieceView script = view.transform.GetComponent<PieceView>();
+        script.UpdateViewByData(id);
     }
 
     public void OnClickCurrencyBtn()

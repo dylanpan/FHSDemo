@@ -4,6 +4,7 @@ using System.Linq;
 using Chess.Config;
 using Chess.Component;
 using Chess.Util;
+using UnityEngine;
 
 namespace Chess.Base
 {
@@ -104,18 +105,49 @@ namespace Chess.Base
         }
 
         private Dictionary<int,List<int>> _player_hero_pool_dict = new Dictionary<int,List<int>>();
-        public void AddHeroPoolToDict(int id, List<int> hero_pool)
+        public void AddHeroPoolToDict(int player_id, List<int> hero_pool)
         {
-            _player_hero_pool_dict.Add(id, hero_pool);
+            _player_hero_pool_dict.Add(player_id, hero_pool);
         }
-        public List<int> GetHeroPoolFormDict(int id)
+        public List<int> GetHeroPoolFormDict(int player_id)
         {
             List<int> hero_pool = new List<int>();
-            if (_player_hero_pool_dict.ContainsKey(id))
+            if (_player_hero_pool_dict.ContainsKey(player_id))
             {
-                hero_pool = _player_hero_pool_dict[id];
+                hero_pool = _player_hero_pool_dict[player_id];
             }
             return hero_pool;
+        }
+        private Dictionary<int,List<int>> _pieces_pool_dict = new Dictionary<int,List<int>>();
+        public void AddPiecePoolToDict(int level, int piece_id)
+        {
+            if (_pieces_pool_dict.ContainsKey(level))
+            {
+                List<int> piece_pool = _pieces_pool_dict[level];
+                piece_pool.Add(piece_id);
+            }
+            else
+            {
+                List<int> piece_pool = new List<int>();
+                piece_pool.Add(piece_id);
+                _pieces_pool_dict.Add(level, piece_pool);
+            }
+        }
+        public List<int> GetPiecePoolFormDict(int level)
+        {
+            List<int> piece_pool = new List<int>();
+            if (level > 0)
+            {
+                for (int i = 1; i <= level; i++)
+                {
+                    if (_pieces_pool_dict.ContainsKey(i))
+                    {
+                        List<int> tmp_piece_pool = _pieces_pool_dict[i];
+                        piece_pool = piece_pool.Concat(tmp_piece_pool).ToList<int>();
+                    }
+                }
+            }
+            return piece_pool;
         }
     }
 }
