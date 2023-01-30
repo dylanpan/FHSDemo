@@ -1,6 +1,6 @@
 [
     {
-        "name": "慵懒的野猪人",
+        "name": "lazy wild boar",
         "id": 4001,
         "skin_name": "pig_001",
         "level": 1,
@@ -12,7 +12,7 @@
         "hp": 2
     },
     {
-        "name": "昏睡的野猪人",
+        "name": "sleepy wild boar",
         "id": 4002,
         "skin_name": "pig_001",
         "level": 2,
@@ -24,7 +24,7 @@
         "hp": 2
     },
     {
-        "name": "奔跑的野猪人",
+        "name": "running wild boar",
         "id": 4003,
         "skin_name": "pig_001",
         "level": 3,
@@ -36,7 +36,7 @@
         "hp": 1
     },
     {
-        "name": "凶残的野猪人",
+        "name": "ferocious wild boar",
         "id": 4004,
         "skin_name": "pig_001",
         "level": 4,
@@ -48,7 +48,7 @@
         "hp": 2
     },
     {
-        "name": "神圣的野猪人",
+        "name": "holy wild boar",
         "id": 4005,
         "skin_name": "pig_001",
         "level": 5,
@@ -60,7 +60,7 @@
         "hp": 5
     },
     {
-        "name": "淳朴的野猪人",
+        "name": "simple wild boar",
         "id": 4006,
         "skin_name": "pig_001",
         "level": 6,
@@ -72,7 +72,7 @@
         "hp": 5
     },
     {
-        "name": "慵懒的木乃伊",
+        "name": "lazy mummy",
         "id": 3001,
         "skin_name": "machinery_001",
         "level": 1,
@@ -84,7 +84,7 @@
         "hp": 2
     },
     {
-        "name": "昏睡的木乃伊",
+        "name": "sleeping mummy",
         "id": 3002,
         "skin_name": "machinery_001",
         "level": 2,
@@ -96,7 +96,7 @@
         "hp": 2
     },
     {
-        "name": "奔跑的木乃伊",
+        "name": "running mummy",
         "id": 3003,
         "skin_name": "machinery_001",
         "level": 3,
@@ -108,7 +108,7 @@
         "hp": 2
     },
     {
-        "name": "凶残的木乃伊",
+        "name": "murderous mummy",
         "id": 3004,
         "skin_name": "machinery_001",
         "level": 4,
@@ -120,7 +120,7 @@
         "hp": 2
     },
     {
-        "name": "神圣的木乃伊",
+        "name": "holy mummy",
         "id": 3005,
         "skin_name": "machinery_001",
         "level": 5,
@@ -132,7 +132,7 @@
         "hp": 2
     },
     {
-        "name": "淳朴的木乃伊",
+        "name": "honest mummy",
         "id": 3006,
         "skin_name": "machinery_001",
         "level": 6,

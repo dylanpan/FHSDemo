@@ -63,5 +63,9 @@ namespace Chess.Util
         public const int Process_Battle_End = 800;
         // 游戏结束
         public const int Process_Game_End = 900;
+
+        // 通知
+        public const int Event_Type_close_hero_pick_view = 10000;
+        public const int Event_Type_update_bartender_pieces_view = 10001;
     }
 }

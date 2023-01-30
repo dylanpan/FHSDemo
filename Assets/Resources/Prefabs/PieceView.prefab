@@ -602,7 +602,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 25}
+  m_SizeDelta: {x: 150, y: 25}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &2643157792277367565
 CanvasRenderer:
@@ -662,9 +662,9 @@ MonoBehaviour:
   m_fontSize: 20
   m_fontSizeBase: 20
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 10
+  m_fontSizeMax: 20
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -745,3 +745,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0754b3f7d88542d6860fca1d1be3b7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BgBtn: {fileID: 4156004113005717587}
+  Icon: {fileID: 2023265545065854182}
+  Name: {fileID: 1094679458685678138}
+  Atk: {fileID: 3816995910480598234}
+  Hp: {fileID: 145112889688245051}

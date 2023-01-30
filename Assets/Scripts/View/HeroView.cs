@@ -52,8 +52,7 @@ public class HeroView : MonoBehaviour
     {
         Process.Instance.SetProcess(ConstUtil.Process_Prepare_Start);
         TestUtil.SetHero(hero.ID);
-        // TODO: 后续统一添加通知方式进行处理
-        GameObject.Destroy(this.transform.parent.parent.parent.parent.gameObject);
+        EventUtil.Instance.SendEvent(ConstUtil.Event_Type_close_hero_pick_view);
     }
 
     // Update is called once per frame

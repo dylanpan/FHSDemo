@@ -97,7 +97,7 @@ namespace Chess.Systems
                     {
                         Debug.Log("PiecesPoolSystem Update - battle prepare");
                         piecesListComponent.piecesIds = GetRamdomPiecesFormPool(piecesListComponent.max_num);
-                        // TODO: 需要补充通知更新页面棋子信息
+                        EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_pieces_view, Process.Instance.GetBartenderId());
                     }
                 }
             }

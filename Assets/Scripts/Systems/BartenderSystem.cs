@@ -56,7 +56,7 @@ namespace Chess.Systems
             }
             else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Start)
             {
-                Debug.Log("BartenderSystem Update - battle prepare");
+                // Debug.Log("BartenderSystem Update - battle prepare");
                 // TODO: 设置当前回合的当前玩家的酒馆信息
                 UpdateBartenderInfo();
             }
