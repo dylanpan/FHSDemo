@@ -27,27 +27,6 @@ namespace Chess.Base
         {
             return _current_process;
         }
-
-        private int _current_level = ConstUtil.Init_Level;
-        public void SetCurrentLevel(int level)
-        {
-            _current_level = level;
-        }
-
-        public int GetCurrentLevel()
-        {
-            return _current_level;
-        }
-        private int _current_currency = ConstUtil.Init_Currency;
-        public void SetCurrentCurrency(int currency)
-        {
-            _current_currency = currency;
-        }
-
-        public int GetCurrentCurrency()
-        {
-            return _current_currency;
-        }
         private int _self_player_id = ConstUtil.None;
 
         public void SetSelfPlayerId(int id)
@@ -75,17 +54,6 @@ namespace Chess.Base
         public List<int> GetHeroPool()
         {
             return _hero_pool;
-        }
-        private int _bartender_id = ConstUtil.None;
-
-        public void SetBartenderId(int id)
-        {
-            _bartender_id = id;
-        }
-
-        public int GetBartenderId()
-        {
-            return _bartender_id;
         }
         private List<int> _bartender_pool = new List<int>();
         public void AddBartenderToPool(int id)

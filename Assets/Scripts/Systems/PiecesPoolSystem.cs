@@ -58,19 +58,35 @@ namespace Chess.Systems
         }
         private int RandomPiece()
         {
-            List<int> piece_pool = Process.Instance.GetPiecePoolFormDict(Process.Instance.GetCurrentLevel());
             int id = ConstUtil.None;
-            if (piece_pool.Count > 0)
+            Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            if (player != null)
             {
-                while (true)
+                PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
+                if (playerComponent != null)
                 {
-                    id = piece_pool[CommonUtil.RandomPiecesIndex(piece_pool.Count)];
-                    Entity piece = World.Instance.entityDic[id];
-                    if (CommonUtil.Battle_GetEntityStatus(piece) != ConstUtil.Status_Piece_Pick
-                        && CommonUtil.Battle_GetEntityStatus(piece) != ConstUtil.Status_Piece_Freeze)
+                    Entity bartender = World.Instance.entityDic[playerComponent.bartender_id];
+                    if (bartender != null)
                     {
-                        CommonUtil.Battle_SetEntityStatus(piece, ConstUtil.Status_Piece_Pick);
-                        break;
+                        LevelComponent levelComponent = (LevelComponent)bartender.GetComponent<LevelComponent>();
+                        if (levelComponent != null)
+                        {
+                            List<int> piece_pool = Process.Instance.GetPiecePoolFormDict(levelComponent.level);
+                            if (piece_pool.Count > 0)
+                            {
+                                while (true)
+                                {
+                                    id = piece_pool[CommonUtil.RandomPiecesIndex(piece_pool.Count)];
+                                    Entity piece = World.Instance.entityDic[id];
+                                    if (CommonUtil.Battle_GetEntityStatus(piece) != ConstUtil.Status_Piece_Pick
+                                        && CommonUtil.Battle_GetEntityStatus(piece) != ConstUtil.Status_Piece_Freeze)
+                                    {
+                                        CommonUtil.Battle_SetEntityStatus(piece, ConstUtil.Status_Piece_Pick);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -87,19 +103,30 @@ namespace Chess.Systems
             }
             else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Start)
             {
-                // TODO: 设置当前回合Buff信息(考虑防止在BuffSys中): 对应玩家手牌和场上的棋子信息和各个酒馆的棋子信息
                 // 从池子中抽取当前玩家酒馆的棋子信息
-                if (Process.Instance.GetBartenderId() != ConstUtil.None)
+                Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+                if (player != null)
                 {
-                    Entity bartender = World.Instance.entityDic[Process.Instance.GetBartenderId()];
-                    PiecesListComponent piecesListComponent = (PiecesListComponent)bartender.GetComponent<PiecesListComponent>();
-                    if (piecesListComponent.piecesIds.Count <= 0)
+                    PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
+                    if (playerComponent != null)
                     {
-                        Debug.Log("PiecesPoolSystem Update - battle prepare");
-                        piecesListComponent.piecesIds = GetRamdomPiecesFormPool(piecesListComponent.max_num);
-                        EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_pieces_view, Process.Instance.GetBartenderId());
+                        if (playerComponent.bartender_id != ConstUtil.None)
+                        {
+                            Entity bartender = World.Instance.entityDic[playerComponent.bartender_id];
+                            PiecesListComponent piecesListComponent = (PiecesListComponent)bartender.GetComponent<PiecesListComponent>();
+                            if (piecesListComponent.piecesIds.Count <= 0)
+                            {
+                                Debug.Log("PiecesPoolSystem Update - battle prepare");
+                                piecesListComponent.piecesIds = GetRamdomPiecesFormPool(piecesListComponent.max_num);
+                                EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_pieces_view, playerComponent.bartender_id);
+                            }
+                        }
                     }
                 }
+            }
+            else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_End)
+            {
+                // TODO: 回合结束的冻结的棋子
             }
         }
     }

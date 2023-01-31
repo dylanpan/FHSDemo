@@ -187,6 +187,7 @@ namespace Chess.Systems
                 }
                 Entity battleAEntity = battleEntitys.Count > 0 ? battleEntitys[ConstUtil.Team_A] : CommonUtil.Battle_GetEmptyEntity();
                 Entity battleBEntity = battleEntitys.Count > 1 ? battleEntitys[ConstUtil.Team_B] : CommonUtil.Battle_GetEmptyEntity();
+                // TODO: 需要联动购买棋子同时更新手牌和战牌
                 TestUtil.SetTestPiecesIds(ref battleAEntity, ref battleBEntity);
                 // TODO: 需要补充随机先手 A 还是 B
                 Entity resultEntity = CreateBattleResultEntity(battleAEntity, battleBEntity);

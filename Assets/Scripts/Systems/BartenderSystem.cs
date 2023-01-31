@@ -18,9 +18,9 @@ namespace Chess.Systems
                 Entity entity = new Entity();
                 entity.AddComponent(new NameComponent(){name = bartenderConfig.name, id = bartenderConfig.id});
                 entity.AddComponent(new SkinComponent(){skin_name = bartenderConfig.skin_name});
-                entity.AddComponent(new LevelComponent(){level = Process.Instance.GetCurrentLevel()});
-                entity.AddComponent(new CurrencyComponent(){currency = Process.Instance.GetCurrentCurrency(), up_level_cost = bartenderConfig.up_level_cost[Process.Instance.GetCurrentLevel()-1], refresh_cost = bartenderConfig.refresh_cost});
-                entity.AddComponent(new PiecesListComponent(){max_num = bartenderConfig.level_list_num[Process.Instance.GetCurrentLevel()-1], bartender_id = entity.ID});
+                entity.AddComponent(new LevelComponent(){level = ConstUtil.Init_Level});
+                entity.AddComponent(new CurrencyComponent(){currency = ConstUtil.Init_Currency, up_level_cost = bartenderConfig.up_level_cost[ConstUtil.Init_Level-1], refresh_cost = bartenderConfig.refresh_cost});
+                entity.AddComponent(new PiecesListComponent(){max_num = bartenderConfig.level_list_num[ConstUtil.Init_Level-1], bartender_id = entity.ID});
                 entity.AddComponent(new StatusComponent());
                 World.Instance.AddEntity(entity);
                 Process.Instance.AddBartenderToPool(entity.ID);
@@ -52,12 +52,13 @@ namespace Chess.Systems
             {
                 Debug.Log("BartenderSystem Update - init");
                 GeneratePoolFormConfig();
+                TestUtil.SetBartender(1000);
                 Process.Instance.SetProcess(ConstUtil.Process_Game_Start_Bartender);
             }
-            else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Start)
+            else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_End)
             {
-                // Debug.Log("BartenderSystem Update - battle prepare");
-                // TODO: 设置当前回合的当前玩家的酒馆信息
+                // Debug.Log("BartenderSystem Update - battle prepare end");
+                // TODO: 设置当前回合的当前玩家的酒馆信息，如：当回合玩家拥有金额
                 UpdateBartenderInfo();
             }
         }
