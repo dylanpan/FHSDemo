@@ -27,7 +27,7 @@ namespace Chess.Systems
         }
         public void GeneratePoolFormConfig()
         {
-            List<HeroesConfig> configDataList = ConfigUtil.GetConfigData<HeroesConfig>(ConstUtil.Json_File_Heroes_Config);
+            List<HeroesConfig> configDataList = ConfigUtil.GetConfigDataList<HeroesConfig>(ConstUtil.Json_File_Heroes_Config);
             if (configDataList.Count > 0)
             {
                 for (int i = 0; i < configDataList.Count; i++)

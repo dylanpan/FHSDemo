@@ -10,7 +10,7 @@ namespace Chess.Util
     public class ConfigUtil
     {
         // dotnet add package Newtonsoft.Json --version 13.0.2
-        public static List<T> GetConfigData<T>(string fileName)
+        public static List<T> GetConfigDataList<T>(string fileName)
         {
             List<T> configList = new List<T>();
             using FileStream openStream = File.OpenRead(fileName);
@@ -32,6 +32,10 @@ namespace Chess.Util
                 }
             }
             return configList;
+        }
+        public static T GetConfigData<T>(string config_id)
+        {
+
         }
     }
 }

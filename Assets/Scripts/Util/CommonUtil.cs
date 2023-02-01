@@ -135,13 +135,15 @@ namespace Chess.Util
             CurrencyComponent currencyComponent = (CurrencyComponent)entity.GetComponent<CurrencyComponent>();
             PiecesListComponent piecesListComponent = (PiecesListComponent)entity.GetComponent<PiecesListComponent>();
             StatusComponent statusComponent = (StatusComponent)entity.GetComponent<StatusComponent>();
+            ConfigComponent<BartenderConfig> configComponent = (ConfigComponent<BartenderConfig>)entity.GetComponent<ConfigComponent<BartenderConfig>>();
             bool isBartender = false;
             if (nameComponent != null 
                 && skinComponent != null 
                 && levelComponent != null 
                 && currencyComponent != null 
                 && piecesListComponent != null
-                && statusComponent != null)
+                && statusComponent != null
+                && configComponent != null)
             {
                 isBartender = true;
             }

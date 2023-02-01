@@ -22,13 +22,14 @@ namespace Chess.Systems
                 entity.AddComponent(new CurrencyComponent(){currency = ConstUtil.Init_Currency, up_level_cost = bartenderConfig.up_level_cost[ConstUtil.Init_Level-1], refresh_cost = bartenderConfig.refresh_cost});
                 entity.AddComponent(new PiecesListComponent(){max_num = bartenderConfig.level_list_num[ConstUtil.Init_Level-1], bartender_id = entity.ID});
                 entity.AddComponent(new StatusComponent());
+                entity.AddComponent(new ConfigComponent<BartenderConfig>(){config = bartenderConfig});
                 World.Instance.AddEntity(entity);
                 Process.Instance.AddBartenderToPool(entity.ID);
             }
         }
         public void GeneratePoolFormConfig()
         {
-            List<BartenderConfig> configDataList = ConfigUtil.GetConfigData<BartenderConfig>(ConstUtil.Json_File_Bartender_Config);
+            List<BartenderConfig> configDataList = ConfigUtil.GetConfigDataList<BartenderConfig>(ConstUtil.Json_File_Bartender_Config);
             if (configDataList.Count > 0)
             {
                 for (int i = 0; i < configDataList.Count; i++)
@@ -40,6 +41,60 @@ namespace Chess.Systems
             else
             {
                 Debug.Log("BartenderSystem get empty config");
+            }
+        }
+        public void BartenderLevelUp()
+        {
+            Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            if (player != null)
+            {
+                PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
+                if (playerComponent != null)
+                {
+                    Entity bartender = World.Instance.entityDic[playerComponent.bartender_id];
+                    if (bartender != null)
+                    {
+                        LevelComponent levelComponent = (LevelComponent)bartender.GetComponent<LevelComponent>();
+                        CurrencyComponent currencyComponent = (CurrencyComponent)bartender.GetComponent<CurrencyComponent>();
+                        PiecesListComponent piecesListComponent = (PiecesListComponent)bartender.GetComponent<PiecesListComponent>();
+                        ConfigComponent<BartenderConfig> configComponent = (ConfigComponent<BartenderConfig>)bartender.GetComponent<ConfigComponent<BartenderConfig>>();
+                        if (levelComponent != null && currencyComponent != null && piecesListComponent != null && configComponent != null)
+                        {
+                            if (levelComponent.level < ConstUtil.Max_Level && currencyComponent.currency >= currencyComponent.up_level_cost)
+                            {
+                                levelComponent.level ++;
+                                currencyComponent.currency -= currencyComponent.up_level_cost;
+                                currencyComponent.up_level_cost = configComponent.config.up_level_cost[levelComponent.level-1];
+                                piecesListComponent.max_num = configComponent.config.level_list_num[levelComponent.level-1];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        public void BartenderRefresh()
+        {
+            Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            if (player != null)
+            {
+                PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
+                if (playerComponent != null)
+                {
+                    Entity bartender = World.Instance.entityDic[playerComponent.bartender_id];
+                    if (bartender != null)
+                    {
+                        LevelComponent levelComponent = (LevelComponent)bartender.GetComponent<LevelComponent>();
+                        CurrencyComponent currencyComponent = (CurrencyComponent)bartender.GetComponent<CurrencyComponent>();
+                        if (levelComponent != null && currencyComponent != null)
+                        {
+                            if (currencyComponent.currency >= currencyComponent.refresh_cost)
+                            {
+                                currencyComponent.currency -= currencyComponent.refresh_cost;
+                                // TODO: - 1 更新酒馆棋子列表信息，删除目前已经有的，重新生成新的
+                            }
+                        }
+                    }
+                }
             }
         }
         public void UpdateBartenderInfo()
@@ -54,6 +109,16 @@ namespace Chess.Systems
                 GeneratePoolFormConfig();
                 TestUtil.SetBartender(1000);
                 Process.Instance.SetProcess(ConstUtil.Process_Game_Start_Bartender);
+            }
+            else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Bartender_Level_Up)
+            {
+                BartenderLevelUp();
+                Process.Instance.SetProcess(ConstUtil.Process_Prepare_Ing);
+            }
+            else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Bartender_Refresh)
+            {
+                BartenderRefresh();
+                Process.Instance.SetProcess(ConstUtil.Process_Prepare_Ing);
             }
             else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_End)
             {

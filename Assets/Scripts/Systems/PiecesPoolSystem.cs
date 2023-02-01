@@ -33,7 +33,7 @@ namespace Chess.Systems
 
         public void GeneratePoolFormConfig()
         {
-            List<PiecesConfig> configDataList = ConfigUtil.GetConfigData<PiecesConfig>(ConstUtil.Json_File_Pieces_Config);
+            List<PiecesConfig> configDataList = ConfigUtil.GetConfigDataList<PiecesConfig>(ConstUtil.Json_File_Pieces_Config);
             if (configDataList.Count > 0)
             {
                 for (int i = 0; i < configDataList.Count; i++)
@@ -93,6 +93,27 @@ namespace Chess.Systems
             return id;
         }
 
+        private PiecesListComponent UpdateBartenderPiecesList(out int bartender_id)
+        {
+            bartender_id = ConstUtil.None;
+            PiecesListComponent piecesListComponent;
+            Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            if (player != null)
+            {
+                PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
+                if (playerComponent != null)
+                {
+                    if (playerComponent.bartender_id != ConstUtil.None)
+                    {
+                        bartender_id = playerComponent.bartender_id;
+                        Entity bartender = World.Instance.entityDic[playerComponent.bartender_id];
+                        piecesListComponent = (PiecesListComponent)bartender.GetComponent<PiecesListComponent>();
+                    }
+                }
+            }
+            return piecesListComponent;
+        }
+
         public override void Update()
         {
             if (Process.Instance.GetProcess() == ConstUtil.Process_Game_Start_Heroes_Pool)
@@ -104,24 +125,29 @@ namespace Chess.Systems
             else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Start)
             {
                 // 从池子中抽取当前玩家酒馆的棋子信息
-                Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
-                if (player != null)
+                int bartender_id = ConstUtil.None;
+                PiecesListComponent piecesListComponent = UpdateBartenderPiecesList(out bartender_id);
+                if (piecesListComponent != null)
                 {
-                    PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
-                    if (playerComponent != null)
+                    if (piecesListComponent.piecesIds.Count <= 0)
                     {
-                        if (playerComponent.bartender_id != ConstUtil.None)
-                        {
-                            Entity bartender = World.Instance.entityDic[playerComponent.bartender_id];
-                            PiecesListComponent piecesListComponent = (PiecesListComponent)bartender.GetComponent<PiecesListComponent>();
-                            if (piecesListComponent.piecesIds.Count <= 0)
-                            {
-                                Debug.Log("PiecesPoolSystem Update - battle prepare");
-                                piecesListComponent.piecesIds = GetRamdomPiecesFormPool(piecesListComponent.max_num);
-                                EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_pieces_view, playerComponent.bartender_id);
-                            }
-                        }
+                        Debug.Log("PiecesPoolSystem Update - prepare start");
+                        piecesListComponent.piecesIds = GetRamdomPiecesFormPool(piecesListComponent.max_num);
+                        EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_pieces_view, bartender_id);
                     }
+                    else
+                    {
+                        // TODO: - 1 承接上回合结束，刷新酒馆已有非冻结棋子 GetRamdomPiecesFormPool(计算num有几个)
+                    }
+                }
+            }
+            else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Bartender_Refresh)
+            {
+                int bartender_id = ConstUtil.None;
+                PiecesListComponent piecesListComponent = UpdateBartenderPiecesList(out bartender_id);
+                if (piecesListComponent != null)
+                {
+                    // TODO: - 1 刷新酒馆已有非冻结棋子 GetRamdomPiecesFormPool(计算num有几个)
                 }
             }
             else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_End)

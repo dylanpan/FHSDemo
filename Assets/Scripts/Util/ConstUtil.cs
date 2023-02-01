@@ -31,6 +31,7 @@ namespace Chess.Util
         public const int Max_Num_Player = 2;
 
         public const int Init_Level = 1;
+        public const int Max_Level = 6;
         public const int Init_Currency = 3;
         
         public const string Json_File_Pieces_Config = "Assets/Scripts/Json/PiecesConfig.json";
@@ -53,6 +54,8 @@ namespace Chess.Util
         public const int Process_Prepare_Start = 300;
         // 战斗准备中: 刷新酒馆
         public const int Process_Prepare_Ing = 400;
+        public const int Process_Prepare_Bartender_Level_Up = 401;
+        public const int Process_Prepare_Bartender_Refresh = 402;
         // 战斗准备结束
         public const int Process_Prepare_End = 500;
         // 战斗开始

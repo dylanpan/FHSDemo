@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using Chess.Base;
 using Chess.Component;
+using Chess.Config;
 using Chess.Util;
 
 public class BartenderView : MonoBehaviour
@@ -93,7 +94,7 @@ public class BartenderView : MonoBehaviour
         }
         else
         {
-            Entity bartender = bartender = World.Instance.entityDic[id];
+            Entity bartender = World.Instance.entityDic[id];
             if (bartender != null)
             {
                 PiecesListComponent piecesListComponent = (PiecesListComponent)bartender.GetComponent<PiecesListComponent>();
@@ -135,11 +136,11 @@ public class BartenderView : MonoBehaviour
     }
     public void OnClickLevelBtn()
     {
-        // TODO: - 1 补充升级消耗逻辑 currencyComponent.currency >= currencyComponent.up_level_cost
+        Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Level_Up);
     }
     public void OnClickRefreshBtn()
     {
-        // TODO: - 1 补充刷新消耗逻辑 currencyComponent.currency >= currencyComponent.refresh_cost
+        Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Refresh);
     }
     public void OnClickFreezeBtn()
     {
