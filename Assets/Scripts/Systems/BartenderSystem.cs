@@ -66,6 +66,7 @@ namespace Chess.Systems
                                 currencyComponent.currency -= currencyComponent.up_level_cost;
                                 currencyComponent.up_level_cost = configComponent.config.up_level_cost[levelComponent.level-1];
                                 piecesListComponent.max_num = configComponent.config.level_list_num[levelComponent.level-1];
+                                EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_currency, currencyComponent.currency);
                             }
                         }
                     }
@@ -90,7 +91,7 @@ namespace Chess.Systems
                             if (currencyComponent.currency >= currencyComponent.refresh_cost)
                             {
                                 currencyComponent.currency -= currencyComponent.refresh_cost;
-                                // TODO: - 1 更新酒馆棋子列表信息，删除目前已经有的，重新生成新的
+                                EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_currency, currencyComponent.currency);
                             }
                         }
                     }
@@ -112,11 +113,13 @@ namespace Chess.Systems
             }
             else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Bartender_Level_Up)
             {
+                Debug.Log("BartenderSystem Update - prepare level up");
                 BartenderLevelUp();
                 Process.Instance.SetProcess(ConstUtil.Process_Prepare_Ing);
             }
             else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Bartender_Refresh)
             {
+                Debug.Log("BartenderSystem Update - prepare refresh");
                 BartenderRefresh();
                 Process.Instance.SetProcess(ConstUtil.Process_Prepare_Ing);
             }

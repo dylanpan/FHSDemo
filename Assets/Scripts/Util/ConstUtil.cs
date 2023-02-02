@@ -70,5 +70,6 @@ namespace Chess.Util
         // 通知
         public const int Event_Type_close_hero_pick_view = 10000;
         public const int Event_Type_update_bartender_pieces_view = 10001;
+        public const int Event_Type_update_bartender_currency = 10002;
     }
 }

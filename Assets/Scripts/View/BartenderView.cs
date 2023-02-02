@@ -24,11 +24,13 @@ public class BartenderView : MonoBehaviour
     public Transform PiecesLayout;
     void Awake()
     {
-        EventUtil.Instance.Register(ConstUtil.Event_Type_update_bartender_pieces_view, updateBartenderPiecesView);
+        EventUtil.Instance.Register(ConstUtil.Event_Type_update_bartender_pieces_view, UpdateBartenderPiecesView);
+        EventUtil.Instance.Register(ConstUtil.Event_Type_update_bartender_currency, UpdateBartenderCurrency);
     }
     private void OnDestroy()
     {
-        EventUtil.Instance.Unregister(ConstUtil.Event_Type_update_bartender_pieces_view, updateBartenderPiecesView);
+        EventUtil.Instance.Unregister(ConstUtil.Event_Type_update_bartender_pieces_view, UpdateBartenderPiecesView);
+        EventUtil.Instance.Unregister(ConstUtil.Event_Type_update_bartender_currency, UpdateBartenderCurrency);
     }
     // Start is called before the first frame update
     void Start()
@@ -81,16 +83,20 @@ public class BartenderView : MonoBehaviour
                         RefreshBtnLabel.text = currencyComponent.refresh_cost.ToString();
                         CurrencyBtnLabel.text = currencyComponent.currency.ToString();
                     }
-                    updateBartenderPiecesView(bartender.ID);
+                    UpdateBartenderPiecesView(bartender.ID);
                 }
             }
         }
     }
-    private void updateBartenderPiecesView(int id = ConstUtil.None)
+    private void UpdateBartenderCurrency(int currency)
+    {
+        CurrencyBtnLabel.text = currency.ToString();
+    }
+    private void UpdateBartenderPiecesView(int id = ConstUtil.None)
     {
         if (id == ConstUtil.None)
         {
-            Debug.Log("BartenderView updateBartenderPiecesView - no bartender");
+            Debug.Log("BartenderView UpdateBartenderPiecesView - no bartender");
         }
         else
         {
@@ -102,6 +108,7 @@ public class BartenderView : MonoBehaviour
                 {
                     if (piecesListComponent.piecesIds.Count > 0)
                     {
+                        CleanAllPiecesView();
                         for (int i = 0; i < piecesListComponent.piecesIds.Count; i++)
                         {
                             Entity piece = World.Instance.entityDic[piecesListComponent.piecesIds[i]];
@@ -110,13 +117,27 @@ public class BartenderView : MonoBehaviour
                         }
                         for (int i = 0; i < piecesListComponent.piecesIds.Count; i++)
                         {
-                            Debug.Log("BartenderView updateBartenderPiecesView - prepare: " + piecesListComponent.piecesIds[i].ToString());
+                            Debug.Log("BartenderView UpdateBartenderPiecesView - prepare: " + piecesListComponent.piecesIds[i].ToString());
                         }
                     }
                     else
                     {
-                        Debug.Log("BartenderView updateBartenderPiecesView - prepare no");
+                        Debug.Log("BartenderView UpdateBartenderPiecesView - prepare no");
                     }
+                }
+            }
+        }
+    }
+    public void CleanAllPiecesView()
+    {
+        if (PiecesLayout.childCount > 0)
+        {
+            for (int i = 0; i < PiecesLayout.childCount; i++)
+            {
+                Transform child = PiecesLayout.GetChild(i);
+                if (child != null)
+                {
+                    GameObject.Destroy(child.gameObject);
                 }
             }
         }

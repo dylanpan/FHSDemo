@@ -23,7 +23,7 @@ namespace Chess.Component
         }
         public override void LoggerString()
         {
-            Debug.Log("---> ConfigComponent<T>:{config:" + typeof(config) + "}");
+            Debug.Log("---> ConfigComponent<T>:{config:" + config.GetType() + "}");
         }
     }
 }

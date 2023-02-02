@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Chess.Base;
+using Chess.Config;
 using Chess.Component;
 using UnityEngine;
 
@@ -82,6 +83,7 @@ namespace Chess.Util
             PorpertyComponent porpertyComponent = (PorpertyComponent)entity.GetComponent<PorpertyComponent>();
             BuffComponent buffComponent = (BuffComponent)entity.GetComponent<BuffComponent>();
             StatusComponent statusComponent = (StatusComponent)entity.GetComponent<StatusComponent>();
+            ConfigComponent<PiecesConfig> configComponent = (ConfigComponent<PiecesConfig>)entity.GetComponent<ConfigComponent<PiecesConfig>>();
             bool isPiece = false;
             if (nameComponent != null 
                 && skinComponent != null 
@@ -89,7 +91,8 @@ namespace Chess.Util
                 && currencyComponent != null 
                 && porpertyComponent != null 
                 && buffComponent != null 
-                && statusComponent != null)
+                && statusComponent != null
+                && configComponent != null)
             {
                 isPiece = true;
             }
@@ -102,12 +105,14 @@ namespace Chess.Util
             SkillComponent skillComponent = (SkillComponent)entity.GetComponent<SkillComponent>();
             PorpertyComponent porpertyComponent = (PorpertyComponent)entity.GetComponent<PorpertyComponent>();
             StatusComponent statusComponent = (StatusComponent)entity.GetComponent<StatusComponent>();
+            ConfigComponent<HeroesConfig> configComponent = (ConfigComponent<HeroesConfig>)entity.GetComponent<ConfigComponent<HeroesConfig>>();
             bool isHero = false;
             if (nameComponent != null 
                 && skinComponent != null 
                 && skillComponent != null 
                 && porpertyComponent != null
-                && statusComponent != null)
+                && statusComponent != null
+                && configComponent != null)
             {
                 isHero = true;
             }

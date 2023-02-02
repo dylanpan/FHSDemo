@@ -21,6 +21,7 @@ namespace Chess.Systems
                 entity.AddComponent(new SkillComponent(){skill_id = heroesConfig.skill_id});
                 entity.AddComponent(new PorpertyComponent(){atk = heroesConfig.atk, hp = heroesConfig.hp});
                 entity.AddComponent(new StatusComponent());
+                entity.AddComponent(new ConfigComponent<HeroesConfig>(){config = heroesConfig});
                 World.Instance.AddEntity(entity);
                 Process.Instance.AddHeroToPool(entity.ID);
             }

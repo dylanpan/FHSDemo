@@ -33,9 +33,5 @@ namespace Chess.Util
             }
             return configList;
         }
-        public static T GetConfigData<T>(string config_id)
-        {
-
-        }
     }
 }
