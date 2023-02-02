@@ -32,7 +32,7 @@ namespace Chess.Util
 
         public const int Init_Level = 1;
         public const int Max_Level = 6;
-        public const int Init_Currency = 3;
+        public const int Init_Currency = 300;
         
         public const string Json_File_Pieces_Config = "Assets/Scripts/Json/PiecesConfig.json";
         public const string Json_File_Heroes_Config = "Assets/Scripts/Json/HeroesConfig.json";
@@ -55,7 +55,9 @@ namespace Chess.Util
         // 战斗准备中: 刷新酒馆
         public const int Process_Prepare_Ing = 400;
         public const int Process_Prepare_Bartender_Level_Up = 401;
-        public const int Process_Prepare_Bartender_Refresh = 402;
+        public const int Process_Prepare_Bartender_Refresh_Pre = 402;
+        public const int Process_Prepare_Bartender_Refresh = 403;
+        public const int Process_Prepare_Bartender_Freeze = 404;
         // 战斗准备结束
         public const int Process_Prepare_End = 500;
         // 战斗开始
@@ -71,5 +73,6 @@ namespace Chess.Util
         public const int Event_Type_close_hero_pick_view = 10000;
         public const int Event_Type_update_bartender_pieces_view = 10001;
         public const int Event_Type_update_bartender_currency = 10002;
+        public const int Event_Type_update_bartender_level = 10003;
     }
 }

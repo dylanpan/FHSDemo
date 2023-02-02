@@ -26,11 +26,13 @@ public class BartenderView : MonoBehaviour
     {
         EventUtil.Instance.Register(ConstUtil.Event_Type_update_bartender_pieces_view, UpdateBartenderPiecesView);
         EventUtil.Instance.Register(ConstUtil.Event_Type_update_bartender_currency, UpdateBartenderCurrency);
+        EventUtil.Instance.Register(ConstUtil.Event_Type_update_bartender_level, UpdateBartenderLevel);
     }
     private void OnDestroy()
     {
         EventUtil.Instance.Unregister(ConstUtil.Event_Type_update_bartender_pieces_view, UpdateBartenderPiecesView);
         EventUtil.Instance.Unregister(ConstUtil.Event_Type_update_bartender_currency, UpdateBartenderCurrency);
+        EventUtil.Instance.Unregister(ConstUtil.Event_Type_update_bartender_level, UpdateBartenderLevel);
     }
     // Start is called before the first frame update
     void Start()
@@ -92,6 +94,10 @@ public class BartenderView : MonoBehaviour
     {
         CurrencyBtnLabel.text = currency.ToString();
     }
+    private void UpdateBartenderLevel(int level)
+    {
+        LevelBtnLabel.text = "Lv." + level.ToString();
+    }
     private void UpdateBartenderPiecesView(int id = ConstUtil.None)
     {
         if (id == ConstUtil.None)
@@ -113,7 +119,7 @@ public class BartenderView : MonoBehaviour
                         {
                             Entity piece = World.Instance.entityDic[piecesListComponent.piecesIds[i]];
                             // TODO: 设置正确位置
-                            AddPieceView(PiecesLayout, new Vector3(){x=(i-1)*200,y=-300,z=0}, piecesListComponent.piecesIds[i]);
+                            AddPieceView(i, PiecesLayout, piecesListComponent.piecesIds[i], CommonUtil.Battle_GetEntityStatus(piece) == ConstUtil.Status_Piece_Freeze);
                         }
                         for (int i = 0; i < piecesListComponent.piecesIds.Count; i++)
                         {
@@ -142,13 +148,26 @@ public class BartenderView : MonoBehaviour
             }
         }
     }
-    public void AddPieceView(Transform parent, Vector3 pos, int id)
+    public void AddPieceView(int index, Transform parent, int id, bool isFreeze)
     {
         GameObject view = (GameObject)GameObject.Instantiate(Resources.Load("Prefabs/PieceView"));
         view.transform.parent = parent;
-        view.transform.position += pos;
+        Vector3 pos = new Vector3(){x=0,y=0,z=0};
+        if (index == 0)
+        {
+            pos = new Vector3(){x=-240,y=200,z=0};
+        }
+        if (index == 1)
+        {
+            pos = new Vector3(){x=0,y=200,z=0};
+        }
+        if (index == 2)
+        {
+            pos = new Vector3(){x=240,y=200,z=0};
+        }
+        view.transform.position = pos;
         PieceView script = view.transform.GetComponent<PieceView>();
-        script.UpdateViewByData(id);
+        script.UpdateViewByData(id, isFreeze);
     }
 
     public void OnClickCurrencyBtn()
@@ -165,9 +184,10 @@ public class BartenderView : MonoBehaviour
     }
     public void OnClickFreezeBtn()
     {
-        // TODO: - 1 补充购买棋子状态逻辑 currencyComponent.currency >= currencyComponent.piece_cost
-        // TODO: - 1 补充出售棋子状态逻辑 currencyComponent.currency += currencyComponent.piece_recycle
-        // TODO: - 1 补充更新棋子状态逻辑
+        // TODO: - 1 补充取消冻结
+        Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Freeze);
+        // TODO: 补充购买棋子（手牌）状态逻辑 currencyComponent.currency >= currencyComponent.piece_cost
+        // TODO: 补充出售棋子（手牌和战牌）状态逻辑 currencyComponent.currency += currencyComponent.piece_recycle
     }
 
     // Update is called once per frame

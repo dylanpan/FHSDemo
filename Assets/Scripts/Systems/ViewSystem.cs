@@ -35,6 +35,7 @@ namespace Chess.Systems
                 view.transform.parent = mUICanvas.transform;
                 BartenderView script = view.transform.GetComponent<BartenderView>();
                 script.UpdateViewByData();
+                Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Refresh_Pre);
             }
         }
         public override void Update()

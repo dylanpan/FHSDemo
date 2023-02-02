@@ -67,13 +67,14 @@ namespace Chess.Systems
                                 currencyComponent.up_level_cost = configComponent.config.up_level_cost[levelComponent.level-1];
                                 piecesListComponent.max_num = configComponent.config.level_list_num[levelComponent.level-1];
                                 EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_currency, currencyComponent.currency);
+                                EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_level, levelComponent.level);
                             }
                         }
                     }
                 }
             }
         }
-        public void BartenderRefresh()
+        public void BartenderRefresh(bool isCost)
         {
             Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
             if (player != null)
@@ -88,10 +89,17 @@ namespace Chess.Systems
                         CurrencyComponent currencyComponent = (CurrencyComponent)bartender.GetComponent<CurrencyComponent>();
                         if (levelComponent != null && currencyComponent != null)
                         {
-                            if (currencyComponent.currency >= currencyComponent.refresh_cost)
+                            if (isCost)
                             {
-                                currencyComponent.currency -= currencyComponent.refresh_cost;
-                                EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_currency, currencyComponent.currency);
+                                if (currencyComponent.currency >= currencyComponent.refresh_cost)
+                                {
+                                    currencyComponent.currency -= currencyComponent.refresh_cost;
+                                    EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_currency, currencyComponent.currency);
+                                }
+                                else
+                                {
+                                    Process.Instance.SetProcess(ConstUtil.Process_Prepare_Ing);
+                                }
                             }
                         }
                     }
@@ -117,11 +125,14 @@ namespace Chess.Systems
                 BartenderLevelUp();
                 Process.Instance.SetProcess(ConstUtil.Process_Prepare_Ing);
             }
+            else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Bartender_Refresh_Pre)
+            {
+                Debug.Log("BartenderSystem Update - prepare refresh pre");
+            }
             else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Bartender_Refresh)
             {
                 Debug.Log("BartenderSystem Update - prepare refresh");
-                BartenderRefresh();
-                Process.Instance.SetProcess(ConstUtil.Process_Prepare_Ing);
+                BartenderRefresh(true);
             }
             else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_End)
             {
