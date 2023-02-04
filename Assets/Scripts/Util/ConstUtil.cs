@@ -58,6 +58,7 @@ namespace Chess.Util
         public const int Process_Prepare_Bartender_Refresh_Pre = 402;
         public const int Process_Prepare_Bartender_Refresh = 403;
         public const int Process_Prepare_Bartender_Freeze = 404;
+        public const int Process_Prepare_Bartender_UnFreeze = 405;
         // 战斗准备结束
         public const int Process_Prepare_End = 500;
         // 战斗开始

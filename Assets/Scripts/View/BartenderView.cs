@@ -184,8 +184,16 @@ public class BartenderView : MonoBehaviour
     }
     public void OnClickFreezeBtn()
     {
-        // TODO: - 1 补充取消冻结
-        Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Freeze);
+        if (Process.Instance.GetBartenderPieceFreezeState())
+        {
+            Process.Instance.SetBartenderPieceFreezeState(false);
+            Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_UnFreeze);
+        }
+        else
+        {
+            Process.Instance.SetBartenderPieceFreezeState(true);
+            Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Freeze);
+        }
         // TODO: 补充购买棋子（手牌）状态逻辑 currencyComponent.currency >= currencyComponent.piece_cost
         // TODO: 补充出售棋子（手牌和战牌）状态逻辑 currencyComponent.currency += currencyComponent.piece_recycle
     }

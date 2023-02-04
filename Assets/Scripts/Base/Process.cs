@@ -117,5 +117,14 @@ namespace Chess.Base
             }
             return piece_pool;
         }
+        private bool _isFreeze = false;
+        public void SetBartenderPieceFreezeState(bool state)
+        {
+            _isFreeze = state;
+        }
+        public bool GetBartenderPieceFreezeState()
+        {
+            return _isFreeze;
+        }
     }
 }

@@ -82,6 +82,7 @@ namespace Chess.Base
     }
 }
 
+// 整个游戏启动包装一层状态监测，参考 GameStateMachine
 
 // World
 // {

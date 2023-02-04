@@ -147,13 +147,14 @@ namespace Chess.Systems
                         }
                     }
                     random_total = piecesListComponent.max_num - freeze_total;
+                    // TODO: - 1 对原有的棋子状态 pick 进行重置
                     List<int> randomPiecesIds = GetRamdomPiecesFormPool(random_total);
                     piecesListComponent.piecesIds = freezePiecesIds.Concat(randomPiecesIds).ToList<int>();
                 }
                 EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_pieces_view, bartender_id);
             }
         }
-        public void FreezeBartenderPiecesList()
+        public void UpdateBartenderPiecesListFreezeState(bool isFreeze)
         {
             int bartender_id = ConstUtil.None;
             PiecesListComponent piecesListComponent = UpdateBartenderPiecesList(out bartender_id);
@@ -164,7 +165,14 @@ namespace Chess.Systems
                 {
                     int piece_id = piecesListComponent.piecesIds[i];
                     Entity piece = World.Instance.entityDic[piece_id];
-                    CommonUtil.Battle_SetEntityStatus(piece, ConstUtil.Status_Piece_Freeze);
+                    if (isFreeze)
+                    {
+                        CommonUtil.Battle_SetEntityStatus(piece, ConstUtil.Status_Piece_Freeze);
+                    }
+                    else
+                    {
+                        CommonUtil.Battle_SetEntityStatus(piece, ConstUtil.None);
+                    }
                 }
                 EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_pieces_view, bartender_id);
             }
@@ -187,7 +195,13 @@ namespace Chess.Systems
             else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Bartender_Freeze)
             {
                 // 冻结酒馆的棋子
-                FreezeBartenderPiecesList();
+                UpdateBartenderPiecesListFreezeState(true);
+                Process.Instance.SetProcess(ConstUtil.Process_Prepare_Ing);
+            }
+            else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Bartender_UnFreeze)
+            {
+                // 解除冻结酒馆的棋子
+                UpdateBartenderPiecesListFreezeState();
                 Process.Instance.SetProcess(ConstUtil.Process_Prepare_Ing);
             }
             else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_End)
