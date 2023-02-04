@@ -73,6 +73,15 @@ namespace Chess.Util
         }
         #endregion
 
+        public static void ResetPiecesStatus(List<int> piecesIdList)
+        {
+            foreach (int pieceId in piecesIdList)
+            {
+                Entity piece = World.Instance.entityDic[pieceId];
+                CommonUtil.Battle_SetEntityStatus(piece, ConstUtil.None);
+            }
+        }
+
         #region Check
         public static bool CheckIsPiece(Entity entity)
         {

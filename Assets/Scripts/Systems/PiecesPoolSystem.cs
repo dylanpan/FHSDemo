@@ -134,8 +134,8 @@ namespace Chess.Systems
                 else
                 {
                     List<int> freezePiecesIds = new List<int>();
+                    List<int> unFreezePiecesIds = new List<int>();
                     int freeze_total = 0;
-                    // TODO: - 1 冻结后刷新有问题
                     for (int i = 0; i < piecesListComponent.piecesIds.Count; i++)
                     {
                         int piece_id = piecesListComponent.piecesIds[i];
@@ -145,32 +145,37 @@ namespace Chess.Systems
                             freezePiecesIds.Add(piece_id);
                             freeze_total ++;
                         }
+                        else
+                        {
+                            unFreezePiecesIds.Add(piece_id);
+                        }
                     }
                     random_total = piecesListComponent.max_num - freeze_total;
-                    // TODO: - 1 对原有的棋子状态 pick 进行重置
+                    CommonUtil.ResetPiecesStatus(unFreezePiecesIds);
                     List<int> randomPiecesIds = GetRamdomPiecesFormPool(random_total);
                     piecesListComponent.piecesIds = freezePiecesIds.Concat(randomPiecesIds).ToList<int>();
                 }
                 EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_pieces_view, bartender_id);
             }
         }
-        public void UpdateBartenderPiecesListFreezeState(bool isFreeze)
+        public void UpdateBartenderPiecesListFreezeState(bool isFreeze = false)
         {
             int bartender_id = ConstUtil.None;
             PiecesListComponent piecesListComponent = UpdateBartenderPiecesList(out bartender_id);
             if (piecesListComponent != null)
             {
-                Debug.Log("PiecesPoolSystem Update - prepare freeze");
                 for (int i = 0; i < piecesListComponent.piecesIds.Count; i++)
                 {
                     int piece_id = piecesListComponent.piecesIds[i];
                     Entity piece = World.Instance.entityDic[piece_id];
                     if (isFreeze)
                     {
+                        Debug.Log("PiecesPoolSystem Update - prepare freeze");
                         CommonUtil.Battle_SetEntityStatus(piece, ConstUtil.Status_Piece_Freeze);
                     }
                     else
                     {
+                        Debug.Log("PiecesPoolSystem Update - prepare unFreeze");
                         CommonUtil.Battle_SetEntityStatus(piece, ConstUtil.None);
                     }
                 }

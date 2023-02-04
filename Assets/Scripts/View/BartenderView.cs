@@ -110,7 +110,8 @@ public class BartenderView : MonoBehaviour
             if (bartender != null)
             {
                 PiecesListComponent piecesListComponent = (PiecesListComponent)bartender.GetComponent<PiecesListComponent>();
-                if (piecesListComponent != null)
+                LevelComponent levelComponent = (LevelComponent)bartender.GetComponent<LevelComponent>();
+                if (piecesListComponent != null && levelComponent != null)
                 {
                     if (piecesListComponent.piecesIds.Count > 0)
                     {
@@ -119,7 +120,7 @@ public class BartenderView : MonoBehaviour
                         {
                             Entity piece = World.Instance.entityDic[piecesListComponent.piecesIds[i]];
                             // TODO: 设置正确位置
-                            AddPieceView(i, PiecesLayout, piecesListComponent.piecesIds[i], CommonUtil.Battle_GetEntityStatus(piece) == ConstUtil.Status_Piece_Freeze);
+                            AddPieceView(i, PiecesLayout, piecesListComponent.piecesIds[i], levelComponent.level, CommonUtil.Battle_GetEntityStatus(piece) == ConstUtil.Status_Piece_Freeze);
                         }
                         for (int i = 0; i < piecesListComponent.piecesIds.Count; i++)
                         {
@@ -148,31 +149,55 @@ public class BartenderView : MonoBehaviour
             }
         }
     }
-    public void AddPieceView(int index, Transform parent, int id, bool isFreeze)
+    public void AddPieceView(int index, Transform parent, int id, int level, bool isFreeze)
     {
         GameObject view = (GameObject)GameObject.Instantiate(Resources.Load("Prefabs/PieceView"));
         view.transform.parent = parent;
-        Vector3 pos = new Vector3(){x=0,y=0,z=0};
-        if (index == 0)
-        {
-            pos = new Vector3(){x=-240,y=200,z=0};
-        }
-        if (index == 1)
-        {
-            pos = new Vector3(){x=0,y=200,z=0};
-        }
-        if (index == 2)
-        {
-            pos = new Vector3(){x=240,y=200,z=0};
-        }
+        Vector3 pos = GetPosByLevel(index, level);
         view.transform.position = pos;
         PieceView script = view.transform.GetComponent<PieceView>();
         script.UpdateViewByData(id, isFreeze);
     }
 
+    private Vector3 GetPosByLevel(int index, int level)
+    {
+        Vector3 pos = new Vector3(){x=0,y=0,z=0};
+        if (level < 2)
+        {
+            if (index == 0) { pos = new Vector3(){x=-240,y=200,z=0};}
+            if (index == 1) { pos = new Vector3(){x=0,y=200,z=0};}
+            if (index == 2) { pos = new Vector3(){x=240,y=200,z=0};}
+        }
+        else if (level < 5)
+        {
+            if (index == 0) { pos = new Vector3(){x=-360,y=200,z=0};}
+            if (index == 1) { pos = new Vector3(){x=-120,y=200,z=0};}
+            if (index == 2) { pos = new Vector3(){x=120,y=200,z=0};}
+            if (index == 3) { pos = new Vector3(){x=360,y=200,z=0};}
+        }
+        else if (level < 6)
+        {
+            if (index == 0) { pos = new Vector3(){x=-480,y=200,z=0};}
+            if (index == 1) { pos = new Vector3(){x=-240,y=200,z=0};}
+            if (index == 2) { pos = new Vector3(){x=0,y=200,z=0};}
+            if (index == 3) { pos = new Vector3(){x=240,y=200,z=0};}
+            if (index == 4) { pos = new Vector3(){x=480,y=200,z=0};}
+        }
+        else
+        {
+            if (index == 0) { pos = new Vector3(){x=-600,y=200,z=0};}
+            if (index == 1) { pos = new Vector3(){x=-360,y=200,z=0};}
+            if (index == 2) { pos = new Vector3(){x=-120,y=200,z=0};}
+            if (index == 3) { pos = new Vector3(){x=120,y=200,z=0};}
+            if (index == 4) { pos = new Vector3(){x=360,y=200,z=0};}
+            if (index == 5) { pos = new Vector3(){x=600,y=200,z=0};}
+        }
+        return pos;
+    }
+
     public void OnClickCurrencyBtn()
     {
-        Process.Instance.SetProcess(ConstUtil.Process_Battle_Start);
+        Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Refresh_Pre);
     }
     public void OnClickLevelBtn()
     {
@@ -180,6 +205,7 @@ public class BartenderView : MonoBehaviour
     }
     public void OnClickRefreshBtn()
     {
+        Process.Instance.SetBartenderPieceFreezeState(false);
         Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Refresh);
     }
     public void OnClickFreezeBtn()

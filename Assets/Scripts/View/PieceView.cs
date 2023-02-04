@@ -45,7 +45,7 @@ public class PieceView : MonoBehaviour
             Atk.text = porpertyComponent.atk.ToString();
             Hp.text = porpertyComponent.hp.ToString();
         }
-        BgBtn.transform.GetComponent<Image>().color = isFreeze ? new Color(0,112,180,255) : new Color(0,0,0,255);
+        BgBtn.transform.GetComponent<Image>().color = isFreeze ? new Color(0,100,180,255) : new Color(0,0,0,255);
     }
 
     // Update is called once per frame
