@@ -26,7 +26,7 @@ public class PieceView : MonoBehaviour
         Debug.Log("PieceView InitView");
     }
 
-    public void UpdateViewByData(int id, bool isFreeze)
+    public void UpdateViewByData(int id, bool isFreeze = false)
     {
         piece = World.Instance.entityDic[id];
         NameComponent nameComponent = (NameComponent)piece.GetComponent<NameComponent>();

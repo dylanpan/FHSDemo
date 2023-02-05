@@ -38,6 +38,21 @@ namespace Chess.Systems
                 Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Refresh_Pre);
             }
         }
+        public void AddPlayerView()
+        {
+            GameObject playerView = GameObject.Find("UIRoot/PlayerView");
+            if (playerView == null)
+            {
+                Debug.Log("ViewSystem Update - add bartender");
+                GameObject view = (GameObject)GameObject.Instantiate(Resources.Load("Prefabs/PlayerView"));
+                GameObject mUICanvas = GameObject.Find("UIRoot");
+                view.name = "PlayerView";
+                view.transform.parent = mUICanvas.transform;
+                PlayerView script = view.transform.GetComponent<PlayerView>();
+                script.UpdateViewByData();
+                Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Refresh_Pre);
+            }
+        }
         public override void Update()
         {
             if (Process.Instance.GetProcess() == ConstUtil.None)
@@ -55,6 +70,7 @@ namespace Chess.Systems
             else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Start)
             {
                 AddBartenderView();
+                AddPlayerView();
             }
         }
     }
