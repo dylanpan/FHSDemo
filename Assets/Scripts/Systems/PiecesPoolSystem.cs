@@ -182,7 +182,175 @@ namespace Chess.Systems
                 EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_pieces_view, bartender_id);
             }
         }
-
+        public void PieceBuy()
+        {
+            Debug.Log("BartenderSystem Update - prepare sold out");
+            Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            if (player != null)
+            {
+                PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
+                if (playerComponent != null)
+                {
+                    Entity piece = World.Instance.entityDic[playerComponent.piece_buy_id];
+                    if (piece != null)
+                    {
+                        bool isUpdateUI = false;
+                        Entity bartender = World.Instance.entityDic[playerComponent.bartender_id];
+                        if (bartender != null)
+                        {
+                            PiecesListComponent piecesListComponent = (PiecesListComponent)bartender.GetComponent<PiecesListComponent>();
+                            if (piecesListComponent != null)
+                            {
+                                piecesListComponent.piecesIds.Remove(piece.ID);
+                                isUpdateUI = true;
+                            }
+                        }
+                        Entity handCard = World.Instance.entityDic[playerComponent.hand_card_id];
+                        if (handCard != null)
+                        {
+                            PiecesListComponent piecesListComponent = (PiecesListComponent)handCard.GetComponent<PiecesListComponent>();
+                            if (piecesListComponent != null)
+                            {
+                                piecesListComponent.piecesIds.Add(piece.ID);
+                                isUpdateUI = true;
+                            }
+                        }
+                        if (isUpdateUI)
+                        {
+                            // TODO: - 1 通知界面更新
+                        }
+                        CurrencyComponent currencyComponent = (CurrencyComponent)piece.GetComponent<CurrencyComponent>();
+                        if (currencyComponent != null)
+                        {
+                            EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_currency, currencyComponent.piece_cost);
+                        }
+                    }
+                    playerComponent.piece_buy_id = ConstUtil.None;
+                }
+            }
+        }
+        public void PieceSell()
+        {
+            Debug.Log("BartenderSystem Update - prepare sell");
+            Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            if (player != null)
+            {
+                PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
+                if (playerComponent != null)
+                {
+                    Entity piece = World.Instance.entityDic[playerComponent.piece_sell_id];
+                    if (piece != null)
+                    {
+                        bool isUpdateUI = false;
+                        Entity handCard = World.Instance.entityDic[playerComponent.hand_card_id];
+                        if (handCard != null)
+                        {
+                            PiecesListComponent piecesListComponent = (PiecesListComponent)handCard.GetComponent<PiecesListComponent>();
+                            if (piecesListComponent != null && piecesListComponent.piecesIds.Contains(piece.ID))
+                            {
+                                piecesListComponent.piecesIds.Remove(piece.ID);
+                                isUpdateUI = true;
+                            }
+                        }
+                        Entity battleCard = World.Instance.entityDic[playerComponent.battle_card_id];
+                        if (battleCard != null)
+                        {
+                            PiecesListComponent piecesListComponent = (PiecesListComponent)battleCard.GetComponent<PiecesListComponent>();
+                            if (piecesListComponent != null && piecesListComponent.piecesIds.Contains(piece.ID))
+                            {
+                                piecesListComponent.piecesIds.Remove(piece.ID);
+                                isUpdateUI = true;
+                            }
+                        }
+                        if (isUpdateUI)
+                        {
+                            // TODO: - 1 通知界面更新
+                        }
+                        CurrencyComponent currencyComponent = (CurrencyComponent)piece.GetComponent<CurrencyComponent>();
+                        if (currencyComponent != null)
+                        {
+                            EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_currency, currencyComponent.piece_recycle);
+                        }
+                    }
+                    playerComponent.piece_sell_id = ConstUtil.None;
+                }
+            }
+        }
+        public void PieceMove()
+        {
+            Debug.Log("BartenderSystem Update - prepare move");
+            Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            if (player != null)
+            {
+                PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
+                if (playerComponent != null)
+                {
+                    Entity pieceSource = World.Instance.entityDic[playerComponent.piece_move_source_id];
+                    if (pieceSource != null)
+                    {
+                        Entity handCard = World.Instance.entityDic[playerComponent.hand_card_id];
+                        PiecesListComponent handCardPiecesListComponent = null;
+                        if (handCard != null)
+                        {
+                            handCardPiecesListComponent = (PiecesListComponent)handCard.GetComponent<PiecesListComponent>();
+                        }
+                        Entity battleCard = World.Instance.entityDic[playerComponent.battle_card_id];
+                        PiecesListComponent battleCardPiecesListComponent = null;
+                        if (battleCard != null)
+                        {
+                            battleCardPiecesListComponent = (PiecesListComponent)battleCard.GetComponent<PiecesListComponent>();
+                        }
+                        StatusComponent statusComponent = (StatusComponent)pieceSource.GetComponent<StatusComponent>();
+                        if (statusComponent != null && handCardPiecesListComponent != null && battleCardPiecesListComponent != null)
+                        {
+                            switch (statusComponent.status)
+                            {
+                                case ConstUtil.Status_Piece_Move_B2B:
+                                {
+                                    Entity pieceTarget = World.Instance.entityDic[playerComponent.piece_move_target_id];
+                                    int targetIndex = battleCardPiecesListComponent.piecesIds.IndexOf(pieceTarget.ID);
+                                    int sourceIndex = battleCardPiecesListComponent.piecesIds.IndexOf(pieceSource.ID);
+                                    battleCardPiecesListComponent.piecesIds[targetIndex] = pieceSource;
+                                    battleCardPiecesListComponent.piecesIds[sourceIndex] = pieceTarget;
+                                    // TODO: - 1 通知界面更新
+                                    break;
+                                }
+                                case ConstUtil.Status_Piece_Move_H2H:
+                                {
+                                    Entity pieceTarget = World.Instance.entityDic[playerComponent.piece_move_target_id];
+                                    int targetIndex = handCardPiecesListComponent.piecesIds.IndexOf(pieceTarget.ID);
+                                    int sourceIndex = handCardPiecesListComponent.piecesIds.IndexOf(pieceSource.ID);
+                                    handCardPiecesListComponent.piecesIds[targetIndex] = pieceSource;
+                                    handCardPiecesListComponent.piecesIds[sourceIndex] = pieceTarget;
+                                    // TODO: - 1 通知界面更新
+                                    break;
+                                }
+                                case ConstUtil.Status_Piece_Move_B2H:
+                                {
+                                    battleCardPiecesListComponent.piecesIds.Remove(pieceSource.ID);
+                                    handCardPiecesListComponent.piecesIds.Add(pieceSource.ID);
+                                    // TODO: - 1 通知界面更新
+                                    break;
+                                }
+                                case ConstUtil.Status_Piece_Move_H2B:
+                                {
+                                    handCardPiecesListComponent.piecesIds.Remove(pieceSource.ID);
+                                    battleCardPiecesListComponent.piecesIds.Add(pieceSource.ID);
+                                    // TODO: - 1 通知界面更新
+                                    break;
+                                }
+                                default:
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    playerComponent.piece_move_source_id = ConstUtil.None;
+                    playerComponent.piece_move_target_id = ConstUtil.None;
+                }
+            }
+        }
         public override void Update()
         {
             if (Process.Instance.GetProcess() == ConstUtil.Process_Game_Start_Heroes_Pool)
@@ -207,6 +375,21 @@ namespace Chess.Systems
             {
                 // 解除冻结酒馆的棋子
                 UpdateBartenderPiecesListFreezeState();
+                Process.Instance.SetProcess(ConstUtil.Process_Prepare_Ing);
+            }
+            else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Piece_Buy)
+            {
+                PieceBuy();
+                Process.Instance.SetProcess(ConstUtil.Process_Prepare_Ing);
+            }
+            else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Piece_Sell)
+            {
+                PieceSell();
+                Process.Instance.SetProcess(ConstUtil.Process_Prepare_Ing);
+            }
+            else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Piece_Move)
+            {
+                PieceMove();
                 Process.Instance.SetProcess(ConstUtil.Process_Prepare_Ing);
             }
             else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_End)

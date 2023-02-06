@@ -6,6 +6,7 @@ using Chess.Component;
 
 namespace Chess.Util
 {
+    // DataUtil
     public class TestUtil
     {
         public static void SetHero(int id)
@@ -43,6 +44,44 @@ namespace Chess.Util
                         }
                     }
                     playerComponent.bartender_id = bartenderEntity.ID;
+                }
+            }
+        }
+
+        public static void SetSellPieceId(int id)
+        {
+            Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            if (player != null)
+            {
+                PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
+                if (playerComponent != null)
+                {
+                    playerComponent.piece_sell_id = id;
+                }
+            }
+        }
+        public static void SetMovePieceId(int source_id = ConstUtil.None, int target_id = ConstUtil.None)
+        {
+            Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            if (player != null)
+            {
+                PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
+                if (playerComponent != null)
+                {
+                    playerComponent.piece_move_source_id = source_id;
+                    playerComponent.piece_move_target_id = target_id;
+                }
+            }
+        }
+        public static void SetBuyPieceId(int id)
+        {
+            Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            if (player != null)
+            {
+                PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
+                if (playerComponent != null)
+                {
+                    playerComponent.piece_buy_id = id;
                 }
             }
         }

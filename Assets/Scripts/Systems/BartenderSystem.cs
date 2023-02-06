@@ -128,6 +128,7 @@ namespace Chess.Systems
             else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Bartender_Refresh_Pre)
             {
                 Debug.Log("BartenderSystem Update - prepare refresh pre");
+                BartenderRefresh(false);
             }
             else if (Process.Instance.GetProcess() == ConstUtil.Process_Prepare_Bartender_Refresh)
             {

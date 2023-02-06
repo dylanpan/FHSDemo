@@ -12,11 +12,15 @@ namespace Chess.Util
         public const int Status_Piece_Dead = 3;
         public const int Status_Piece_No_Atk = 4;
         public const int Status_Piece_Pick = 5;
+        public const int Status_Piece_Move = 6;
+        public const int Status_Piece_Move_B2B = 61;
+        public const int Status_Piece_Move_H2H = 62;
+        public const int Status_Piece_Move_B2H = 63;
+        public const int Status_Piece_Move_H2B = 64;
+        public const int Status_Hero_Dead = 7;
+        public const int Status_Hero_Pick = 8;
 
-        public const int Status_Hero_Dead = 6;
-        public const int Status_Hero_Pick = 7;
-
-        public const int Status_Bartender_Pick = 8;
+        public const int Status_Bartender_Pick = 9;
 
         public const int Team_A = 0;
         public const int Team_B = 1;
@@ -59,6 +63,9 @@ namespace Chess.Util
         public const int Process_Prepare_Bartender_Refresh = 403;
         public const int Process_Prepare_Bartender_Freeze = 404;
         public const int Process_Prepare_Bartender_UnFreeze = 405;
+        public const int Process_Prepare_Piece_Buy = 406;
+        public const int Process_Prepare_Piece_Sell = 407;
+        public const int Process_Prepare_Piece_Move = 408;
         // 战斗准备结束
         public const int Process_Prepare_End = 500;
         // 战斗开始

@@ -57,9 +57,66 @@ namespace Chess.Component
                 _battle_card_id = value;
             }
         }
+        private int _piece_buy_id = ConstUtil.None;
+        public int piece_buy_id
+        {
+            get
+            {
+                return _piece_buy_id;
+            }
+            set
+            {
+                _piece_buy_id = value;
+            }
+        }
+        private int _piece_sell_id = ConstUtil.None;
+        public int piece_sell_id
+        {
+            get
+            {
+                return _piece_sell_id;
+            }
+            set
+            {
+                _piece_sell_id = value;
+            }
+        }
+        private int _piece_move_source_id = ConstUtil.None;
+        public int piece_move_source_id
+        {
+            get
+            {
+                return _piece_move_source_id;
+            }
+            set
+            {
+                _piece_move_source_id = value;
+            }
+        }
+        private int _piece_move_target_id = ConstUtil.None;
+        public int piece_move_target_id
+        {
+            get
+            {
+                return _piece_move_target_id;
+            }
+            set
+            {
+                _piece_move_target_id = value;
+            }
+        }
         public override void LoggerString()
         {
-            Debug.Log("---> PlayerComponent:{hero_id:" + hero_id + ", bartender_id: " + bartender_id + ", hand_card_id: " + hand_card_id + ", battle_card_id: " + battle_card_id + "}");
+            Debug.Log("---> PlayerComponent:{"
+                         + "hero_id:" + hero_id
+                         + ", bartender_id: " + bartender_id
+                         + ", hand_card_id: " + hand_card_id
+                         + ", battle_card_id: " + battle_card_id 
+                         + ", piece_buy_id: " + piece_buy_id 
+                         + ", piece_sell_id: " + piece_sell_id
+                         + ", piece_move_source_id: " + piece_move_source_id
+                         + ", piece_move_target_id: " + piece_move_target_id
+                         + "}");
         }
     }
 }

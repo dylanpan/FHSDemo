@@ -86,8 +86,8 @@ namespace Chess.Systems
             else if(Process.Instance.GetProcess() == ConstUtil.Process_Game_Start_Battle_Card)
             {
                 Debug.Log("HeroPoolSystem Update - pick Hero");
-                Process.Instance.SetProcess(ConstUtil.Process_Pick_Hero);
                 GenerateHeroListFormPool();
+                Process.Instance.SetProcess(ConstUtil.Process_Pick_Hero);
             }
         }
     }

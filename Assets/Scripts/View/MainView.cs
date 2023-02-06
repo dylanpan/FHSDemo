@@ -27,7 +27,7 @@ public class MainView : MonoBehaviour
 
     private void OnClickStartBtn()
     {
-        Process.Instance.SetProcess(ConstUtil.Process_Game_Start);
+        Process.Instance.SetProcess(ConstUtil.Process_Game_Start_Main_View);
         GameObject.Destroy(this.gameObject);
     }
 

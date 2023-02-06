@@ -50,8 +50,8 @@ public class HeroView : MonoBehaviour
 
     public void OnClickBgBtn()
     {
-        Process.Instance.SetProcess(ConstUtil.Process_Prepare_Start);
         TestUtil.SetHero(hero.ID);
+        Process.Instance.SetProcess(ConstUtil.Process_Prepare_Start);
         EventUtil.Instance.SendEvent(ConstUtil.Event_Type_close_hero_pick_view);
     }
 

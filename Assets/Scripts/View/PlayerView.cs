@@ -38,22 +38,8 @@ public class PlayerView : MonoBehaviour
     public void UpdateViewByData()
     {
         UpdateHeroView();
-        UpdateAllPiecesView();
-    }
-    public void UpdateAllPiecesView(int currency = 0)
-    {
-        Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
-        if (player != null)
-        {
-            PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
-            if (playerComponent != null)
-            {
-                // UpdatePiecesView(BattleCardLayout, playerComponent.battle_card_id);
-                // UpdatePiecesView(HandCardLayout, playerComponent.hand_card_id);
-                UpdatePiecesView(BattleCardLayout, playerComponent.bartender_id, -250);
-                UpdatePiecesView(HandCardLayout, playerComponent.bartender_id, -750);
-            }
-        }
+        UpdateBattleCardPiecesView();
+        UpdateHandCardPiecesView();
     }
     private void UpdateHeroView()
     {
@@ -87,17 +73,38 @@ public class PlayerView : MonoBehaviour
                 }
                 for (int i = 0; i < piecesListComponent.piecesIds.Count; i++)
                 {
-                    Debug.Log("PlayerView UpdateBartenderPiecesView - prepare: " + piecesListComponent.piecesIds[i].ToString());
+                    Debug.Log("PlayerView UpdatePiecesView - prepare: " + piecesListComponent.piecesIds[i].ToString());
                 }
             }
             else
             {
-                Debug.Log("PlayerView UpdateBartenderPiecesView - prepare no");
+                Debug.Log("PlayerView UpdatePiecesView - prepare no");
+            }
+        }
+    }
+    public void UpdateHandCardPiecesView()
+    {
+        Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+        if (player != null)
+        {
+            PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
+            if (playerComponent != null)
+            {
+                UpdatePiecesView(HandCardLayout, playerComponent.hand_card_id, -750);
             }
         }
     }
     private void UpdateBattleCardPiecesView()
     {
+        Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+        if (player != null)
+        {
+            PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
+            if (playerComponent != null)
+            {
+                UpdatePiecesView(BattleCardLayout, playerComponent.battle_card_id, -250);
+            }
+        }
     }
     public void CleanAllPiecesView(Transform layout)
     {

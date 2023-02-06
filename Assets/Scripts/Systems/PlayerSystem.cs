@@ -35,11 +35,11 @@ namespace Chess.Systems
 
         public override void Update()
         {
-            if (Process.Instance.GetProcess() == ConstUtil.Process_Game_Start)
+            if (Process.Instance.GetProcess() == ConstUtil.Process_Game_Start_Main_View)
             {
                 Debug.Log("PlayerSystem Update - init");
-                Process.Instance.SetProcess(ConstUtil.Process_Game_Start_Player);
                 InitWorldPlayerEntity();
+                Process.Instance.SetProcess(ConstUtil.Process_Game_Start_Player);
             }
         }
     }

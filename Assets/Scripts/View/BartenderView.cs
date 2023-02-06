@@ -220,8 +220,6 @@ public class BartenderView : MonoBehaviour
             Process.Instance.SetBartenderPieceFreezeState(true);
             Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Freeze);
         }
-        // TODO: 补充购买棋子（手牌）状态逻辑 currencyComponent.currency >= currencyComponent.piece_cost
-        // TODO: 补充出售棋子（手牌和战牌）状态逻辑 currencyComponent.currency += currencyComponent.piece_recycle
     }
 
     // Update is called once per frame

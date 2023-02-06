@@ -59,7 +59,7 @@ namespace Chess.Systems
             {
                 Debug.Log("ViewSystem Update - init");
                 AddGameMainView();
-                Process.Instance.SetProcess(ConstUtil.Process_Game_Start_Main_View);
+                Process.Instance.SetProcess(ConstUtil.Process_Game_Start);
             }
             else if (Process.Instance.GetProcess() == ConstUtil.Process_Pick_Hero)
             {
