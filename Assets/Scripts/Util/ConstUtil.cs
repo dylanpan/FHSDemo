@@ -6,6 +6,15 @@ namespace Chess.Util
         public const int Zero = 0;
         public const string Empty = "";
 
+        public const int Player_Type_Human_Mine = 1;
+        public const int Player_Type_Human_Other = 2;
+        public const int Player_Type_AI = 3;
+
+        public const int Belong_Pool = 1;
+        public const int Belong_Bartender = 2;
+        public const int Belong_Hand_Card = 3;
+        public const int Belong_Battle_Card = 4;
+
         public const int Status_Piece_Freeze = 0;
         public const int Status_Piece_Idle = 1;
         public const int Status_Piece_Atk = 2;
@@ -17,10 +26,10 @@ namespace Chess.Util
         public const int Status_Piece_Move_H2H = 62;
         public const int Status_Piece_Move_B2H = 63;
         public const int Status_Piece_Move_H2B = 64;
-        public const int Status_Hero_Dead = 7;
-        public const int Status_Hero_Pick = 8;
-
-        public const int Status_Bartender_Pick = 9;
+        public const int Status_Piece_Out = 7;
+        public const int Status_Hero_Dead = 8;
+        public const int Status_Hero_Pick = 9;
+        public const int Status_Bartender_Pick = 10;
 
         public const int Team_A = 0;
         public const int Team_B = 1;

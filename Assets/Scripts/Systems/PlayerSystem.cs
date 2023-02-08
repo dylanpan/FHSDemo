@@ -11,25 +11,26 @@ namespace Chess.Systems
 {
     public class PlayerSystem : ISystem
     {
-        public Entity CreatePlayerEntity()
+        public Entity CreatePlayerEntity(int player_type)
         {
             Entity entity = new Entity();
             entity.AddComponent(new NameComponent(){name = "Player_" + entity.ID});
-            entity.AddComponent(new PlayerComponent());
-            StatusComponent statusComponent = new StatusComponent();
-            if (Process.Instance.GetSelfPlayerId() == ConstUtil.None)
-            {
-                Process.Instance.SetSelfPlayerId(entity.ID);
-            }
-            entity.AddComponent(statusComponent);
+            entity.AddComponent(new PlayerComponent() {ai_id = (player_type == ConstUtil.Player_Type_AI) ? entity.ID : ConstUtil.None});
+            entity.AddComponent(new StatusComponent());
+            World.Instance.AddEntity(entity);
             return entity;
         }
         public void InitWorldPlayerEntity()
         {
-            // TODO: 新增扩展到 8 个
-            for (int i = 0; i < ConstUtil.Max_Num_Player; i++)
+            List<int> player_list = new List<int>();
+            for (int i = 0; i < player_list.Count; i++)
             {
-                World.Instance.AddEntity(CreatePlayerEntity());
+                int player_type = player_list[i];
+                Entity entity = CreatePlayerEntity(player_type);
+                if (player_type == ConstUtil.Player_Type_Human_Mine)
+                {
+                    Process.Instance.SetShowPlayerId(entity.ID);
+                }
             }
         }
 

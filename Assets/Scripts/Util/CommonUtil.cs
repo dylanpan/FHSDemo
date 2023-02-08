@@ -174,6 +174,32 @@ namespace Chess.Util
         {
             return new System.Random().Next(total);
         }
+        public static void SetPieceBelong(int id, int belong = ConstUtil.None)
+        {
+            Entity piece = World.Instance.entityDic[id];
+            if (piece != null)
+            {
+                NameComponent nameComponent = (NameComponent)piece.GetComponent<NameComponent>();
+                if (nameComponent != null)
+                {
+                    nameComponent.belong = belong;
+                }
+            }
+        }
+        public static void GetPieceBelong(int id)
+        {
+            int belong = ConstUtil.None;
+            Entity piece = World.Instance.entityDic[id];
+            if (piece != null)
+            {
+                NameComponent nameComponent = (NameComponent)piece.GetComponent<NameComponent>();
+                if (nameComponent != null)
+                {
+                    belong = nameComponent.belong;
+                }
+            }
+            return belong;
+        }
         #endregion
 
         #region Battle

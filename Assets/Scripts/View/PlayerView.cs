@@ -43,7 +43,7 @@ public class PlayerView : MonoBehaviour
     }
     private void UpdateHeroView()
     {
-        Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+        Entity player = World.Instance.entityDic[Process.Instance.GetShowPlayerId()];
         if (player != null)
         {
             PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
@@ -84,7 +84,7 @@ public class PlayerView : MonoBehaviour
     }
     public void UpdateHandCardPiecesView()
     {
-        Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+        Entity player = World.Instance.entityDic[Process.Instance.GetShowPlayerId()];
         if (player != null)
         {
             PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
@@ -96,7 +96,7 @@ public class PlayerView : MonoBehaviour
     }
     private void UpdateBattleCardPiecesView()
     {
-        Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+        Entity player = World.Instance.entityDic[Process.Instance.GetShowPlayerId()];
         if (player != null)
         {
             PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();

@@ -33,9 +33,21 @@ namespace Chess.Component
                 _id = value;
             }
         }
+        private int _belong = ConstUtil.None;
+        public int belong
+        {
+            get
+            {
+                return _belong;
+            }
+            set
+            {
+                _belong = value;
+            }
+        }
         public override void LoggerString()
         {
-            Debug.Log("---> NameComponent:{name:" + name + ", id:" + id + "}");
+            Debug.Log("---> NameComponent:{name:" + name + ", id:" + id + ", belong:" + belong + "}");
         }
     }
 }

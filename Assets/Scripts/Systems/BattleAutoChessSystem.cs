@@ -176,6 +176,7 @@ namespace Chess.Systems
             if (Process.Instance.GetProcess() == ConstUtil.Process_Battle_Start)
             {
                 Debug.Log("BattleAutoChessSystem Update - init");
+                // TODO: - 1 需要新增 MatchSystem 进行玩家匹配，之后通过玩家 ID 直接获取其战斗队伍
                 List<Entity> battleEntitys = new List<Entity>();
                 foreach (Entity entity in World.Instance.entityDic.Values)
                 {
@@ -187,7 +188,7 @@ namespace Chess.Systems
                 }
                 Entity battleAEntity = battleEntitys.Count > 0 ? battleEntitys[ConstUtil.Team_A] : CommonUtil.Battle_GetEmptyEntity();
                 Entity battleBEntity = battleEntitys.Count > 1 ? battleEntitys[ConstUtil.Team_B] : CommonUtil.Battle_GetEmptyEntity();
-                // TODO: 需要联动购买棋子同时更新手牌和战牌
+                // TODO: 需要补充 AI 准备阶段操作，得到战斗队伍
                 TestUtil.SetTestPiecesIds(ref battleAEntity, ref battleBEntity);
                 // TODO: 需要补充随机先手 A 还是 B
                 Entity resultEntity = CreateBattleResultEntity(battleAEntity, battleBEntity);

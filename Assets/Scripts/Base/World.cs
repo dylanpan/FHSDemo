@@ -66,6 +66,7 @@ namespace Chess.Base
             World.Instance.AddSystem(new BattleAutoChessSystem());
             World.Instance.AddSystem(new BattleReplaySystem());
             World.Instance.AddSystem(new ViewSystem());
+            World.Instance.AddSystem(new AISystem());
         }
         // 由引擎驱动
         public void Update()
@@ -81,6 +82,13 @@ namespace Chess.Base
         }
     }
 }
+
+// TODO: - 1 设置类似魔兽争霸的登录房间界面，新增扩展到 8 个，设置进入玩家，设置 AI 数量
+// TODO: 准备时间的倒计时结束切换到战斗状态，可先通过按钮进行切换
+// TODO: 目前使用的全局玩家 ID，对应后台运行的 AI ID 怎么使用
+// TODO: 准备阶段需补充 AI 进行后台准备操作
+// TODO: 无 AI 的情况下可以提前编辑好战斗队伍，直接进行战斗
+// TODO: BattleReplaySystem 该系统中回放已经进行对战得到结果的对局，通过 ID 进行切换
 
 // 整个游戏启动包装一层状态监测，参考 GameStateMachine
 

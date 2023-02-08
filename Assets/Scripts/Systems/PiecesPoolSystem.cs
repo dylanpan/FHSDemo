@@ -18,7 +18,7 @@ namespace Chess.Systems
                 for (int i = 0; i < piecesConfig.piece_num; i++)
                 {
                     Entity entity = new Entity();
-                    entity.AddComponent(new NameComponent(){name = piecesConfig.name, id = piecesConfig.id});
+                    entity.AddComponent(new NameComponent(){name = piecesConfig.name, id = piecesConfig.id, belong = ConstUtil.Belong_Pool});
                     entity.AddComponent(new SkinComponent(){skin_name = piecesConfig.skin_name});
                     entity.AddComponent(new LevelComponent(){level = piecesConfig.level});
                     entity.AddComponent(new CurrencyComponent(){piece_cost = piecesConfig.piece_cost, piece_recycle = piecesConfig.piece_recycle});
@@ -63,7 +63,7 @@ namespace Chess.Systems
         private int RandomPiece()
         {
             int id = ConstUtil.None;
-            Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            Entity player = World.Instance.entityDic[Process.Instance.GetShowPlayerId()];
             if (player != null)
             {
                 PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
@@ -83,7 +83,8 @@ namespace Chess.Systems
                                     id = piece_pool[CommonUtil.RandomPiecesIndex(piece_pool.Count)];
                                     Entity piece = World.Instance.entityDic[id];
                                     if (CommonUtil.Battle_GetEntityStatus(piece) != ConstUtil.Status_Piece_Pick
-                                        && CommonUtil.Battle_GetEntityStatus(piece) != ConstUtil.Status_Piece_Freeze)
+                                        && CommonUtil.Battle_GetEntityStatus(piece) != ConstUtil.Status_Piece_Freeze
+                                        && CommonUtil.Battle_GetEntityStatus(piece) != ConstUtil.Status_Piece_Out)
                                     {
                                         CommonUtil.Battle_SetEntityStatus(piece, ConstUtil.Status_Piece_Pick);
                                         break;
@@ -101,7 +102,7 @@ namespace Chess.Systems
         {
             bartender_id = ConstUtil.None;
             PiecesListComponent piecesListComponent = null;
-            Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            Entity player = World.Instance.entityDic[Process.Instance.GetShowPlayerId()];
             if (player != null)
             {
                 PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
@@ -155,6 +156,13 @@ namespace Chess.Systems
                     List<int> randomPiecesIds = GetRamdomPiecesFormPool(random_total);
                     piecesListComponent.piecesIds = freezePiecesIds.Concat(randomPiecesIds).ToList<int>();
                 }
+                if (piecesListComponent.piecesIds.Count > 0)
+                {
+                    for (int i = 0; i < piecesListComponent.piecesIds.Count; i++)
+                    {
+                        CommonUtil.SetPieceBelong(piecesListComponent.piecesIds[i], ConstUtil.Belong_Bartender);
+                    }
+                }
                 EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_pieces_view, bartender_id);
             }
         }
@@ -184,8 +192,8 @@ namespace Chess.Systems
         }
         public void PieceBuy()
         {
-            Debug.Log("BartenderSystem Update - prepare sold out");
-            Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            Debug.Log("BartenderSystem Update - prepare buy");
+            Entity player = World.Instance.entityDic[Process.Instance.GetShowPlayerId()];
             if (player != null)
             {
                 PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
@@ -198,31 +206,42 @@ namespace Chess.Systems
                         Entity bartender = World.Instance.entityDic[playerComponent.bartender_id];
                         if (bartender != null)
                         {
-                            PiecesListComponent piecesListComponent = (PiecesListComponent)bartender.GetComponent<PiecesListComponent>();
-                            if (piecesListComponent != null)
+                            CurrencyComponent bartenderCurrencyComponent = (CurrencyComponent)bartender.GetComponent<CurrencyComponent>();
+                            if (bartenderCurrencyComponent != null)
                             {
-                                piecesListComponent.piecesIds.Remove(piece.ID);
-                                isUpdateUI = true;
+                                CurrencyComponent pieceCurrencyComponent = (CurrencyComponent)piece.GetComponent<CurrencyComponent>();
+                                if (pieceCurrencyComponent != null)
+                                {
+                                    if (bartenderCurrencyComponent.currency >= pieceCurrencyComponent.piece_cost)
+                                    {
+                                        bartenderCurrencyComponent.currency -= pieceCurrencyComponent.piece_cost;
+                                        EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_currency, bartenderCurrencyComponent.currency);
+
+                                        PiecesListComponent piecesListComponent = (PiecesListComponent)bartender.GetComponent<PiecesListComponent>();
+                                        if (piecesListComponent != null)
+                                        {
+                                            piecesListComponent.piecesIds.Remove(piece.ID);
+                                            isUpdateUI = true;
+                                        }
+                                        Entity handCard = World.Instance.entityDic[playerComponent.hand_card_id];
+                                        if (handCard != null)
+                                        {
+                                            PiecesListComponent piecesListComponent = (PiecesListComponent)handCard.GetComponent<PiecesListComponent>();
+                                            if (piecesListComponent != null)
+                                            {
+                                                piecesListComponent.piecesIds.Add(piece.ID);
+                                                CommonUtil.SetPieceBelong(piece.ID, ConstUtil.Belong_Hand_Card);
+                                                isUpdateUI = true;
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                        }
-                        Entity handCard = World.Instance.entityDic[playerComponent.hand_card_id];
-                        if (handCard != null)
-                        {
-                            PiecesListComponent piecesListComponent = (PiecesListComponent)handCard.GetComponent<PiecesListComponent>();
-                            if (piecesListComponent != null)
-                            {
-                                piecesListComponent.piecesIds.Add(piece.ID);
-                                isUpdateUI = true;
-                            }
+                            CommonUtil.Battle_SetEntityStatus(piece, ConstUtil.Status_Piece_Out);
                         }
                         if (isUpdateUI)
                         {
                             // TODO: - 1 通知界面更新
-                        }
-                        CurrencyComponent currencyComponent = (CurrencyComponent)piece.GetComponent<CurrencyComponent>();
-                        if (currencyComponent != null)
-                        {
-                            EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_currency, currencyComponent.piece_cost);
                         }
                     }
                     playerComponent.piece_buy_id = ConstUtil.None;
@@ -232,7 +251,7 @@ namespace Chess.Systems
         public void PieceSell()
         {
             Debug.Log("BartenderSystem Update - prepare sell");
-            Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            Entity player = World.Instance.entityDic[Process.Instance.GetShowPlayerId()];
             if (player != null)
             {
                 PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
@@ -262,15 +281,26 @@ namespace Chess.Systems
                                 isUpdateUI = true;
                             }
                         }
+                        CommonUtil.SetPieceBelong(piece.ID, ConstUtil.Belong_Pool);
                         if (isUpdateUI)
                         {
                             // TODO: - 1 通知界面更新
                         }
-                        CurrencyComponent currencyComponent = (CurrencyComponent)piece.GetComponent<CurrencyComponent>();
-                        if (currencyComponent != null)
+                        CurrencyComponent pieceCurrencyComponent = (CurrencyComponent)piece.GetComponent<CurrencyComponent>();
+                        if (pieceCurrencyComponent != null)
                         {
-                            EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_currency, currencyComponent.piece_recycle);
+                            Entity bartender = World.Instance.entityDic[playerComponent.bartender_id];
+                            if (bartender != null)
+                            {
+                                CurrencyComponent bartenderCurrencyComponent = (CurrencyComponent)bartender.GetComponent<CurrencyComponent>();
+                                if (bartenderCurrencyComponent != null)
+                                {
+                                    bartenderCurrencyComponent.currency += pieceCurrencyComponent.piece_recycle;
+                                }
+                            }
+                            EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_currency, bartenderCurrencyComponent.currency);
                         }
+                        CommonUtil.Battle_SetEntityStatus(piece, ConstUtil.None);
                     }
                     playerComponent.piece_sell_id = ConstUtil.None;
                 }
@@ -279,7 +309,7 @@ namespace Chess.Systems
         public void PieceMove()
         {
             Debug.Log("BartenderSystem Update - prepare move");
-            Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            Entity player = World.Instance.entityDic[Process.Instance.GetShowPlayerId()];
             if (player != null)
             {
                 PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
@@ -312,6 +342,7 @@ namespace Chess.Systems
                                     int sourceIndex = battleCardPiecesListComponent.piecesIds.IndexOf(pieceSource.ID);
                                     battleCardPiecesListComponent.piecesIds[targetIndex] = pieceSource;
                                     battleCardPiecesListComponent.piecesIds[sourceIndex] = pieceTarget;
+                                    CommonUtil.SetPieceBelong(piece.ID, ConstUtil.Belong_Battle_Card);
                                     // TODO: - 1 通知界面更新
                                     break;
                                 }
@@ -322,6 +353,7 @@ namespace Chess.Systems
                                     int sourceIndex = handCardPiecesListComponent.piecesIds.IndexOf(pieceSource.ID);
                                     handCardPiecesListComponent.piecesIds[targetIndex] = pieceSource;
                                     handCardPiecesListComponent.piecesIds[sourceIndex] = pieceTarget;
+                                    CommonUtil.SetPieceBelong(piece.ID, ConstUtil.Belong_Hand_Card);
                                     // TODO: - 1 通知界面更新
                                     break;
                                 }
@@ -329,6 +361,7 @@ namespace Chess.Systems
                                 {
                                     battleCardPiecesListComponent.piecesIds.Remove(pieceSource.ID);
                                     handCardPiecesListComponent.piecesIds.Add(pieceSource.ID);
+                                    CommonUtil.SetPieceBelong(piece.ID, ConstUtil.Belong_Hand_Card);
                                     // TODO: - 1 通知界面更新
                                     break;
                                 }
@@ -336,6 +369,7 @@ namespace Chess.Systems
                                 {
                                     handCardPiecesListComponent.piecesIds.Remove(pieceSource.ID);
                                     battleCardPiecesListComponent.piecesIds.Add(pieceSource.ID);
+                                    CommonUtil.SetPieceBelong(piece.ID, ConstUtil.Belong_Battle_Card);
                                     // TODO: - 1 通知界面更新
                                     break;
                                 }

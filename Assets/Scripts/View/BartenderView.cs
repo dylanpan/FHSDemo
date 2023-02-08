@@ -55,7 +55,7 @@ public class BartenderView : MonoBehaviour
 
     public void UpdateViewByData()
     {
-        Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+        Entity player = World.Instance.entityDic[Process.Instance.GetShowPlayerId()];
         if (player != null)
         {
             PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();

@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace Chess.Base
 {
+    // 存储当前游戏使用数据
     public class Process
     {
         private static Process? instance = null;
@@ -16,29 +17,64 @@ namespace Chess.Base
         {
             get { return instance != null ? instance : (instance = new Process()); }
         }
-        private int _current_process = ConstUtil.None;
 
+        /// <summary>
+        /// 开启游戏界面进行设置玩家与 AI
+        /// </summary>
+        /// <typeparam name="int"></typeparam>
+        /// <returns></returns>
+        private List<int> _player_list = new List<int>();
+        public List<int> GetPlayerList()
+        {
+            return _player_list;
+        }
+        public void SetPlayerList(int player_type)
+        {
+            _player_list.Add(player_type);
+        }
+
+        /// <summary>
+        /// 当前展示玩家对应的进度
+        /// </summary>
+        /// <typeparam name="int"></typeparam>
+        /// <typeparam name="int"></typeparam>
+        /// <returns></returns>
+        private Dictionary<int, int> _current_process_dict = new Dictionary<int, int>();
         public void SetProcess(int process)
         {
-            _current_process = process;
+            _current_process_dict[GetShowPlayerId()] = process;
         }
-
         public int GetProcess()
         {
-            return _current_process;
+            return _current_process_dict[GetShowPlayerId()];
         }
-        private int _self_player_id = ConstUtil.None;
-
-        public void SetSelfPlayerId(int id)
+        public void SetProcessById(int player_id, int process)
         {
-            _self_player_id = id;
+            _current_process_dict[player_id] = process;
         }
-
-        public int GetSelfPlayerId()
+        public int GetProcessById(int player_id)
         {
-            return _self_player_id;
+            return _current_process_dict[player_id];
         }
 
+        /// <summary>
+        /// 当前展示玩家
+        /// </summary>
+        private int _show_player_id = ConstUtil.None;
+        public void SetShowPlayerId(int id)
+        {
+            _show_player_id = id;
+        }
+        public int GetShowPlayerId()
+        {
+            return _show_player_id;
+        }
+
+        /// <summary>
+        /// 英雄池子
+        /// </summary>
+        /// <typeparam name="int"></typeparam>
+        /// <returns></returns>
         private List<int> _hero_pool = new List<int>();
         public void AddHeroToPool(int id)
         {
@@ -55,6 +91,12 @@ namespace Chess.Base
         {
             return _hero_pool;
         }
+
+        /// <summary>
+        /// 酒馆池子
+        /// </summary>
+        /// <typeparam name="int"></typeparam>
+        /// <returns></returns>
         private List<int> _bartender_pool = new List<int>();
         public void AddBartenderToPool(int id)
         {
@@ -72,20 +114,29 @@ namespace Chess.Base
             return _bartender_pool;
         }
 
-        private Dictionary<int,List<int>> _player_hero_pool_dict = new Dictionary<int,List<int>>();
-        public void AddHeroPoolToDict(int player_id, List<int> hero_pool)
+        /// <summary>
+        /// 提供给玩家选取英雄列表
+        /// </summary>
+        /// <returns></returns>
+        private Dictionary<int,List<int>> _player_hero_list_dict = new Dictionary<int,List<int>>();
+        public void AddHeroListToDict(int player_id, List<int> hero_list)
         {
-            _player_hero_pool_dict.Add(player_id, hero_pool);
+            _player_hero_list_dict.Add(player_id, hero_list);
         }
         public List<int> GetHeroPoolFormDict(int player_id)
         {
-            List<int> hero_pool = new List<int>();
-            if (_player_hero_pool_dict.ContainsKey(player_id))
+            List<int> hero_list = new List<int>();
+            if (_player_hero_list_dict.ContainsKey(player_id))
             {
-                hero_pool = _player_hero_pool_dict[player_id];
+                hero_list = _player_hero_list_dict[player_id];
             }
-            return hero_pool;
+            return hero_list;
         }
+
+        /// <summary>
+        /// 对应等级的棋子池子
+        /// </summary>
+        /// <returns></returns>
         private Dictionary<int,List<int>> _pieces_pool_dict = new Dictionary<int,List<int>>();
         public void AddPiecePoolToDict(int level, int piece_id)
         {
@@ -117,6 +168,10 @@ namespace Chess.Base
             }
             return piece_pool;
         }
+
+        /// <summary>
+        /// 当前 BartenderView 操作页面的记录
+        /// </summary>
         private bool _isFreeze = false;
         public void SetBartenderPieceFreezeState(bool state)
         {

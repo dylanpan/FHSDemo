@@ -45,7 +45,7 @@ namespace Chess.Systems
         }
         public void BartenderLevelUp()
         {
-            Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            Entity player = World.Instance.entityDic[Process.Instance.GetShowPlayerId()];
             if (player != null)
             {
                 PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
@@ -76,7 +76,7 @@ namespace Chess.Systems
         }
         public void BartenderRefresh(bool isCost)
         {
-            Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            Entity player = World.Instance.entityDic[Process.Instance.GetShowPlayerId()];
             if (player != null)
             {
                 PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();

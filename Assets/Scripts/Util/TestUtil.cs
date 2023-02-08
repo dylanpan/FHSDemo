@@ -6,12 +6,12 @@ using Chess.Component;
 
 namespace Chess.Util
 {
-    // DataUtil
+    // DataUtil 通过该类对已有的数据进行更新
     public class TestUtil
     {
         public static void SetHero(int id)
         {
-            Entity entity = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            Entity entity = World.Instance.entityDic[Process.Instance.GetShowPlayerId()];
             PlayerComponent playerComponent = (PlayerComponent)entity.GetComponent<PlayerComponent>();
             if (playerComponent != null)
             {
@@ -24,7 +24,7 @@ namespace Chess.Util
 
         public static void SetBartender(int config_id)
         {
-            Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            Entity player = World.Instance.entityDic[Process.Instance.GetShowPlayerId()];
             PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
             if (playerComponent != null)
             {
@@ -50,7 +50,7 @@ namespace Chess.Util
 
         public static void SetSellPieceId(int id)
         {
-            Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            Entity player = World.Instance.entityDic[Process.Instance.GetShowPlayerId()];
             if (player != null)
             {
                 PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
@@ -62,7 +62,7 @@ namespace Chess.Util
         }
         public static void SetMovePieceId(int source_id = ConstUtil.None, int target_id = ConstUtil.None)
         {
-            Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            Entity player = World.Instance.entityDic[Process.Instance.GetShowPlayerId()];
             if (player != null)
             {
                 PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
@@ -75,7 +75,7 @@ namespace Chess.Util
         }
         public static void SetBuyPieceId(int id)
         {
-            Entity player = World.Instance.entityDic[Process.Instance.GetSelfPlayerId()];
+            Entity player = World.Instance.entityDic[Process.Instance.GetShowPlayerId()];
             if (player != null)
             {
                 PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
