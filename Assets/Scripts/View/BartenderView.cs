@@ -197,28 +197,28 @@ public class BartenderView : MonoBehaviour
 
     public void OnClickCurrencyBtn()
     {
-        Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Refresh_Pre);
+        Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Refresh_Pre, Process.Instance.GetShowPlayerId());
     }
     public void OnClickLevelBtn()
     {
-        Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Level_Up);
+        Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Level_Up, Process.Instance.GetShowPlayerId());
     }
     public void OnClickRefreshBtn()
     {
         Process.Instance.SetBartenderPieceFreezeState(false);
-        Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Refresh);
+        Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Refresh, Process.Instance.GetShowPlayerId());
     }
     public void OnClickFreezeBtn()
     {
         if (Process.Instance.GetBartenderPieceFreezeState())
         {
             Process.Instance.SetBartenderPieceFreezeState(false);
-            Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_UnFreeze);
+            Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_UnFreeze, Process.Instance.GetShowPlayerId());
         }
         else
         {
             Process.Instance.SetBartenderPieceFreezeState(true);
-            Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Freeze);
+            Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Freeze, Process.Instance.GetShowPlayerId());
         }
     }
 

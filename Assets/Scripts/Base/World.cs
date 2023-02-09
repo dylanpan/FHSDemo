@@ -71,7 +71,7 @@ namespace Chess.Base
         // 由引擎驱动
         public void Update()
         {
-            if (Process.Instance.GetProcess() == ConstUtil.None)
+            if (Process.Instance.GetProcess(Process.Instance.GetShowPlayerId()) == ConstUtil.None)
             {
                 AddSystem();
             }
@@ -83,7 +83,6 @@ namespace Chess.Base
     }
 }
 
-// TODO: - 1 设置类似魔兽争霸的登录房间界面，新增扩展到 8 个，设置进入玩家，设置 AI 数量
 // TODO: 准备时间的倒计时结束切换到战斗状态，可先通过按钮进行切换
 // TODO: 目前使用的全局玩家 ID，对应后台运行的 AI ID 怎么使用
 // TODO: 准备阶段需补充 AI 进行后台准备操作

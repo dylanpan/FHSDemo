@@ -93,7 +93,7 @@ public class PieceView : MonoBehaviour
             if (CommonUtil.GetPieceBelong(piece.ID) == ConstUtil.Belong_Bartender)
             {
                 TestUtil.SetBuyPieceId(piece.ID);
-                Process.Instance.SetProcess(ConstUtil.Process_Prepare_Piece_Buy);
+                Process.Instance.SetProcess(ConstUtil.Process_Prepare_Piece_Buy, Process.Instance.GetShowPlayerId());
             }
         }
     }
@@ -105,7 +105,7 @@ public class PieceView : MonoBehaviour
             if (CommonUtil.GetPieceBelong(piece.ID) == ConstUtil.Belong_Hand_Card || CommonUtil.GetPieceBelong(piece.ID) == ConstUtil.Belong_Battle_Card)
             {
                 TestUtil.SetSellPieceId(piece.ID);
-                Process.Instance.SetProcess(ConstUtil.Process_Prepare_Piece_Sell);
+                Process.Instance.SetProcess(ConstUtil.Process_Prepare_Piece_Sell, Process.Instance.GetShowPlayerId());
             }
         }
     }
@@ -119,7 +119,7 @@ public class PieceView : MonoBehaviour
                 // 设置棋子状态
                 CommonUtil.Battle_SetEntityStatus(piece, ConstUtil.Status_Piece_Move_B2B);
                 TestUtil.SetMovePieceId(piece.ID);
-                Process.Instance.SetProcess(ConstUtil.Process_Prepare_Piece_Move);
+                Process.Instance.SetProcess(ConstUtil.Process_Prepare_Piece_Move, Process.Instance.GetShowPlayerId());
             }
         }
     }

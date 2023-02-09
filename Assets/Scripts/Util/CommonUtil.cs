@@ -132,10 +132,12 @@ namespace Chess.Util
             NameComponent nameComponent = (NameComponent)entity.GetComponent<NameComponent>();
             PlayerComponent playerComponent = (PlayerComponent)entity.GetComponent<PlayerComponent>();
             StatusComponent statusComponent = (StatusComponent)entity.GetComponent<StatusComponent>();
+            ConfigComponent<AIConfig> configComponent = (ConfigComponent<AIConfig>)entity.GetComponent<ConfigComponent<AIConfig>>();
             bool isPlayer = false;
             if (nameComponent != null 
+                && playerComponent != null
                 && statusComponent != null
-                && playerComponent != null)
+                && configComponent != null)
             {
                 isPlayer = true;
             }

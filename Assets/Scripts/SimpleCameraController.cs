@@ -122,9 +122,17 @@ namespace UnityTemplateProjects
             lookAction.Enable();
             verticalMovementAction.Enable();
             boostFactorAction.Enable();
+
+            AddGameMainView();
         }
 #endif
 
+        public void AddGameMainView()
+        {
+            GameObject view = (GameObject)GameObject.Instantiate(Resources.Load("Prefabs/MainView"));
+            GameObject mUICanvas = GameObject.Find("UIRoot");
+            view.transform.parent = mUICanvas.transform;
+        }
         void OnEnable()
         {
             m_TargetCameraState.SetFromTransform(transform);
@@ -230,7 +238,7 @@ namespace UnityTemplateProjects
             m_InterpolatingCameraState.UpdateTransform(transform);
 
             World.Instance.Update();
-            if(Process.Instance.GetProcess() == ConstUtil.Process_Pick_Hero_Ing)
+            if(Process.Instance.GetProcess(Process.Instance.GetShowPlayerId()) == ConstUtil.Process_Pick_Hero_Ing)
             {
                 if (m_TargetCameraState.pitch > 0.0f)
                 {

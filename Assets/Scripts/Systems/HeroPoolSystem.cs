@@ -77,17 +77,22 @@ namespace Chess.Systems
         }
         public override void Update()
         {
-            if (Process.Instance.GetProcess() == ConstUtil.Process_Game_Start_Bartender)
+            List<int> player_list = Process.Instance.GetPlayerIdList();
+            for (int i = 0; i < player_list.Count; i++)
             {
-                Debug.Log("HeroPoolSystem Update - init");
-                GeneratePoolFormConfig();
-                Process.Instance.SetProcess(ConstUtil.Process_Game_Start_Heroes_Pool);
-            }
-            else if(Process.Instance.GetProcess() == ConstUtil.Process_Game_Start_Battle_Card)
-            {
-                Debug.Log("HeroPoolSystem Update - pick Hero");
-                GenerateHeroListFormPool();
-                Process.Instance.SetProcess(ConstUtil.Process_Pick_Hero);
+                int player_id = player_list[i];
+                if (Process.Instance.GetProcess(player_id) == ConstUtil.Process_Game_Start_Bartender)
+                {
+                    Debug.Log("HeroPoolSystem Update - init");
+                    GeneratePoolFormConfig();
+                    Process.Instance.SetProcess(ConstUtil.Process_Game_Start_Heroes_Pool, player_id);
+                }
+                else if(Process.Instance.GetProcess(player_id) == ConstUtil.Process_Game_Start_Battle_Card)
+                {
+                    Debug.Log("HeroPoolSystem Update - pick Hero");
+                    GenerateHeroListFormPool();
+                    Process.Instance.SetProcess(ConstUtil.Process_Pick_Hero, player_id);
+                }
             }
         }
     }

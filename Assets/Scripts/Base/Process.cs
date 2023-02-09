@@ -18,19 +18,29 @@ namespace Chess.Base
             get { return instance != null ? instance : (instance = new Process()); }
         }
 
+        private List<int> _player_type_list = new List<int>();
+        public List<int> GetPlayerTypeList()
+        {
+            return _player_type_list;
+        }
+        public void SetPlayerTypeList(int player_type)
+        {
+            _player_type_list.Add(player_type);
+        }
+
         /// <summary>
         /// 开启游戏界面进行设置玩家与 AI
         /// </summary>
         /// <typeparam name="int"></typeparam>
         /// <returns></returns>
-        private List<int> _player_list = new List<int>();
-        public List<int> GetPlayerList()
+        private List<int> _player_id_list = new List<int>();
+        public List<int> GetPlayerIdList()
         {
-            return _player_list;
+            return _player_id_list;
         }
-        public void SetPlayerList(int player_type)
+        public void SetPlayerIdList(int player_id)
         {
-            _player_list.Add(player_type);
+            _player_id_list.Add(player_id);
         }
 
         /// <summary>
@@ -40,20 +50,16 @@ namespace Chess.Base
         /// <typeparam name="int"></typeparam>
         /// <returns></returns>
         private Dictionary<int, int> _current_process_dict = new Dictionary<int, int>();
-        public void SetProcess(int process)
-        {
-            _current_process_dict[GetShowPlayerId()] = process;
-        }
-        public int GetProcess()
-        {
-            return _current_process_dict[GetShowPlayerId()];
-        }
-        public void SetProcessById(int player_id, int process)
+        public void SetProcess(int process, int player_id)
         {
             _current_process_dict[player_id] = process;
         }
-        public int GetProcessById(int player_id)
+        public int GetProcess(int player_id)
         {
+            if (!_current_process_dict.ContainsKey(player_id))
+            {
+                return ConstUtil.None;
+            }
             return _current_process_dict[player_id];
         }
 

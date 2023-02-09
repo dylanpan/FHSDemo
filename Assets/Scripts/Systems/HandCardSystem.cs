@@ -38,11 +38,16 @@ namespace Chess.Systems
         }
         public override void Update()
         {
-            if (Process.Instance.GetProcess() == ConstUtil.Process_Game_Start_Pieces_Pool)
+            List<int> player_list = Process.Instance.GetPlayerIdList();
+            for (int i = 0; i < player_list.Count; i++)
             {
-                Debug.Log("HandCardSystem Update - init");
-                CheckAddHandCardEntity();
-                Process.Instance.SetProcess(ConstUtil.Process_Game_Start_Hand_Card);
+                int player_id = player_list[i];
+                if (Process.Instance.GetProcess(player_id) == ConstUtil.Process_Game_Start_Pieces_Pool)
+                {
+                    Debug.Log("HandCardSystem Update - init");
+                    CheckAddHandCardEntity();
+                    Process.Instance.SetProcess(ConstUtil.Process_Game_Start_Hand_Card, player_id);
+                }
             }
         }
     }

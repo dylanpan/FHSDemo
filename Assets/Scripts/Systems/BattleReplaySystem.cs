@@ -13,10 +13,15 @@ namespace Chess.Systems
     {
         public override void Update()
         {
-            if (Process.Instance.GetProcess() == ConstUtil.Process_Game_End)
+            List<int> player_list = Process.Instance.GetPlayerIdList();
+            for (int i = 0; i < player_list.Count; i++)
             {
-                Debug.Log("BattleReplaySystem Update - init");
-                // Process.Instance.SetProcess(ConstUtil.Process_Game_End);
+                int player_id = player_list[i];
+                if (Process.Instance.GetProcess(player_id) == ConstUtil.Process_Game_End)
+                {
+                    Debug.Log("BattleReplaySystem Update - init");
+                    // Process.Instance.SetProcess(ConstUtil.Process_Game_End);
+                }
             }
         }
     }

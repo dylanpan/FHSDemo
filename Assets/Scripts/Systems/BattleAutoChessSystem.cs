@@ -173,31 +173,36 @@ namespace Chess.Systems
         }
         public override void Update()
         {
-            if (Process.Instance.GetProcess() == ConstUtil.Process_Battle_Start)
+            List<int> player_list = Process.Instance.GetPlayerIdList();
+            for (int i = 0; i < player_list.Count; i++)
             {
-                Debug.Log("BattleAutoChessSystem Update - init");
-                // TODO: - 1 需要新增 MatchSystem 进行玩家匹配，之后通过玩家 ID 直接获取其战斗队伍
-                List<Entity> battleEntitys = new List<Entity>();
-                foreach (Entity entity in World.Instance.entityDic.Values)
+                int player_id = player_list[i];
+                if (Process.Instance.GetProcess(player_id) == ConstUtil.Process_Battle_Start)
                 {
-                    PiecesListComponent piecesListComponent = (PiecesListComponent)entity.GetComponent<PiecesListComponent>();
-                    if (piecesListComponent != null && piecesListComponent.battle_card_id != ConstUtil.None)
+                    Debug.Log("BattleAutoChessSystem Update - init");
+                    // TODO: - 1 需要新增 MatchSystem 进行玩家匹配，之后通过玩家 ID 直接获取其战斗队伍
+                    List<Entity> battleEntitys = new List<Entity>();
+                    foreach (Entity entity in World.Instance.entityDic.Values)
                     {
-                        battleEntitys.Add(entity);
+                        PiecesListComponent piecesListComponent = (PiecesListComponent)entity.GetComponent<PiecesListComponent>();
+                        if (piecesListComponent != null && piecesListComponent.battle_card_id != ConstUtil.None)
+                        {
+                            battleEntitys.Add(entity);
+                        }
                     }
-                }
-                Entity battleAEntity = battleEntitys.Count > 0 ? battleEntitys[ConstUtil.Team_A] : CommonUtil.Battle_GetEmptyEntity();
-                Entity battleBEntity = battleEntitys.Count > 1 ? battleEntitys[ConstUtil.Team_B] : CommonUtil.Battle_GetEmptyEntity();
-                // TODO: 需要补充 AI 准备阶段操作，得到战斗队伍
-                TestUtil.SetTestPiecesIds(ref battleAEntity, ref battleBEntity);
-                // TODO: 需要补充随机先手 A 还是 B
-                Entity resultEntity = CreateBattleResultEntity(battleAEntity, battleBEntity);
-                GetBattleResult(1, ref resultEntity);
-                World.Instance.AddEntity(resultEntity);
-                Process.Instance.SetProcess(ConstUtil.Process_Battle_End);
+                    Entity battleAEntity = battleEntitys.Count > 0 ? battleEntitys[ConstUtil.Team_A] : CommonUtil.Battle_GetEmptyEntity();
+                    Entity battleBEntity = battleEntitys.Count > 1 ? battleEntitys[ConstUtil.Team_B] : CommonUtil.Battle_GetEmptyEntity();
+                    // TODO: 需要补充 AI 准备阶段操作，得到战斗队伍
+                    TestUtil.SetTestPiecesIds(ref battleAEntity, ref battleBEntity);
+                    // TODO: 需要补充随机先手 A 还是 B
+                    Entity resultEntity = CreateBattleResultEntity(battleAEntity, battleBEntity);
+                    GetBattleResult(1, ref resultEntity);
+                    World.Instance.AddEntity(resultEntity);
+                    Process.Instance.SetProcess(ConstUtil.Process_Battle_End, player_id);
 
-                // ResultComponent resultComponent = (ResultComponent)resultEntity.GetComponent<ResultComponent>();
-                // resultComponent.LoggerString();
+                    // ResultComponent resultComponent = (ResultComponent)resultEntity.GetComponent<ResultComponent>();
+                    // resultComponent.LoggerString();
+                }
             }
         }
     }

@@ -41,7 +41,7 @@ namespace Chess.Util
 
         public const int Max_Num_Battle_Card = 7;
         public const int Max_Num_Hand_Card = 10;
-        public const int Max_Num_Player = 2;
+        public const int Max_Num_Player = 4;
 
         public const int Init_Level = 1;
         public const int Max_Level = 6;
