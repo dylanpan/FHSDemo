@@ -38,15 +38,15 @@ namespace Chess.Systems
         }
         public override void Update()
         {
-            List<int> player_list = Process.Instance.GetPlayerIdList();
+            List<int> player_list = Process.GetInstance().GetPlayerIdList();
             for (int i = 0; i < player_list.Count; i++)
             {
                 int player_id = player_list[i];
-                if (Process.Instance.GetProcess(player_id) == ConstUtil.Process_Game_Start_Hand_Card)
+                if (Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Game_Start_Hand_Card)
                 {
                     Debug.Log("BattleCardSystem Update - init");
                     CheckAddBattleCardEntity();
-                    Process.Instance.SetProcess(ConstUtil.Process_Game_Start_Battle_Card, player_id);
+                    Process.GetInstance().SetProcess(ConstUtil.Process_Game_Start_Battle_Card, player_id);
                 }
             }
         }

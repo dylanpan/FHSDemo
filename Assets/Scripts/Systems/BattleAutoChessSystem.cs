@@ -173,11 +173,11 @@ namespace Chess.Systems
         }
         public override void Update()
         {
-            List<int> player_list = Process.Instance.GetPlayerIdList();
+            List<int> player_list = Process.GetInstance().GetPlayerIdList();
             for (int i = 0; i < player_list.Count; i++)
             {
                 int player_id = player_list[i];
-                if (Process.Instance.GetProcess(player_id) == ConstUtil.Process_Battle_Start)
+                if (Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Battle_Start)
                 {
                     Debug.Log("BattleAutoChessSystem Update - init");
                     // TODO: - 1 需要新增 MatchSystem 进行玩家匹配，之后通过玩家 ID 直接获取其战斗队伍
@@ -198,7 +198,7 @@ namespace Chess.Systems
                     Entity resultEntity = CreateBattleResultEntity(battleAEntity, battleBEntity);
                     GetBattleResult(1, ref resultEntity);
                     World.Instance.AddEntity(resultEntity);
-                    Process.Instance.SetProcess(ConstUtil.Process_Battle_End, player_id);
+                    Process.GetInstance().SetProcess(ConstUtil.Process_Battle_End, player_id);
 
                     // ResultComponent resultComponent = (ResultComponent)resultEntity.GetComponent<ResultComponent>();
                     // resultComponent.LoggerString();

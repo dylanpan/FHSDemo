@@ -75,6 +75,7 @@ namespace Chess.Util
         public const int Process_Prepare_Piece_Buy = 406;
         public const int Process_Prepare_Piece_Sell = 407;
         public const int Process_Prepare_Piece_Move = 408;
+        public const int Process_Prepare_Switch = 409;
         // 战斗准备结束
         public const int Process_Prepare_End = 500;
         // 战斗开始

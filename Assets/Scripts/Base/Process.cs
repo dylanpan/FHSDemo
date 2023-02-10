@@ -11,12 +11,46 @@ namespace Chess.Base
     // 存储当前游戏使用数据
     public class Process
     {
-        private static Process? instance = null;
+        #region 单例 - 不考虑线程安全
+        private static Process? no_save_instance = null;
         
         public static Process Instance
         {
-            get { return instance != null ? instance : (instance = new Process()); }
+            get { return no_save_instance != null ? no_save_instance : (no_save_instance = new Process()); }
         }
+        #endregion
+        #region 单例 - C# 独有写法
+        private class Nested
+        {
+            static Nested()
+            {
+            }
+
+            internal static readonly Process inner_instance = new Process();
+        }
+        public static Process _Instance { get { return Nested.inner_instance; } }
+        #endregion
+        #region 单例 - 考虑线程安全
+        private volatile static Process _instance = null;
+        private static readonly object lockHelper = new object();
+        private Process()
+        {
+        }
+        public static Process GetInstance()
+        {
+            if (_instance == null)
+            {
+                lock(lockHelper)
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new Process();
+                    }
+                }
+            }
+            return _instance;
+        }
+        #endregion
 
         private List<int> _player_type_list = new List<int>();
         public List<int> GetPlayerTypeList()

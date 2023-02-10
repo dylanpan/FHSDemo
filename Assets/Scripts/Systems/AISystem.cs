@@ -13,12 +13,12 @@ namespace Chess.Systems
     {
         public override void Update()
         {
-            List<int> player_list = Process.Instance.GetPlayerIdList();
+            List<int> player_list = Process.GetInstance().GetPlayerIdList();
             for (int i = 0; i < player_list.Count; i++)
             {
                 int player_id = player_list[i];
                 // TODO: - 1 通过获取 AI 的行为配置表进行对应的操作执行
-                if (Process.Instance.GetProcess(player_id) == ConstUtil.Process_Game_End)
+                if (Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Game_End)
                 {
                     Debug.Log("AISystem Update - init");
                 }

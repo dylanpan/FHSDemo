@@ -26,7 +26,7 @@ public class HeroPickView : MonoBehaviour
     public void InitView()
     {
         Debug.Log("HeroPickView InitView");
-        List<int> hero_pool = Process.Instance.GetHeroPoolFormDict(Process.Instance.GetShowPlayerId());
+        List<int> hero_pool = Process.GetInstance().GetHeroPoolFormDict(Process.GetInstance().GetShowPlayerId());
         for (int i = 0; i < hero_pool.Count; i++)
         {
             // TODO: 设置正确位置

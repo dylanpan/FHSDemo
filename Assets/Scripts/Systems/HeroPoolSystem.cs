@@ -23,7 +23,7 @@ namespace Chess.Systems
                 entity.AddComponent(new StatusComponent());
                 entity.AddComponent(new ConfigComponent<HeroesConfig>(){config = heroesConfig});
                 World.Instance.AddEntity(entity);
-                Process.Instance.AddHeroToPool(entity.ID);
+                Process.GetInstance().AddHeroToPool(entity.ID);
             }
         }
         public void GeneratePoolFormConfig()
@@ -51,7 +51,7 @@ namespace Chess.Systems
                     // TODO: VIP 扩展 4 个
                     // TODO: 切换不同 player 视角(编写 AI 执行脚本可观测操作流程)
                     List<int> hero_list = GetRamdomHeroFormPool(2);
-                    Process.Instance.AddHeroListToDict(entity.ID, hero_list);
+                    Process.GetInstance().AddHeroListToDict(entity.ID, hero_list);
                 }
             }
         }
@@ -66,32 +66,32 @@ namespace Chess.Systems
         }
         private int RandomHero()
         {
-            List<int> hero_pool = Process.Instance.GetHeroPool();
+            List<int> hero_pool = Process.GetInstance().GetHeroPool();
             int id = ConstUtil.None;
             if (hero_pool.Count > 0)
             {
                 id = hero_pool[CommonUtil.RandomHeroesIndex(hero_pool.Count)];
-                Process.Instance.RemoveHeroFormPool(id);
+                Process.GetInstance().RemoveHeroFormPool(id);
             }
             return id;
         }
         public override void Update()
         {
-            List<int> player_list = Process.Instance.GetPlayerIdList();
+            List<int> player_list = Process.GetInstance().GetPlayerIdList();
             for (int i = 0; i < player_list.Count; i++)
             {
                 int player_id = player_list[i];
-                if (Process.Instance.GetProcess(player_id) == ConstUtil.Process_Game_Start_Bartender)
+                if (Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Game_Start_Bartender)
                 {
                     Debug.Log("HeroPoolSystem Update - init");
                     GeneratePoolFormConfig();
-                    Process.Instance.SetProcess(ConstUtil.Process_Game_Start_Heroes_Pool, player_id);
+                    Process.GetInstance().SetProcess(ConstUtil.Process_Game_Start_Heroes_Pool, player_id);
                 }
-                else if(Process.Instance.GetProcess(player_id) == ConstUtil.Process_Game_Start_Battle_Card)
+                else if(Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Game_Start_Battle_Card)
                 {
                     Debug.Log("HeroPoolSystem Update - pick Hero");
                     GenerateHeroListFormPool();
-                    Process.Instance.SetProcess(ConstUtil.Process_Pick_Hero, player_id);
+                    Process.GetInstance().SetProcess(ConstUtil.Process_Pick_Hero, player_id);
                 }
             }
         }

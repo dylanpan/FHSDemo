@@ -32,17 +32,17 @@ public class MainView : MonoBehaviour
     }
     public void UpdatePlayerTypeList()
     {
-        Process.Instance.SetPlayerTypeList(ConstUtil.Player_Type_Human_Mine);
+        Process.GetInstance().SetPlayerTypeList(ConstUtil.Player_Type_Human_Mine);
         for (int i = 1; i < ConstUtil.Max_Num_Player; i++)
         {
-            Process.Instance.SetPlayerTypeList(ConstUtil.Player_Type_AI);
+            Process.GetInstance().SetPlayerTypeList(ConstUtil.Player_Type_AI);
         }
     }
     private void OnClickStartBtn()
     {
         // 新增玩家类型列表，由 PlayerSystem 进行玩家初始化，新增玩家 Id 列表
         UpdatePlayerTypeList();
-        Process.Instance.SetProcess(ConstUtil.Process_Game_Start_Main_View, Process.Instance.GetShowPlayerId());
+        Process.GetInstance().SetProcess(ConstUtil.Process_Game_Start_Main_View, Process.GetInstance().GetShowPlayerId());
         GameObject.Destroy(this.gameObject);
     }
 

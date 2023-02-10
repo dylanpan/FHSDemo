@@ -11,7 +11,7 @@ namespace Chess.Util
     {
         public static void SetHero(int id)
         {
-            Entity entity = World.Instance.entityDic[Process.Instance.GetShowPlayerId()];
+            Entity entity = World.Instance.entityDic[Process.GetInstance().GetShowPlayerId()];
             PlayerComponent playerComponent = (PlayerComponent)entity.GetComponent<PlayerComponent>();
             if (playerComponent != null)
             {
@@ -24,14 +24,14 @@ namespace Chess.Util
 
         public static void SetBartender(int config_id)
         {
-            Entity player = World.Instance.entityDic[Process.Instance.GetShowPlayerId()];
+            Entity player = World.Instance.entityDic[Process.GetInstance().GetShowPlayerId()];
             PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
             if (playerComponent != null)
             {
                 if (playerComponent.bartender_id == ConstUtil.None)
                 {
                     Entity? bartenderEntity = null;
-                    List<int> bartender_pool = Process.Instance.GetBartenderPool();
+                    List<int> bartender_pool = Process.GetInstance().GetBartenderPool();
                     for (int i = 0; i < bartender_pool.Count; i++)
                     {
                         Entity entity = World.Instance.entityDic[bartender_pool[i]];
@@ -50,7 +50,7 @@ namespace Chess.Util
 
         public static void SetSellPieceId(int id)
         {
-            Entity player = World.Instance.entityDic[Process.Instance.GetShowPlayerId()];
+            Entity player = World.Instance.entityDic[Process.GetInstance().GetShowPlayerId()];
             if (player != null)
             {
                 PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
@@ -62,7 +62,7 @@ namespace Chess.Util
         }
         public static void SetMovePieceId(int source_id = ConstUtil.None, int target_id = ConstUtil.None)
         {
-            Entity player = World.Instance.entityDic[Process.Instance.GetShowPlayerId()];
+            Entity player = World.Instance.entityDic[Process.GetInstance().GetShowPlayerId()];
             if (player != null)
             {
                 PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
@@ -75,7 +75,7 @@ namespace Chess.Util
         }
         public static void SetBuyPieceId(int id)
         {
-            Entity player = World.Instance.entityDic[Process.Instance.GetShowPlayerId()];
+            Entity player = World.Instance.entityDic[Process.GetInstance().GetShowPlayerId()];
             if (player != null)
             {
                 PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();

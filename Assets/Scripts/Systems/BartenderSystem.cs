@@ -24,7 +24,7 @@ namespace Chess.Systems
                 entity.AddComponent(new StatusComponent());
                 entity.AddComponent(new ConfigComponent<BartenderConfig>(){config = bartenderConfig});
                 World.Instance.AddEntity(entity);
-                Process.Instance.AddBartenderToPool(entity.ID);
+                Process.GetInstance().AddBartenderToPool(entity.ID);
             }
         }
         public void GeneratePoolFormConfig()
@@ -98,7 +98,7 @@ namespace Chess.Systems
                                 }
                                 else
                                 {
-                                    Process.Instance.SetProcess(ConstUtil.Process_Prepare_Ing, player_id);
+                                    Process.GetInstance().SetProcess(ConstUtil.Process_Prepare_Ing, player_id);
                                 }
                             }
                         }
@@ -112,35 +112,35 @@ namespace Chess.Systems
         }
         public override void Update()
         {
-            List<int> player_list = Process.Instance.GetPlayerIdList();
+            List<int> player_list = Process.GetInstance().GetPlayerIdList();
             for (int i = 0; i < player_list.Count; i++)
             {
                 int player_id = player_list[i];
-                if (Process.Instance.GetProcess(player_id) == ConstUtil.Process_Game_Start_Player)
+                if (Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Game_Start_Player)
                 {
                     Debug.Log("BartenderSystem Update - init");
                     GeneratePoolFormConfig();
                     // TODO: - 1 调整设置位置
                     TestUtil.SetBartender(1000);
-                    Process.Instance.SetProcess(ConstUtil.Process_Game_Start_Bartender, player_id);
+                    Process.GetInstance().SetProcess(ConstUtil.Process_Game_Start_Bartender, player_id);
                 }
-                else if (Process.Instance.GetProcess(player_id) == ConstUtil.Process_Prepare_Bartender_Level_Up)
+                else if (Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Prepare_Bartender_Level_Up)
                 {
                     Debug.Log("BartenderSystem Update - prepare level up");
                     BartenderLevelUp(player_id);
-                    Process.Instance.SetProcess(ConstUtil.Process_Prepare_Ing, player_id);
+                    Process.GetInstance().SetProcess(ConstUtil.Process_Prepare_Ing, player_id);
                 }
-                else if (Process.Instance.GetProcess(player_id) == ConstUtil.Process_Prepare_Bartender_Refresh_Pre)
+                else if (Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Prepare_Bartender_Refresh_Pre)
                 {
                     Debug.Log("BartenderSystem Update - prepare refresh pre");
                     BartenderRefresh(player_id, false);
                 }
-                else if (Process.Instance.GetProcess(player_id) == ConstUtil.Process_Prepare_Bartender_Refresh)
+                else if (Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Prepare_Bartender_Refresh)
                 {
                     Debug.Log("BartenderSystem Update - prepare refresh");
                     BartenderRefresh(player_id, true);
                 }
-                else if (Process.Instance.GetProcess(player_id) == ConstUtil.Process_Prepare_End)
+                else if (Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Prepare_End)
                 {
                     // Debug.Log("BartenderSystem Update - battle prepare end");
                     // TODO: 设置当前回合的当前玩家的酒馆信息，如：当回合玩家拥有金额

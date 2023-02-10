@@ -55,7 +55,7 @@ public class BartenderView : MonoBehaviour
 
     public void UpdateViewByData()
     {
-        Entity player = World.Instance.entityDic[Process.Instance.GetShowPlayerId()];
+        Entity player = World.Instance.entityDic[Process.GetInstance().GetShowPlayerId()];
         if (player != null)
         {
             PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
@@ -197,28 +197,28 @@ public class BartenderView : MonoBehaviour
 
     public void OnClickCurrencyBtn()
     {
-        Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Refresh_Pre, Process.Instance.GetShowPlayerId());
+        Process.GetInstance().SetProcess(ConstUtil.Process_Prepare_Bartender_Refresh_Pre, Process.GetInstance().GetShowPlayerId());
     }
     public void OnClickLevelBtn()
     {
-        Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Level_Up, Process.Instance.GetShowPlayerId());
+        Process.GetInstance().SetProcess(ConstUtil.Process_Prepare_Bartender_Level_Up, Process.GetInstance().GetShowPlayerId());
     }
     public void OnClickRefreshBtn()
     {
-        Process.Instance.SetBartenderPieceFreezeState(false);
-        Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Refresh, Process.Instance.GetShowPlayerId());
+        Process.GetInstance().SetBartenderPieceFreezeState(false);
+        Process.GetInstance().SetProcess(ConstUtil.Process_Prepare_Bartender_Refresh, Process.GetInstance().GetShowPlayerId());
     }
     public void OnClickFreezeBtn()
     {
-        if (Process.Instance.GetBartenderPieceFreezeState())
+        if (Process.GetInstance().GetBartenderPieceFreezeState())
         {
-            Process.Instance.SetBartenderPieceFreezeState(false);
-            Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_UnFreeze, Process.Instance.GetShowPlayerId());
+            Process.GetInstance().SetBartenderPieceFreezeState(false);
+            Process.GetInstance().SetProcess(ConstUtil.Process_Prepare_Bartender_UnFreeze, Process.GetInstance().GetShowPlayerId());
         }
         else
         {
-            Process.Instance.SetBartenderPieceFreezeState(true);
-            Process.Instance.SetProcess(ConstUtil.Process_Prepare_Bartender_Freeze, Process.Instance.GetShowPlayerId());
+            Process.GetInstance().SetBartenderPieceFreezeState(true);
+            Process.GetInstance().SetProcess(ConstUtil.Process_Prepare_Bartender_Freeze, Process.GetInstance().GetShowPlayerId());
         }
     }
 
