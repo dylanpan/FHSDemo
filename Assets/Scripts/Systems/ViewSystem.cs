@@ -47,19 +47,19 @@ namespace Chess.Systems
         }
         public override void Update()
         {
-            if (Process.GetInstance().GetProcess(Process.GetInstance().GetShowPlayerId()) == ConstUtil.Process_Pick_Hero)
+            if (Process.GetInstance().CheckProcessIsEqual(Process.GetInstance().GetShowPlayerId(), ConstUtil.Process_Pick_Hero))
             {
                 Debug.Log("ViewSystem Update - pick hero");
                 AddHeroPickView();
                 Process.GetInstance().SetProcess(ConstUtil.Process_Pick_Hero_Ing, Process.GetInstance().GetShowPlayerId());
             }
-            else if (Process.GetInstance().GetProcess(Process.GetInstance().GetShowPlayerId()) == ConstUtil.Process_Prepare_Start)
+            else if (Process.GetInstance().CheckProcessIsEqual(Process.GetInstance().GetShowPlayerId(), ConstUtil.Process_Prepare_Start))
             {
                 AddBartenderView();
                 AddPlayerView();
                 Process.GetInstance().SetProcess(ConstUtil.Process_Prepare_Bartender_Refresh_Pre, Process.GetInstance().GetShowPlayerId());
             }
-            else if (Process.GetInstance().GetProcess(Process.GetInstance().GetShowPlayerId()) == ConstUtil.Process_Prepare_Switch)
+            else if (Process.GetInstance().CheckProcessIsEqual(Process.GetInstance().GetShowPlayerId(), ConstUtil.Process_Prepare_Switch))
             {
                 // TODO: - 1 需要兼容在切换不同玩家的操作（补充准备阶段切换状态和战斗阶段切换转状态，专门在这个状态下进行操作）
             }

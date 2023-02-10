@@ -18,7 +18,7 @@ namespace Chess.Systems
             {
                 int player_id = player_list[i];
                 // TODO: - 1 通过获取 AI 的行为配置表进行对应的操作执行
-                if (Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Game_End)
+                if (Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Game_End))
                 {
                     Debug.Log("AISystem Update - init");
                 }

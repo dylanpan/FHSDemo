@@ -42,7 +42,7 @@ namespace Chess.Systems
             for (int i = 0; i < player_list.Count; i++)
             {
                 int player_id = player_list[i];
-                if (Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Game_Start_Pieces_Pool)
+                if (Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Game_Start_Pieces_Pool))
                 {
                     Debug.Log("HandCardSystem Update - init");
                     CheckAddHandCardEntity();

@@ -141,7 +141,7 @@ namespace Chess.Systems
                     {
                         int piece_id = piecesListComponent.piecesIds[i];
                         Entity piece = World.Instance.entityDic[piece_id];
-                        if (CommonUtil.Battle_GetEntityStatus(piece) == ConstUtil.Status_Piece_Freeze && Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Prepare_Bartender_Refresh_Pre)
+                        if (CommonUtil.Battle_GetEntityStatus(piece) == ConstUtil.Status_Piece_Freeze && Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Prepare_Bartender_Refresh_Pre))
                         {
                             freezePiecesIds.Add(piece_id);
                             freeze_total ++;
@@ -392,46 +392,46 @@ namespace Chess.Systems
             for (int i = 0; i < player_list.Count; i++)
             {
                 int player_id = player_list[i];
-                if (Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Game_Start_Heroes_Pool)
+                if (Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Game_Start_Heroes_Pool))
                 {
                     Debug.Log("PiecesPoolSystem Update - init");
                     GeneratePoolFormConfig();
                     Process.GetInstance().SetProcess(ConstUtil.Process_Game_Start_Pieces_Pool, player_id);
                 }
-                else if (Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Prepare_Bartender_Refresh_Pre || Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Prepare_Bartender_Refresh)
+                else if (Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Prepare_Bartender_Refresh_Pre) || Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Prepare_Bartender_Refresh))
                 {
                     // 从池子中抽取当前玩家酒馆的棋子信息
                     RefreshBartenderPiecesList(player_id);
                     Process.GetInstance().SetProcess(ConstUtil.Process_Prepare_Ing, player_id);
                 }
-                else if (Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Prepare_Bartender_Freeze)
+                else if (Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Prepare_Bartender_Freeze))
                 {
                     // 冻结酒馆的棋子
                     UpdateBartenderPiecesListFreezeState(player_id, true);
                     Process.GetInstance().SetProcess(ConstUtil.Process_Prepare_Ing, player_id);
                 }
-                else if (Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Prepare_Bartender_UnFreeze)
+                else if (Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Prepare_Bartender_UnFreeze))
                 {
                     // 解除冻结酒馆的棋子
                     UpdateBartenderPiecesListFreezeState(player_id);
                     Process.GetInstance().SetProcess(ConstUtil.Process_Prepare_Ing, player_id);
                 }
-                else if (Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Prepare_Piece_Buy)
+                else if (Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Prepare_Piece_Buy))
                 {
                     PieceBuy(player_id);
                     Process.GetInstance().SetProcess(ConstUtil.Process_Prepare_Ing, player_id);
                 }
-                else if (Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Prepare_Piece_Sell)
+                else if (Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Prepare_Piece_Sell))
                 {
                     PieceSell(player_id);
                     Process.GetInstance().SetProcess(ConstUtil.Process_Prepare_Ing, player_id);
                 }
-                else if (Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Prepare_Piece_Move)
+                else if (Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Prepare_Piece_Move))
                 {
                     PieceMove(player_id);
                     Process.GetInstance().SetProcess(ConstUtil.Process_Prepare_Ing, player_id);
                 }
-                else if (Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Prepare_End)
+                else if (Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Prepare_End))
                 {
                     // TODO: 回合结束的冻结的棋子
                 }

@@ -32,6 +32,7 @@ public class MainView : MonoBehaviour
     }
     public void UpdatePlayerTypeList()
     {
+        // TODO: - 1 操作设置一个就 set 一个
         Process.GetInstance().SetPlayerTypeList(ConstUtil.Player_Type_Human_Mine);
         for (int i = 1; i < ConstUtil.Max_Num_Player; i++)
         {

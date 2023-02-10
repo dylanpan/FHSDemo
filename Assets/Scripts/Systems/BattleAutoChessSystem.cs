@@ -177,7 +177,7 @@ namespace Chess.Systems
             for (int i = 0; i < player_list.Count; i++)
             {
                 int player_id = player_list[i];
-                if (Process.GetInstance().GetProcess(player_id) == ConstUtil.Process_Battle_Start)
+                if (Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Battle_Start))
                 {
                     Debug.Log("BattleAutoChessSystem Update - init");
                     // TODO: - 1 需要新增 MatchSystem 进行玩家匹配，之后通过玩家 ID 直接获取其战斗队伍

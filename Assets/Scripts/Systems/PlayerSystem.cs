@@ -40,9 +40,8 @@ namespace Chess.Systems
 
         public override void Update()
         {
-            // TODO: - 1 各自的状态和进度：玩家通过操作设置，AI 通过 system.update 进行设置
             // TODO: - 1 将所有 update 的地方进行修改，切换成 NotificationQueue ，然后通过增加当前状态下的 action 进行处理？？？目的是给每一个玩家一个队列，增加什么执行什么，不进行整体遍历
-            if (Process.GetInstance().GetProcess(Process.GetInstance().GetShowPlayerId()) == ConstUtil.Process_Game_Start_Main_View)
+            if (Process.GetInstance().CheckProcessIsEqual(Process.GetInstance().GetShowPlayerId(), ConstUtil.Process_Game_Start_Main_View))
             {
                 Debug.Log("PlayerSystem Update - init");
                 InitWorldPlayerEntity();

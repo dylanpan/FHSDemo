@@ -52,6 +52,11 @@ namespace Chess.Base
         }
         #endregion
 
+        /// <summary>
+        /// 开启游戏界面进行设置玩家与 AI 的类型数量
+        /// </summary>
+        /// <typeparam name="int"></typeparam>
+        /// <returns></returns>
         private List<int> _player_type_list = new List<int>();
         public List<int> GetPlayerTypeList()
         {
@@ -63,7 +68,7 @@ namespace Chess.Base
         }
 
         /// <summary>
-        /// 开启游戏界面进行设置玩家与 AI
+        /// 游戏内的玩家 ID 列表
         /// </summary>
         /// <typeparam name="int"></typeparam>
         /// <returns></returns>
@@ -78,7 +83,7 @@ namespace Chess.Base
         }
 
         /// <summary>
-        /// 当前展示玩家对应的进度
+        /// 对应玩家 ID 对应的进度
         /// </summary>
         /// <typeparam name="int"></typeparam>
         /// <typeparam name="int"></typeparam>
@@ -96,9 +101,15 @@ namespace Chess.Base
             }
             return _current_process_dict[player_id];
         }
+        public bool CheckProcessIsEqual(int player_id, int check_process)
+        {
+            int player_process = GetProcess(player_id);
+            bool isEqual = player_process == check_process;
+            return isEqual;
+        }
 
         /// <summary>
-        /// 当前展示玩家
+        /// /// 当前展示玩家
         /// </summary>
         private int _show_player_id = ConstUtil.None;
         public void SetShowPlayerId(int id)

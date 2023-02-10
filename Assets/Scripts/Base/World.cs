@@ -71,7 +71,7 @@ namespace Chess.Base
         // 由引擎驱动
         public void Update()
         {
-            if (Process.GetInstance().GetProcess(Process.GetInstance().GetShowPlayerId()) == ConstUtil.None)
+            if (Process.GetInstance().CheckProcessIsEqual(Process.GetInstance().GetShowPlayerId(), ConstUtil.None))
             {
                 AddSystem();
             }
