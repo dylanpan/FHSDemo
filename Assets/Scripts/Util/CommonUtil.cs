@@ -176,6 +176,14 @@ namespace Chess.Util
         {
             return new System.Random().Next(total);
         }
+        public static int RandomPlayerIndex(int total)
+        {
+            return new System.Random().Next(total);
+        }
+        public static int RandomFirstIndex(int total)
+        {
+            return new System.Random().Next(total);
+        }
         public static void SetPieceBelong(int id, int belong = ConstUtil.None)
         {
             Entity piece = World.Instance.entityDic[id];

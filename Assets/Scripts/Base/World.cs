@@ -64,6 +64,7 @@ namespace Chess.Base
             World.Instance.AddSystem(new PiecesPoolSystem());
             World.Instance.AddSystem(new HandCardSystem());
             World.Instance.AddSystem(new BattleCardSystem());
+            World.Instance.AddSystem(new MatchSystem());
             World.Instance.AddSystem(new BattleAutoChessSystem());
             World.Instance.AddSystem(new BattleReplaySystem());
             World.Instance.AddSystem(new ViewSystem());

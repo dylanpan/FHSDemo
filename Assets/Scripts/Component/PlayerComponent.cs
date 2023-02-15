@@ -117,6 +117,18 @@ namespace Chess.Component
                 _ai_id = value;
             }
         }
+        private int _rival_id = ConstUtil.None;
+        public int rival_id
+        {
+            get
+            {
+                return _rival_id;
+            }
+            set
+            {
+                _rival_id = value;
+            }
+        }
         public override void LoggerString()
         {
             Debug.Log("---> PlayerComponent:{"
@@ -129,6 +141,7 @@ namespace Chess.Component
                          + ", piece_move_source_id: " + piece_move_source_id
                          + ", piece_move_target_id: " + piece_move_target_id
                          + ", ai_id: " + ai_id
+                         + ", rival_id: " + rival_id
                          + "}");
         }
     }

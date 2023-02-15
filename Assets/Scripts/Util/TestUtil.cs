@@ -56,9 +56,13 @@ namespace Chess.Util
             }
         }
 
-        public static void SetSellPieceId(int id)
+        public static void SetSellPieceId(int id, int player_id = ConstUtil.None)
         {
-            Entity player = World.Instance.entityDic[Process.GetInstance().GetShowPlayerId()];
+            if (player_id == ConstUtil.None)
+            {
+                player_id = Process.GetInstance().GetShowPlayerId();
+            }
+            Entity player = World.Instance.entityDic[player_id];
             if (player != null)
             {
                 PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
@@ -68,9 +72,13 @@ namespace Chess.Util
                 }
             }
         }
-        public static void SetMovePieceId(int source_id = ConstUtil.None, int target_id = ConstUtil.None)
+        public static void SetMovePieceId(int source_id = ConstUtil.None, int target_id = ConstUtil.None, int player_id = ConstUtil.None)
         {
-            Entity player = World.Instance.entityDic[Process.GetInstance().GetShowPlayerId()];
+            if (player_id == ConstUtil.None)
+            {
+                player_id = Process.GetInstance().GetShowPlayerId();
+            }
+            Entity player = World.Instance.entityDic[player_id];
             if (player != null)
             {
                 PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
@@ -81,59 +89,19 @@ namespace Chess.Util
                 }
             }
         }
-        public static void SetBuyPieceId(int id)
+        public static void SetBuyPieceId(int id, int player_id = ConstUtil.None)
         {
-            Entity player = World.Instance.entityDic[Process.GetInstance().GetShowPlayerId()];
+            if (player_id == ConstUtil.None)
+            {
+                player_id = Process.GetInstance().GetShowPlayerId();
+            }
+            Entity player = World.Instance.entityDic[player_id];
             if (player != null)
             {
                 PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
                 if (playerComponent != null)
                 {
                     playerComponent.piece_buy_id = id;
-                }
-            }
-        }
-        
-        public static int GetTestPieces(int piece_id)
-        {
-            int find_id = 0;
-            foreach (Entity entity in World.Instance.entityDic.Values)
-            {
-                if (CommonUtil.CheckIsPiece(entity))
-                {
-                    NameComponent nameComponent = (NameComponent)entity.GetComponent<NameComponent>();
-                    if (nameComponent != null && nameComponent.id == piece_id)
-                    {
-                        find_id = entity.ID;
-                    }
-                }
-            }
-            return find_id;
-        }
-        public static void SetTestPiecesIds(ref Entity aEntity, ref Entity bEntity)
-        {
-            if (aEntity != null)
-            {
-                PiecesListComponent aPiecesListComponent = (PiecesListComponent)aEntity.GetComponent<PiecesListComponent>();
-                if (aPiecesListComponent != null)
-                {
-                    int pieces_0_ID = TestUtil.GetTestPieces(4001);
-                    int pieces_1_ID = TestUtil.GetTestPieces(4002);
-                    int pieces_2_ID = TestUtil.GetTestPieces(4003);
-                    int[] piecesIds = {pieces_0_ID, pieces_1_ID, pieces_2_ID};
-                    aPiecesListComponent.piecesIds = new List<int>(piecesIds);
-                }
-            }
-            if (bEntity != null)
-            {
-                PiecesListComponent bPiecesListComponent = (PiecesListComponent)bEntity.GetComponent<PiecesListComponent>();
-                if (bPiecesListComponent != null)
-                {
-                    int pieces_0_ID = TestUtil.GetTestPieces(4004);
-                    int pieces_1_ID = TestUtil.GetTestPieces(4005);
-                    int pieces_2_ID = TestUtil.GetTestPieces(4005);
-                    int[] piecesIds = {pieces_0_ID, pieces_1_ID, pieces_2_ID};
-                    bPiecesListComponent.piecesIds = new List<int>(piecesIds);
                 }
             }
         }
