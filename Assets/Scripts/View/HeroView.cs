@@ -51,6 +51,7 @@ public class HeroView : MonoBehaviour
     public void OnClickBgBtn()
     {
         TestUtil.SetHero(hero.ID);
+        TestUtil.SetBartender(1000);
         Process.GetInstance().SetProcess(ConstUtil.Process_Prepare_Start, Process.GetInstance().GetShowPlayerId());
         EventUtil.Instance.SendEvent(ConstUtil.Event_Type_close_hero_pick_view);
     }

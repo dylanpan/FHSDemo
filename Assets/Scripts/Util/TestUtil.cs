@@ -9,9 +9,13 @@ namespace Chess.Util
     // DataUtil 通过该类对已有的数据进行更新
     public class TestUtil
     {
-        public static void SetHero(int id)
+        public static void SetHero(int id, int player_id = ConstUtil.None)
         {
-            Entity entity = World.Instance.entityDic[Process.GetInstance().GetShowPlayerId()];
+            if (player_id == ConstUtil.None)
+            {
+                player_id = Process.GetInstance().GetShowPlayerId();
+            }
+            Entity entity = World.Instance.entityDic[player_id];
             PlayerComponent playerComponent = (PlayerComponent)entity.GetComponent<PlayerComponent>();
             if (playerComponent != null)
             {
@@ -22,9 +26,13 @@ namespace Chess.Util
             }
         }
 
-        public static void SetBartender(int config_id)
+        public static void SetBartender(int config_id, int player_id = ConstUtil.None)
         {
-            Entity player = World.Instance.entityDic[Process.GetInstance().GetShowPlayerId()];
+            if (player_id == ConstUtil.None)
+            {
+                player_id = Process.GetInstance().GetShowPlayerId();
+            }
+            Entity player = World.Instance.entityDic[player_id];
             PlayerComponent playerComponent = (PlayerComponent)player.GetComponent<PlayerComponent>();
             if (playerComponent != null)
             {

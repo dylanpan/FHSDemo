@@ -116,13 +116,11 @@ namespace Chess.Systems
             for (int i = 0; i < player_list.Count; i++)
             {
                 int player_id = player_list[i];
-                if (Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Game_Start_Player))
+                if (Process.GetInstance().CheckProcessIsEqual(Process.GetInstance().GetShowPlayerId(), ConstUtil.Process_Game_Start_AI_Pool))
                 {
                     Debug.Log("BartenderSystem Update - init");
                     GeneratePoolFormConfig();
-                    // TODO: - 1 调整设置位置
-                    TestUtil.SetBartender(1000);
-                    Process.GetInstance().SetProcess(ConstUtil.Process_Game_Start_Bartender, player_id);
+                    Process.GetInstance().SetProcess(ConstUtil.Process_Game_Start_Bartender_Pool, Process.GetInstance().GetShowPlayerId());
                 }
                 else if (Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Prepare_Bartender_Level_Up))
                 {

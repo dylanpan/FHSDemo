@@ -81,13 +81,13 @@ namespace Chess.Systems
             for (int i = 0; i < player_list.Count; i++)
             {
                 int player_id = player_list[i];
-                if (Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Game_Start_Bartender))
+                if (Process.GetInstance().CheckProcessIsEqual(Process.GetInstance().GetShowPlayerId(), ConstUtil.Process_Game_Start_Bartender_Pool))
                 {
                     Debug.Log("HeroPoolSystem Update - init");
                     GeneratePoolFormConfig();
-                    Process.GetInstance().SetProcess(ConstUtil.Process_Game_Start_Heroes_Pool, player_id);
+                    Process.GetInstance().SetProcess(ConstUtil.Process_Game_Start_Heroes_Pool, Process.GetInstance().GetShowPlayerId());
                 }
-                else if(Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Game_Start_Battle_Card))
+                else if(Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Game_Start_Player))
                 {
                     Debug.Log("HeroPoolSystem Update - pick Hero");
                     GenerateHeroListFormPool();

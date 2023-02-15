@@ -180,7 +180,7 @@ namespace Chess.Systems
                 if (Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Battle_Start))
                 {
                     Debug.Log("BattleAutoChessSystem Update - init");
-                    // TODO: - 1 需要新增 MatchSystem 进行玩家匹配，之后通过玩家 ID 直接获取其战斗队伍
+                    // TODO: - 11 需要新增 MatchSystem 进行玩家匹配，之后通过玩家 ID 直接获取其战斗队伍
                     List<Entity> battleEntitys = new List<Entity>();
                     foreach (Entity entity in World.Instance.entityDic.Values)
                     {

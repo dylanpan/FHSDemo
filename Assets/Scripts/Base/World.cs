@@ -57,6 +57,7 @@ namespace Chess.Base
         }
         public void AddSystem()
         {
+            World.Instance.AddSystem(new AISystem());
             World.Instance.AddSystem(new PlayerSystem());
             World.Instance.AddSystem(new BartenderSystem());
             World.Instance.AddSystem(new HeroPoolSystem());
@@ -66,7 +67,6 @@ namespace Chess.Base
             World.Instance.AddSystem(new BattleAutoChessSystem());
             World.Instance.AddSystem(new BattleReplaySystem());
             World.Instance.AddSystem(new ViewSystem());
-            World.Instance.AddSystem(new AISystem());
         }
         // 由引擎驱动
         public void Update()

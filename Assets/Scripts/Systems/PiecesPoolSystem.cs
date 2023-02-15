@@ -163,8 +163,10 @@ namespace Chess.Systems
                         CommonUtil.SetPieceBelong(piecesListComponent.piecesIds[i], ConstUtil.Belong_Bartender);
                     }
                 }
-                // TODO: - 1 system 中所有的消息都需要等于 showplayer 才发送
-                EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_pieces_view, bartender_id);
+                if (player_id == Process.GetInstance().GetShowPlayerId())
+                {
+                    EventUtil.Instance.SendEvent(ConstUtil.Event_Type_update_bartender_pieces_view, bartender_id);
+                }
             }
         }
         public void UpdateBartenderPiecesListFreezeState(int player_id, bool isFreeze = false)
@@ -242,7 +244,10 @@ namespace Chess.Systems
                         }
                         if (isUpdateUI)
                         {
-                            // TODO: - 1 通知界面更新
+                            if (player_id == Process.GetInstance().GetShowPlayerId())
+                            {
+                                // TODO: - 1 通知界面更新
+                            }
                         }
                     }
                     playerComponent.piece_buy_id = ConstUtil.None;
@@ -285,7 +290,10 @@ namespace Chess.Systems
                         CommonUtil.SetPieceBelong(piece.ID, ConstUtil.Belong_Pool);
                         if (isUpdateUI)
                         {
-                            // TODO: - 1 通知界面更新
+                            if (player_id == Process.GetInstance().GetShowPlayerId())
+                            {
+                                // TODO: - 1 通知界面更新
+                            }
                         }
                         CurrencyComponent pieceCurrencyComponent = (CurrencyComponent)piece.GetComponent<CurrencyComponent>();
                         if (pieceCurrencyComponent != null)
@@ -344,7 +352,10 @@ namespace Chess.Systems
                                     battleCardPiecesListComponent.piecesIds[targetIndex] = pieceSource;
                                     battleCardPiecesListComponent.piecesIds[sourceIndex] = pieceTarget;
                                     CommonUtil.SetPieceBelong(piece.ID, ConstUtil.Belong_Battle_Card);
-                                    // TODO: - 1 通知界面更新
+                                    if (player_id == Process.GetInstance().GetShowPlayerId())
+                                    {
+                                        // TODO: - 1 通知界面更新
+                                    }
                                     break;
                                 }
                                 case ConstUtil.Status_Piece_Move_H2H:
@@ -355,7 +366,10 @@ namespace Chess.Systems
                                     handCardPiecesListComponent.piecesIds[targetIndex] = pieceSource;
                                     handCardPiecesListComponent.piecesIds[sourceIndex] = pieceTarget;
                                     CommonUtil.SetPieceBelong(piece.ID, ConstUtil.Belong_Hand_Card);
-                                    // TODO: - 1 通知界面更新
+                                    if (player_id == Process.GetInstance().GetShowPlayerId())
+                                    {
+                                        // TODO: - 1 通知界面更新
+                                    }
                                     break;
                                 }
                                 case ConstUtil.Status_Piece_Move_B2H:
@@ -363,7 +377,10 @@ namespace Chess.Systems
                                     battleCardPiecesListComponent.piecesIds.Remove(pieceSource.ID);
                                     handCardPiecesListComponent.piecesIds.Add(pieceSource.ID);
                                     CommonUtil.SetPieceBelong(piece.ID, ConstUtil.Belong_Hand_Card);
-                                    // TODO: - 1 通知界面更新
+                                    if (player_id == Process.GetInstance().GetShowPlayerId())
+                                    {
+                                        // TODO: - 1 通知界面更新
+                                    }
                                     break;
                                 }
                                 case ConstUtil.Status_Piece_Move_H2B:
@@ -371,7 +388,10 @@ namespace Chess.Systems
                                     handCardPiecesListComponent.piecesIds.Remove(pieceSource.ID);
                                     battleCardPiecesListComponent.piecesIds.Add(pieceSource.ID);
                                     CommonUtil.SetPieceBelong(piece.ID, ConstUtil.Belong_Battle_Card);
-                                    // TODO: - 1 通知界面更新
+                                    if (player_id == Process.GetInstance().GetShowPlayerId())
+                                    {
+                                        // TODO: - 1 通知界面更新
+                                    }
                                     break;
                                 }
                                 default:
@@ -392,11 +412,11 @@ namespace Chess.Systems
             for (int i = 0; i < player_list.Count; i++)
             {
                 int player_id = player_list[i];
-                if (Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Game_Start_Heroes_Pool))
+                if (Process.GetInstance().CheckProcessIsEqual(Process.GetInstance().GetShowPlayerId(), ConstUtil.Process_Game_Start_Heroes_Pool))
                 {
                     Debug.Log("PiecesPoolSystem Update - init");
                     GeneratePoolFormConfig();
-                    Process.GetInstance().SetProcess(ConstUtil.Process_Game_Start_Pieces_Pool, player_id);
+                    Process.GetInstance().SetProcess(ConstUtil.Process_Game_Start_Pieces_Pool, Process.GetInstance().GetShowPlayerId());
                 }
                 else if (Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Prepare_Bartender_Refresh_Pre) || Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Prepare_Bartender_Refresh))
                 {
@@ -434,6 +454,7 @@ namespace Chess.Systems
                 else if (Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Prepare_End))
                 {
                     // TODO: 回合结束的冻结的棋子
+                    Process.GetInstance().SetProcess(ConstUtil.Process_Match_Start, player_id);
                 }
             }
         }

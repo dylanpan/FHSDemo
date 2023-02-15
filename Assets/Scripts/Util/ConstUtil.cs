@@ -8,7 +8,10 @@ namespace Chess.Util
 
         public const int Player_Type_Human_Mine = 1;
         public const int Player_Type_Human_Other = 2;
-        public const int Player_Type_AI = 3;
+        public const int Player_Type_AI_Shit = 3;
+        public const int Player_Type_AI_Normal = 4;
+        public const int Player_Type_AI_Cpu = 5;
+        public const int Player_Type_AI_Hell = 6;
 
         public const int Belong_Pool = 1;
         public const int Belong_Bartender = 2;
@@ -50,16 +53,18 @@ namespace Chess.Util
         public const string Json_File_Pieces_Config = "Assets/Scripts/Json/PiecesConfig.json";
         public const string Json_File_Heroes_Config = "Assets/Scripts/Json/HeroesConfig.json";
         public const string Json_File_Bartender_Config = "Assets/Scripts/Json/BartenderConfig.json";
+        public const string Json_File_AI_Config = "Assets/Scripts/Json/AIConfig.json";
 
         // 游戏开始: 创建玩家,创建池子,创建酒馆
         public const int Process_Game_Start = 100;
         public const int Process_Game_Start_Main_View = 101;
-        public const int Process_Game_Start_Player = 102;
-        public const int Process_Game_Start_Bartender = 103;
+        public const int Process_Game_Start_AI_Pool = 102;
+        public const int Process_Game_Start_Bartender_Pool = 103;
         public const int Process_Game_Start_Heroes_Pool = 104;
         public const int Process_Game_Start_Pieces_Pool = 105;
-        public const int Process_Game_Start_Hand_Card = 106;
-        public const int Process_Game_Start_Battle_Card = 107;
+        public const int Process_Game_Start_Player = 106;
+        public const int Process_Game_Start_Hand_Card = 107;
+        public const int Process_Game_Start_Battle_Card = 108;
         // 选择英雄
         public const int Process_Pick_Hero = 200;
         public const int Process_Pick_Hero_Ing = 201;
@@ -78,14 +83,22 @@ namespace Chess.Util
         public const int Process_Prepare_Switch = 409;
         // 战斗准备结束
         public const int Process_Prepare_End = 500;
+        // 战斗匹配开始
+        public const int Process_Match_Start = 600;
+        // 战斗匹配结束
+        public const int Process_Match_End =700;
         // 战斗开始
-        public const int Process_Battle_Start = 600;
+        public const int Process_Battle_Start = 800;
         // 战斗中: 执行战斗部分得出结果
-        public const int Process_Battle_Ing = 700;
+        public const int Process_Battle_Ing = 900;
         // 战斗结束
-        public const int Process_Battle_End = 800;
+        public const int Process_Battle_End = 1000;
+        // 回放战斗开始
+        public const int Process_Battle_Replay_Start = 1100;
+        // 回放战斗结束
+        public const int Process_Battle_Replay_End = 1200;
         // 游戏结束
-        public const int Process_Game_End = 900;
+        public const int Process_Game_End = 1300;// TODO: 重置 pool 中元素的状态
 
         // 通知
         public const int Event_Type_close_hero_pick_view = 10000;

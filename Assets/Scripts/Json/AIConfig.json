@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Shit",
+        "id": 1000,
+        "type": 3
+    },
+    {
+        "name": "Normal",
+        "id": 2000,
+        "type": 4
+    },
+    {
+        "name": "Cpu",
+        "id": 3000,
+        "type": 5
+    },
+    {
+        "name": "Hell",
+        "id": 2000,
+        "type": 6
+    }
+]

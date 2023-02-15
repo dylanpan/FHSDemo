@@ -122,6 +122,31 @@ namespace Chess.Base
         }
 
         /// <summary>
+        /// 预置AI池子
+        /// </summary>
+        /// <typeparam name="int"></typeparam>
+        /// <returns></returns>
+        private List<int> _ai_pool = new List<int>();
+        public void AddAIToPool(int id)
+        {
+            if (!_ai_pool.Contains(id))
+            {
+                _ai_pool.Add(id);
+            }
+        }
+        public void RemoveAIFormPool(int id)
+        {
+            if (_ai_pool.Contains(id))
+            {
+                _ai_pool.Remove(id);
+            }
+        }
+        public List<int> GetAIPool()
+        {
+            return _ai_pool;
+        }
+
+        /// <summary>
         /// 英雄池子
         /// </summary>
         /// <typeparam name="int"></typeparam>
@@ -129,7 +154,10 @@ namespace Chess.Base
         private List<int> _hero_pool = new List<int>();
         public void AddHeroToPool(int id)
         {
-            _hero_pool.Add(id);
+            if (!_hero_pool.Contains(id))
+            {
+                _hero_pool.Add(id);
+            }
         }
         public void RemoveHeroFormPool(int id)
         {
@@ -151,7 +179,10 @@ namespace Chess.Base
         private List<int> _bartender_pool = new List<int>();
         public void AddBartenderToPool(int id)
         {
-            _bartender_pool.Add(id);
+            if (!_bartender_pool.Contains(id))
+            {
+                _bartender_pool.Add(id);
+            }
         }
         public void RemoveBartenderFormPool(int id)
         {
@@ -172,7 +203,10 @@ namespace Chess.Base
         private Dictionary<int,List<int>> _player_hero_list_dict = new Dictionary<int,List<int>>();
         public void AddHeroListToDict(int player_id, List<int> hero_list)
         {
-            _player_hero_list_dict.Add(player_id, hero_list);
+            if (!_player_hero_list_dict.ContainsKey(player_id))
+            {
+                _player_hero_list_dict.Add(player_id, hero_list);
+            }
         }
         public List<int> GetHeroPoolFormDict(int player_id)
         {
