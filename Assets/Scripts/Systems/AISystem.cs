@@ -52,6 +52,14 @@ namespace Chess.Systems
                 else if (Process.GetInstance().CheckProcessIsEqual(player_id, ConstUtil.Process_Game_End))
                 {
                     // TODO: - 11 通过获取 AI 的行为配置表进行对应的操作执行
+                    /**
+                    1. AI 行为树设计
+                    2. 赋予初值，进行自身 ai 培养，然后
+                    3. 通过配置行为参数进行设置
+                        选英雄
+                        选酒馆
+                        选棋子：购买、出售、更新套路
+                    **/
                 }
             }
         }
